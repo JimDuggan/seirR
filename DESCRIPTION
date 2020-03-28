@@ -1,0 +1,17 @@
+Package: seirR
+Title: Implementation of an SEIR model
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: The package provides access to an SEIR model for disease transmission.
+License: MIT
+Encoding: UTF-8
+Depends: R (>= 2.10)
+Imports: 
+    dplyr,
+    deSolve
+LazyData: true
