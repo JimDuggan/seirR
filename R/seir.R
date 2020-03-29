@@ -1,0 +1,413 @@
+library(dplyr)
+library(tibble)
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage("Welcome to package seirR v0.0.0.9000")
+}
+#-------------------------------------------------------------------------------------
+#' Gets the transmission params for the initial params tibble
+#'
+#' \code{get_initial_conditions_01} returns resource params
+#' @param tb is input seir object
+#' @return tibble of class seir
+get_initial_conditions_01<-function(tb){
+  tb <- dplyr::add_row(tb,
+                       ParameterName="init_seeds",
+                       ParameterType="InitialCondition",
+                       Description="The initial number of people infected",
+                       Value=1,
+                       UpperEstimate=1,
+                       LowerEstimate=1,
+                       Varying=F,
+                       Source="Use for data calibration process");
+  tb <- dplyr::add_row(tb,
+                       ParameterName="total_population",
+                       ParameterType="InitialCondition",
+                       Description="Total number of people in all compartments",
+                       Value=4800000,
+                       UpperEstimate=4800000,
+                       LowerEstimate=4800000,
+                       Varying=F,
+                      Source="National Statistics")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="init_susceptible",
+                       ParameterType="InitialCondition",
+                       Description="Initial number susceptible",
+                       Value=4800000-1,
+                       UpperEstimate=4800000-1,
+                       LowerEstimate=4800000-1,
+                       Varying=F,
+                       Source="Arbitrary value")
+  tb
+}
+#-------------------------------------------------------------------------------------
+#' Gets the transmission params for the initial params tibble
+#'
+#' \code{get_transmission_params_02} returns resource params
+#' @param tb is input seir object
+#' @return tibble of class seir
+get_transmission_params_02<-function(tb){
+  tb <- dplyr::add_row(tb,
+                       ParameterName="beta",
+                       ParameterType="Transmission",
+                       Description="Transmission parameter",
+                       Value=1.04138,
+                       UpperEstimate=1.04138,
+                       LowerEstimate=1.04138,
+                       Varying=F,
+                       Source="Calibration of Irish Data");
+  tb <- dplyr::add_row(tb,
+                       ParameterName="beta_mult_h",
+                       ParameterType="Transmission",
+                       Description="Multiplicative factor for reduction in infectiousness of asymptomatic infected",
+                       Value=0.507091,
+                       UpperEstimate=0.75,
+                       LowerEstimate=0.15,
+                       Varying=T,
+                       Source="Lierature reviews")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="beta_mult_i",
+                       ParameterType="Transmission",
+                       Description="Multiplicative factor for reduction in infectiousness of those in isolation",
+                       Value=0.0101439,
+                       UpperEstimate=0.0101439,
+                       LowerEstimate=0.0101439,
+                       Varying=T,
+                       Source="Calibration of Irish Data")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="beta_mult_j",
+                       ParameterType="Transmission",
+                       Description="Multiplicative factor for reduction in infectiousness of those solated after test",
+                       Value=0.177054,
+                       UpperEstimate=0.177054,
+                       LowerEstimate=0.177054,
+                       Varying=F,
+                      Source="Arbitrary")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="beta_mult_k",
+                       ParameterType="Transmission",
+                       Description="Multiplicative factor for those asymptomatic who may isolate",
+                       Value=1.0,
+                       UpperEstimate=1.0,
+                       LowerEstimate=1.0,
+                       Varying=T,
+                       Source="Speculative at time of model design")
+  tb
+
+}
+
+#-------------------------------------------------------------------------------------
+#' Gets the biological params for the initial params tibble
+#'
+#' \code{get_biological_params_03} returns resource params
+#' @param tb is input seir object
+#' @return tibble of class seir
+get_biological_params_03<-function(tb){
+  tb <- dplyr::add_row(tb,
+                       ParameterName="incubation_period",
+                       ParameterType="Biological",
+                       Description="Time from infection until clinical symptoms",
+                       Value=5.3,
+                       UpperEstimate=5.3,
+                       LowerEstimate=5.3,
+                       Varying=F,
+                       Source="Sourced via systematic review")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="latent_period",
+                       ParameterType="Biological",
+                       Description="Time from infection until being infectious (L)",
+                       Value=3.55,
+                       UpperEstimate=3.55,
+                       LowerEstimate=3.55,
+                       Varying=F,
+                       Source="Sourced via systematic review")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="infectious_period",
+                       ParameterType="Biological",
+                       Description="Total Duration of Infectiousness",
+                       Value=5.64,
+                       UpperEstimate=5.64,
+                       LowerEstimate=5.64,
+                       Varying=F,
+                       Source="Sourced via systematic review")
+  tb
+}
+
+#-------------------------------------------------------------------------------------
+#' Gets the flow params for the initial params tibble
+#'
+#' \code{get_flow_params_04} returns resource params
+#' @param tb is input seir object
+#' @return tibble of class seir
+get_flow_params_04<-function(tb){
+  tb <- dplyr::add_row(tb,
+                       ParameterName="prop_asymptomatic",
+                       ParameterType="PathwayFlow",
+                       Description="Proportion of population who do not have symptoms (undocumented)",
+                       Value=0.50,
+                       UpperEstimate=0.75,
+                       LowerEstimate=0.15,
+                       Varying=T,
+                       Source="Based on wide range from systematic review")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="prop_tested",
+                       ParameterType="PathwayFlow",
+                       Description="Proportion of symptomatic who have positive test",
+                       Value=0.88,
+                       UpperEstimate=0.88,
+                       LowerEstimate=0.88,
+                       Varying=F,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="prop_quarantined",
+                       ParameterType="PathwayFlow",
+                       Description="Proportion of symptomatic self-isolate",
+                       Value=0.08,
+                       UpperEstimate=0.08,
+                       LowerEstimate=0.08,
+                       Varying=F,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="prop_hospital",
+                       ParameterType="PathwayFlow",
+                       Description="Proportion of positive tests who are hospitalised",
+                       Value=0,
+                       UpperEstimate=0,
+                       LowerEstimate=0,
+                       Varying=F,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="fraction_hosp_severe",
+                       ParameterType="PathwayFlow",
+                       Description="Fraction is hospital who are severly ill",
+                       Value=0,
+                       UpperEstimate=0,
+                       LowerEstimate=0,
+                       Varying=F,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="fraction_risk_group",
+                       ParameterType="PathwayFlow",
+                       Description="Fraction from risk group",
+                       Value=0,
+                       UpperEstimate=0,
+                       LowerEstimate=0,
+                       Varying=F,
+                       Source="TBD")
+  tb
+}
+
+#-------------------------------------------------------------------------------------
+#' Gets the physical distancing params for the initial params tibble
+#'
+#' \code{get_distancing_params_05} returns resource params
+#' @param tb is input seir object
+#' @return tibble of class seir
+get_distancing_params_05 <- function(tb){
+  tb <- dplyr::add_row(tb,
+                       ParameterName="distancing_flag",
+                       ParameterType="Distancing",
+                       Description="Flag to activate physical distancing",
+                       Value=0,
+                       UpperEstimate=1,
+                       LowerEstimate=0,
+                       Varying=T,
+                       Source="Model variable to activate policy")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="pd_percentage_reduction",
+                       ParameterType="Distancing",
+                       Description="Percentage reduction in physical distancing",
+                       Value=.30,
+                       UpperEstimate=.7,
+                       LowerEstimate=0,
+                       Varying=T,
+                       Source="Impact of physical distancing on transmission parameter")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="pd_start_time",
+                       ParameterType="Distancing",
+                       Description="Start time for physical distancing (day)",
+                       Value=20,
+                       UpperEstimate=100,
+                       LowerEstimate=20,
+                       Varying=T,
+                       Source="Time when intervention starts")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="pd_end_time",
+                       ParameterType="Distancing",
+                       Description="End time for physical distancing (day)",
+                       Value=300,
+                       UpperEstimate=300,
+                       LowerEstimate=100,
+                       Varying=T,
+                       Source="Time when intervention ends")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="pd_start_delay",
+                       ParameterType="Distancing",
+                       Description="Time lag for reductions to take hold",
+                       Value=5,
+                       UpperEstimate=20,
+                       LowerEstimate=3,
+                       Varying=T,
+                       Source="Time lag for intervention to have an impact")
+  tb
+
+}
+
+#-------------------------------------------------------------------------------------
+#' Gets the health system params for the initial params tibble
+#'
+#' \code{get_health_system_params_06} returns resource params
+#' @param tb is input seir object
+#' @return tibble of class seir
+get_health_system_params_06<-function(tb){
+  tb <- dplyr::add_row(tb,
+                       ParameterName="avr_HLOS",
+                       ParameterType="HealthSystem",
+                       Description="Average Hospital length of stay",
+                       Value=10,
+                       UpperEstimate=15,
+                       LowerEstimate=7,
+                       Varying=T,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="avr_results_wait",
+                       ParameterType="HealthSystem",
+                       Description="Average wait for positive result",
+                       Value=1.71,
+                       UpperEstimate=3,
+                       LowerEstimate=1,
+                       Varying=T,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="icu_residency",
+                       ParameterType="HealthSystem",
+                       Description="Average time in ICU",
+                       Value=10,
+                       UpperEstimate=10,
+                       LowerEstimate=10,
+                       Varying=F,
+                       Source="TBD")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="icu_capacity",
+                       ParameterType="HealthSystem",
+                       Description="ICU Spaces",
+                       Value=250,
+                       UpperEstimate=250,
+                       LowerEstimate=250,
+                       Varying=F,
+                       Source="TBD")
+  tb
+
+}
+
+
+#-------------------------------------------------------------------------------------
+#' Creates an object to facilitate running the simulation
+#'
+#' \code{create_seir} returns an seir object to the calling program.
+#' This object contains a tibble with default parameter, any of which
+#' can be modified before the model is rum
+#' @return An S3 object of class seir
+#' @export
+#' @examples
+#' \dontrun{
+#' mod <- create_seir()
+#' }
+create_seir <- function (){
+  tb <- tibble::tibble(ParameterName=character(),
+                       ParameterType=character(),
+                       Description=character(),
+                       Value=numeric(),
+                       UpperEstimate=numeric(),
+                       LowerEstimate=numeric(),
+                       Varying=logical(),
+                       Source=character())
+
+  tb <- get_initial_conditions_01(tb)
+  tb <- get_transmission_params_02(tb)
+  tb <- get_biological_params_03(tb)
+  tb <- get_flow_params_04(tb)
+  tb <- get_distancing_params_05(tb)
+  tb <- get_health_system_params_06(tb)
+
+  structure(tb, class=c("seir","tbl_df","tbl","data.frame"))
+}
+
+#-------------------------------------------------------------------------------------
+#' Runs a model
+#'
+#' \code{run()} runs the simulation, based on the parameter set
+#'
+#'
+#' As it's a generic function, this call is dispatched to run.seir
+#'
+#' @param o is the seir S3 object
+#' @param return_all a flag used to decide how many observations to return
+#' @param offset is the simulation offset time
+#' @return A tibble of simulation results
+#' @export
+#' @examples
+#'\dontrun{
+#' m <- create_seir()
+#' o <- run(m)
+#' }
+run <- function(o,start=0, finish=300, DT=0.125,return_all = F, offset=0){
+  UseMethod("run")
+}
+
+#' @export
+run.seir <- function(o,start=0, finish=300, DT=0.125,return_all = F, offset=0){
+  run_seir_model(o,start, finish,DT,return_all,offset)
+  # for the result, return the timestamp as a unique identifer.
+  # Sys.time()
+}
+
+#-------------------------------------------------------------------------------------
+#' Sets a parameter value
+#'
+#' \code{set_param()} runs the simulation, based on the parameter set
+#'
+#'
+#' As it's a generic function, this call is dispatched to run.seir
+#'
+#' @param o is the seir S3 object
+#' @param p is the parameter name
+#' @param v is the new value for the parameter
+#' @return A tibble of simulation results
+#' @export
+#' @examples
+#'\dontrun{
+#' m <- create_seir()
+#' o <- run(m)
+#' }
+set_param <- function(o, p, v){
+  UseMethod("set_param")
+}
+
+#' @export
+set_param.seir <- function(o, p, v){
+  o[o$ParameterName==p,"Value"] <- v
+  o
+}
+
+#-------------------------------------------------------------------------------------
+#' Gets a parameter value
+#'
+#' \code{get_param()} runs the simulation, based on the parameter set
+#'
+#'
+#' As it's a generic function, this call is dispatched to run.seir
+#'
+#' @param o is the seir S3 object
+#' @param p is the parameter name
+#' @return The parameter value
+#' @export
+get_param <- function(o, p){
+  UseMethod("get_param")
+}
+
+#' @export
+get_param.seir <- function(o, p){
+  pull(o[o$ParameterName==p,"Value"])
+}
+

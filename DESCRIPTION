@@ -2,16 +2,38 @@ Package: seirR
 Title: Implementation of an SEIR model
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    c(person(given = "Jim",
+           family = "Duggan",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "jim.duggan@nuigalway.ie"),
+     person(given = "James",
+           family = "Gleeson",
+           role = c("aut"),
+           email = "james.gleeson@ul.ie"),
+     person(given = "Brendan",
+           family = "Murphy",
+           role = c("aut"),
+           email = "brendan.murphy@ucd.ie"),
+     person(given = "Chris",
+           family = "Brunsdon",
+           role = c("aut"),
+           email = "christopher.brunsdon@mu.ie"), 
+    person(given = "Cathal",
+          family = "Walsh",
+          role = c("aut"),
+          email = "cathal.walsh@ul.ie"), 
+    person(given = "Simon",
+         family = "More",
+         role = c("aut"),
+         email = "simon.more@ucd.ie"))
 Description: The package provides access to an SEIR model for disease transmission.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 2.10)
 Imports: 
     dplyr,
-    deSolve
+    tibble,
+    deSolve,
+    testthat
 LazyData: true
+RoxygenNote: 6.1.1
