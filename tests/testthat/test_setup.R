@@ -28,7 +28,9 @@ mod <- create_seir()
 o_unmit <- run(mod,return_all = T)
 
 test_that("Check Total Infectious (Unmitigated) ...", {
-  expect_true(all.equal(o_unmit$TotalInfectious,test_unmitigated$`Total Infectious`,tolerance = .0001))
+  expect_true(all.equal(o_unmit$TotalInfectious,
+                        test_unmitigated$`Total Infectious`,
+                        tolerance = .0001))
 })
 
 test_that("Check Total Exposed (Unmitigated) ...", {

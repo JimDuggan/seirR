@@ -36,6 +36,7 @@ Imports:
     deSolve,
     testthat,
     readr,
-    RCurl
+    RCurl,
+    readxl
 LazyData: true
 RoxygenNote: 6.1.1

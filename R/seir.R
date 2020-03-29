@@ -14,14 +14,15 @@ get_world_data <- function(){
 
   if(RCurl::url.exists(url_data)){
     packageStartupMessage(paste("Loading",url_data," to global variable world_covid_data"))
-    suppressMessages(world_covid_data <<- read_csv(url_data))
-    world_covid_data <<- rename(world_covid_data,
-                               Date=date,
-                               Country=location,
-                               ReportedNewCases=new_cases,
-                               ReportedNewDeaths=new_deaths,
-                               ReportedTotalCases=total_cases,
-                               ReportedTotalDeaths=total_deaths)
+    suppressMessages(world_covid_data <- readr::read_csv(url_data))
+    world_covid_data <- dplyr::rename(world_covid_data,
+                                       Date=date,
+                                       Country=location,
+                                       ReportedNewCases=new_cases,
+                                       ReportedNewDeaths=new_deaths,
+                                       ReportedTotalCases=total_cases,
+                                       ReportedTotalDeaths=total_deaths)
+    world_covid_data <<- world_covid_data
   }
 }
 #-------------------------------------------------------------------------------------
@@ -448,6 +449,7 @@ set_param.seir <- function(o, p, v, isString=F){
 #'
 #' @param o is the seir S3 object
 #' @param p is the parameter name
+#' @param isString used one parameter that is a string (start date)
 #' @return The parameter value
 #' @export
 get_param <- function(o, p, isString=F){

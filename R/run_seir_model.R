@@ -97,7 +97,7 @@ set_model_parameters <- function(p){
 #'
 #' As it's a generic function, this call is dispatched to run.seir
 #'
-#' @param params are the simulation parameters
+#' @param mod_object are the simulation parameters
 #' @param start is thesimulation start time
 #' @param finish is the simulation finish time
 #' @param DT is the simulation time step (Euler)
@@ -108,7 +108,7 @@ run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=
   # Create a new environment for all the simulation variable
   sim_state                <<- new.env()
   sim_state$TimeOfRun      <-Sys.time()
-  sim_state$ActualStartDay <- ymd(get_param(mod_object,"start_day",T))
+  sim_state$ActualStartDay <- lubridate::ymd(get_param(mod_object,"start_day",T))
 
   # Copy all the params to this new state
   set_model_parameters(mod_object)

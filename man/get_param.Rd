@@ -10,6 +10,8 @@ get_param(o, p, isString = F)
 \item{o}{is the seir S3 object}
 
 \item{p}{is the parameter name}
+
+\item{isString}{used one parameter that is a string (start date)}
 }
 \value{
 The parameter value

@@ -8,6 +8,8 @@ run_seir_model(mod_object, start, finish, DT, return_all = F,
   offset = 0)
 }
 \arguments{
+\item{mod_object}{are the simulation parameters}
+
 \item{start}{is thesimulation start time}
 
 \item{finish}{is the simulation finish time}
@@ -17,8 +19,6 @@ run_seir_model(mod_object, start, finish, DT, return_all = F,
 \item{return_all}{a flag used to decide how many observations to return}
 
 \item{offset}{is the simulation offset time}
-
-\item{params}{are the simulation parameters}
 }
 \value{
 A tibble of simulation results
