@@ -9,7 +9,7 @@ library(lubridate)
 init_compartments <- function(){
   # Populate in Alphabetical Order
 
-  sim_state$CompartmentsINIT <- c(AsymptomaticInfected01                = 0,
+  sim_state$CompartmentsINIT <- c(AsymptomaticInfected01                 = 0,
                                    AsymptomaticInfected02                = 0,
                                    AwaitingResults01                     = 0,
                                    AwaitingResults02                     = 0,
@@ -26,13 +26,13 @@ init_compartments <- function(){
                                    InHospital02                          = 0,
                                    InHospital03                          = 0,
                                    InHospitalSevere                      = 0,
-                                   InfectedPresymptomatic01              = 0,
+                                   InfectedPresymptomatic01              = sim_state$P_init_seeds,
                                    InfectedPresymptomatic02              = 0,
                                    NotQuarantineInfectious01             = 0,
                                    NotQuarantineInfectious02             = 0,
-                                   PhysicalDistancingSmoothedValue       = 0,
+                                   PhysicalDistancingSmoothedValue       = 1,
                                    RemovedAsymptomatic                   = 0,
-                                   RemovedAwaitingResult                 = 0,
+                                   RemovedAwaitingResults                = 0,
                                    RemovedHospital                       = 0,
                                    RemovedNotQuarantine                  = 0,
                                    RemovedSevereCasesHospital            = 0,
@@ -42,7 +42,7 @@ init_compartments <- function(){
                                    SevereCasesHospital02                 = 0,
                                    SevereCasesICU01                      = 0,
                                    SevereCasesICU02                      = 0,
-                                   Susceptible                           = 0,
+                                   Susceptible                           = sim_state$P_init_susceptible,
                                    SymptomaticImmediateIsolation01       = 0,
                                    SymptomaticImmediateIsolation02       = 0)
 }

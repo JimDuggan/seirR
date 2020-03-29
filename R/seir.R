@@ -62,7 +62,7 @@ get_initial_conditions_01<-function(tb){
                        ParameterName="start_day",
                        ParameterType="InitialCondition",
                        Description="Start day of epidemic, see variable ValueS",
-                       Value=0,
+                       Value=1,
                        UpperEstimate=0,
                        LowerEstimate=0,
                        Varying=F,
