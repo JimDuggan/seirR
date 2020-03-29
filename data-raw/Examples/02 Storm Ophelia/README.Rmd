@@ -1,0 +1,56 @@
+---
+output: github_document
+title:  Example 2 - Exploring Storm Ophelia
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+The data set can be explored for specific events. For example, on October 16th 2017, Storm Ophelia landed in Ireland. We can analyse this data using **dplyr** and **ggplot2**. First, we load the libraries.
+
+```{r,echo=T,message=FALSE}
+library(aimsir17)
+library(dplyr)
+library(ggplot2)
+```
+
+Next, we filter the observations for this date.
+
+
+```{r,echo=T}
+o <- observations %>%
+  filter(month==10, day==16)
+o
+```
+
+Next, we can take a selection of stations that had the lowest atmospheric pressure.
+
+```{r,echo=T}
+lowest <- o %>% arrange(msl) %>% 
+  slice(1:6) %>% 
+  pull(station) %>%
+  unique()
+lowest
+```
+
+This is then visualised using ggplot2
+```{r,echo=T,fig.width=10, fig.height=6}
+ggplot(filter(o,station %in% lowest),aes(x=date,y=msl,colour=station))+
+  geom_point()+geom_line()
+```
+
+
+The stations with the highest mean hourly windspeed can be found
+```{r,echo=T}
+highest<- o %>% arrange(desc(wdsp)) %>% 
+  slice(1:6) %>% 
+  pull(station) %>%
+  unique()
+highest
+```
+
+```{r,echo=T,fig.width=10, fig.height=6}
+ggplot(filter(o,station %in% highest),aes(x=date,y=wdsp,colour=station))+
+  geom_point()+geom_line()
+```

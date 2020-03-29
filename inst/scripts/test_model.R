@@ -8,4 +8,4 @@ ds <- filter(world_covid_data,Country %in% c("Ireland","Italy","South Korea","Ge
                                              "United States"))
 
 
-ggplot(ds,aes(x=Date,y=ReportedNewCases,colour=Country))+geom_point()+geom_smooth()
+ggplot(ds,aes(x=Date,y=ReportedNewDeaths,colour=Country))+geom_point()+geom_smooth()

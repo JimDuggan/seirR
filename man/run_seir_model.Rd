@@ -4,11 +4,10 @@
 \alias{run_seir_model}
 \title{Prepares all variables and calls \code{deSolve::ode()}}
 \usage{
-run_seir_model(params, start, finish, DT, return_all = F, offset = 0)
+run_seir_model(mod_object, start, finish, DT, return_all = F,
+  offset = 0)
 }
 \arguments{
-\item{params}{are the simulation parameters}
-
 \item{start}{is thesimulation start time}
 
 \item{finish}{is the simulation finish time}
@@ -18,6 +17,8 @@ run_seir_model(params, start, finish, DT, return_all = F, offset = 0)
 \item{return_all}{a flag used to decide how many observations to return}
 
 \item{offset}{is the simulation offset time}
+
+\item{params}{are the simulation parameters}
 }
 \value{
 A tibble of simulation results

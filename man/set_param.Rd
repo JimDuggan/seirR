@@ -4,7 +4,7 @@
 \alias{set_param}
 \title{Sets a parameter value}
 \usage{
-set_param(o, p, v)
+set_param(o, p, v, isString = F)
 }
 \arguments{
 \item{o}{is the seir S3 object}

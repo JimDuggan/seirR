@@ -12,7 +12,7 @@ library(RCurl)
 get_world_data <- function(){
   url_data <-"https://covid.ourworldindata.org/data/ecdc/full_data.csv"
 
-  if(url.exists(url_data)){
+  if(RCurl::url.exists(url_data)){
     packageStartupMessage(paste("Loading",url_data," to global variable world_covid_data"))
     suppressMessages(world_covid_data <<- read_csv(url_data))
     world_covid_data <<- rename(world_covid_data,
@@ -68,6 +68,16 @@ get_initial_conditions_01<-function(tb){
                        Varying=F,
                        Source="Depends on country",
                        ValueS="2020-02-29")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="end_day",
+                       ParameterType="InitialCondition",
+                       Description="End day of epidemic, see variable ValueS",
+                       Value=300,
+                       UpperEstimate=0,
+                       LowerEstimate=0,
+                       Varying=F,
+                       Source="Depends on country",
+                       ValueS="")
   tb
 }
 #-------------------------------------------------------------------------------------
@@ -81,7 +91,7 @@ get_transmission_params_02<-function(tb){
                        ParameterName="beta",
                        ParameterType="Transmission",
                        Description="Transmission parameter",
-                       Value=1.04138,
+                       Value=1.12,
                        UpperEstimate=1.04138,
                        LowerEstimate=1.04138,
                        Varying=F,
@@ -90,7 +100,7 @@ get_transmission_params_02<-function(tb){
                        ParameterName="beta_mult_h",
                        ParameterType="Transmission",
                        Description="Multiplicative factor for reduction in infectiousness of asymptomatic infected",
-                       Value=0.507091,
+                       Value=0.21,
                        UpperEstimate=0.75,
                        LowerEstimate=0.15,
                        Varying=T,
@@ -99,7 +109,7 @@ get_transmission_params_02<-function(tb){
                        ParameterName="beta_mult_i",
                        ParameterType="Transmission",
                        Description="Multiplicative factor for reduction in infectiousness of those in isolation",
-                       Value=0.0101439,
+                       Value=0.08,
                        UpperEstimate=0.0101439,
                        LowerEstimate=0.0101439,
                        Varying=T,
@@ -108,7 +118,7 @@ get_transmission_params_02<-function(tb){
                        ParameterName="beta_mult_j",
                        ParameterType="Transmission",
                        Description="Multiplicative factor for reduction in infectiousness of those solated after test",
-                       Value=0.177054,
+                       Value=0.12,
                        UpperEstimate=0.177054,
                        LowerEstimate=0.177054,
                        Varying=F,
@@ -137,7 +147,7 @@ get_biological_params_03<-function(tb){
                        ParameterName="incubation_period",
                        ParameterType="Biological",
                        Description="Time from infection until clinical symptoms",
-                       Value=5.3,
+                       Value=5.19,
                        UpperEstimate=5.3,
                        LowerEstimate=5.3,
                        Varying=F,
@@ -155,7 +165,7 @@ get_biological_params_03<-function(tb){
                        ParameterName="infectious_period",
                        ParameterType="Biological",
                        Description="Total Duration of Infectiousness",
-                       Value=5.64,
+                       Value=4.13,
                        UpperEstimate=5.64,
                        LowerEstimate=5.64,
                        Varying=F,
@@ -174,7 +184,7 @@ get_flow_params_04<-function(tb){
                        ParameterName="prop_asymptomatic",
                        ParameterType="PathwayFlow",
                        Description="Proportion of population who do not have symptoms (undocumented)",
-                       Value=0.50,
+                       Value=0.25,
                        UpperEstimate=0.75,
                        LowerEstimate=0.15,
                        Varying=T,
@@ -192,7 +202,7 @@ get_flow_params_04<-function(tb){
                        ParameterName="prop_quarantined",
                        ParameterType="PathwayFlow",
                        Description="Proportion of symptomatic self-isolate",
-                       Value=0.08,
+                       Value=0.05,
                        UpperEstimate=0.08,
                        LowerEstimate=0.08,
                        Varying=F,
@@ -247,7 +257,7 @@ get_distancing_params_05 <- function(tb){
                        ParameterName="pd_percentage_reduction",
                        ParameterType="Distancing",
                        Description="Percentage reduction in physical distancing",
-                       Value=.30,
+                       Value=.60,
                        UpperEstimate=.7,
                        LowerEstimate=0,
                        Varying=T,
@@ -274,7 +284,7 @@ get_distancing_params_05 <- function(tb){
                        ParameterName="pd_start_delay",
                        ParameterType="Distancing",
                        Description="Time lag for reductions to take hold",
-                       Value=5,
+                       Value=1,
                        UpperEstimate=20,
                        LowerEstimate=3,
                        Varying=T,
@@ -294,7 +304,7 @@ get_health_system_params_06<-function(tb){
                        ParameterName="avr_HLOS",
                        ParameterType="HealthSystem",
                        Description="Average Hospital length of stay",
-                       Value=10,
+                       Value=15,
                        UpperEstimate=15,
                        LowerEstimate=7,
                        Varying=T,
@@ -303,7 +313,7 @@ get_health_system_params_06<-function(tb){
                        ParameterName="avr_results_wait",
                        ParameterType="HealthSystem",
                        Description="Average wait for positive result",
-                       Value=1.71,
+                       Value=2,
                        UpperEstimate=3,
                        LowerEstimate=1,
                        Varying=T,

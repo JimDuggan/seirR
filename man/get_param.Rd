@@ -4,7 +4,7 @@
 \alias{get_param}
 \title{Gets a parameter value}
 \usage{
-get_param(o, p)
+get_param(o, p, isString = F)
 }
 \arguments{
 \item{o}{is the seir S3 object}
