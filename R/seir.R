@@ -1,6 +1,8 @@
 library(dplyr)
 library(tibble)
 
+utils::globalVariables(c("sim_state"))
+
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("Welcome to package seirR v0.0.0.9000")
 }
@@ -342,6 +344,9 @@ create_seir <- function (){
 #' As it's a generic function, this call is dispatched to run.seir
 #'
 #' @param o is the seir S3 object
+#' @param start is thesimulation start time
+#' @param finish is the simulation finish time
+#' @param DT is the simulation time step (Euler)
 #' @param return_all a flag used to decide how many observations to return
 #' @param offset is the simulation offset time
 #' @return A tibble of simulation results
@@ -408,6 +413,6 @@ get_param <- function(o, p){
 
 #' @export
 get_param.seir <- function(o, p){
-  pull(o[o$ParameterName==p,"Value"])
+  dplyr::pull(o[o$ParameterName==p,"Value"])
 }
 

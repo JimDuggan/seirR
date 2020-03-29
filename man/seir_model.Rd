@@ -11,7 +11,7 @@ seir_model(time, stocks, auxs)
 
 \item{stocks}{is the vector of model compartments}
 
-\item{auxs}{vector of auxiliaries (alway NULL) as these are passed via sim_state environment}
+\item{auxs}{vector of auxiliaries (alway NULL) as these are passed via \code{sim_state} environment}
 }
 \value{
 list of new compartment values, and other relevant variables

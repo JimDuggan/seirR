@@ -1,11 +1,14 @@
 library(dplyr)
 library(deSolve)
 
+#-------------------------------------------------------------------------------------
+#' Creates the initial state vector for ODE
+#'
+#' @return A vector of compartments and their initial conditions
 init_compartments <- function(){
   # Populate in Alphabetical Order
 
-
-  sim_state$CompartmentsINIT <<- c(AsymptomaticInfected01                = 0,
+  sim_state$CompartmentsINIT <- c(AsymptomaticInfected01                = 0,
                                    AsymptomaticInfected02                = 0,
                                    AwaitingResults01                     = 0,
                                    AwaitingResults02                     = 0,
@@ -46,7 +49,7 @@ init_compartments <- function(){
 set_model_parameters <- function(p){
   # Set each param to a variable to simplify ODE function
   # Initial conditions
-  sim_state$P_init_seeds               <- get_param(p,"init_seeds")
+  sim_state$P_init_seeds               <- get_param(p, "init_seeds")
   sim_state$P_total_population         <- get_param(p, "total_population")
   sim_state$P_init_susceptible         <- get_param(p, "init_susceptible")
 
@@ -94,6 +97,9 @@ set_model_parameters <- function(p){
 #' As it's a generic function, this call is dispatched to run.seir
 #'
 #' @param params are the simulation parameters
+#' @param start is thesimulation start time
+#' @param finish is the simulation finish time
+#' @param DT is the simulation time step (Euler)
 #' @param return_all a flag used to decide how many observations to return
 #' @param offset is the simulation offset time
 #' @return A tibble of simulation results
@@ -114,15 +120,15 @@ run_seir_model <- function (params, start, finish, DT, return_all=F, offset=0){
   simtime              <- seq(start, finish, by=DT)
   sim_state$simtime    <- simtime
 
-  results <-data.frame(ode(y=stocks,
-                           times=simtime,
-                           func = seir_model,
-                           parms=NULL,
-                           method="euler"))
+  results <-data.frame(deSolve::ode(y=stocks,
+                       times=simtime,
+                       func = seir_model,
+                       parms=NULL,
+                       method="euler"))
   if(!return_all){
     lg <- c(T,rep(F,1/DT-1))
     results <- results[lg,]
   }
-  sim_state$Results <- as_tibble(results)
+  sim_state$Results <- dplyr::as_tibble(results)
 }
 
