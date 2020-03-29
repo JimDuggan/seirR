@@ -1,10 +1,28 @@
 library(dplyr)
 library(tibble)
+library(readr)
+library(RCurl)
 
-utils::globalVariables(c("sim_state"))
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("Welcome to package seirR v0.0.0.9000")
+  get_world_data()
+}
+
+get_world_data <- function(){
+  url_data <-"https://covid.ourworldindata.org/data/ecdc/full_data.csv"
+
+  if(url.exists(url_data)){
+    packageStartupMessage(paste("Loading",url_data," to global variable world_covid_data"))
+    suppressMessages(world_covid_data <<- read_csv(url_data))
+    world_covid_data <<- rename(world_covid_data,
+                               Date=date,
+                               Country=location,
+                               ReportedNewCases=new_cases,
+                               ReportedNewDeaths=new_deaths,
+                               ReportedTotalCases=total_cases,
+                               ReportedTotalDeaths=total_deaths)
+  }
 }
 #-------------------------------------------------------------------------------------
 #' Gets the transmission params for the initial params tibble
@@ -40,6 +58,16 @@ get_initial_conditions_01<-function(tb){
                        LowerEstimate=4800000-1,
                        Varying=F,
                        Source="Arbitrary value")
+  tb <- dplyr::add_row(tb,
+                       ParameterName="start_day",
+                       ParameterType="InitialCondition",
+                       Description="Start day of epidemic, see variable ValueS",
+                       Value=0,
+                       UpperEstimate=0,
+                       LowerEstimate=0,
+                       Varying=F,
+                       Source="Depends on country",
+                       ValueS="2020-02-29")
   tb
 }
 #-------------------------------------------------------------------------------------
@@ -323,7 +351,8 @@ create_seir <- function (){
                        UpperEstimate=numeric(),
                        LowerEstimate=numeric(),
                        Varying=logical(),
-                       Source=character())
+                       Source=character(),
+                       ValueS=character())
 
   tb <- get_initial_conditions_01(tb)
   tb <- get_transmission_params_02(tb)
@@ -385,13 +414,17 @@ run.seir <- function(o,start=0, finish=300, DT=0.125,return_all = F, offset=0){
 #' m <- create_seir()
 #' o <- run(m)
 #' }
-set_param <- function(o, p, v){
+set_param <- function(o, p, v, isString=F){
   UseMethod("set_param")
 }
 
 #' @export
-set_param.seir <- function(o, p, v){
-  o[o$ParameterName==p,"Value"] <- v
+set_param.seir <- function(o, p, v, isString=F){
+  if(!isString){
+     o[o$ParameterName==p,"Value"] <- v
+  }else{
+    o[o$ParameterName==p,"ValueS"] <- v
+  }
   o
 }
 
@@ -407,12 +440,16 @@ set_param.seir <- function(o, p, v){
 #' @param p is the parameter name
 #' @return The parameter value
 #' @export
-get_param <- function(o, p){
+get_param <- function(o, p, isString=F){
   UseMethod("get_param")
 }
 
 #' @export
-get_param.seir <- function(o, p){
-  dplyr::pull(o[o$ParameterName==p,"Value"])
+get_param.seir <- function(o, p, isString=F){
+  if(!isString){
+     dplyr::pull(o[o$ParameterName==p,"Value"])
+  }else{
+    dplyr::pull(o[o$ParameterName==p,"ValueS"])
+  }
 }
 

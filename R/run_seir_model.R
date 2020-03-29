@@ -1,5 +1,6 @@
 library(dplyr)
 library(deSolve)
+library(lubridate)
 
 #-------------------------------------------------------------------------------------
 #' Creates the initial state vector for ODE
@@ -103,14 +104,15 @@ set_model_parameters <- function(p){
 #' @param return_all a flag used to decide how many observations to return
 #' @param offset is the simulation offset time
 #' @return A tibble of simulation results
-run_seir_model <- function (params, start, finish, DT, return_all=F, offset=0){
+run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=0){
   # Create a new environment for all the simulation variable
-  sim_state            <<- new.env()
-  sim_state$TimeOfRun  <-Sys.time()
+  sim_state                <<- new.env()
+  sim_state$TimeOfRun      <-Sys.time()
+  sim_state$ActualStartDay <- ymd(get_param(mod_object,"start_day",T))
 
   # Copy all the params to this new state
-  set_model_parameters(params)
-  sim_state$params     <- params
+  set_model_parameters(mod_object)
+  sim_state$params     <- mod_object
   sim_state$return_all <- return_all
   sim_state$offset     <- offset
   sim_state$start      <- start
@@ -125,6 +127,21 @@ run_seir_model <- function (params, start, finish, DT, return_all=F, offset=0){
                        func = seir_model,
                        parms=NULL,
                        method="euler"))
+
+  results <- mutate(results,Date=sim_state$ActualStartDay+floor(time)) %>% select(Date,everything())
+  irl_data <- filter(world_covid_data,Country=="Ireland")
+  results <- suppressMessages(results %>%
+                              dplyr::rename(SimDay=time) %>%
+                              dplyr::left_join(irl_data) %>%
+                              dplyr::select(Date,
+                                            SimDay,
+                                            Country,
+                                            ReportedNewCases,
+                                            ReportedNewDeaths,
+                                            ReportedTotalCases,
+                                            ReportedTotalDeaths,
+                                            everything()))
+
   if(!return_all){
     lg <- c(T,rep(F,1/DT-1))
     results <- results[lg,]
