@@ -12,6 +12,8 @@ set_param(o, p, v, isString = F)
 \item{p}{is the parameter name}
 
 \item{v}{is the new value for the parameter}
+
+\item{isString}{to indicate if its a string param.}
 }
 \value{
 A tibble of simulation results

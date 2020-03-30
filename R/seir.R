@@ -4,6 +4,7 @@ library(readr)
 library(RCurl)
 
 
+
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("Welcome to package seirR v0.0.0.9000")
   get_world_data()
@@ -418,6 +419,7 @@ run.seir <- function(o,start=0, finish=300, DT=0.125,return_all = F, offset=0){
 #' @param o is the seir S3 object
 #' @param p is the parameter name
 #' @param v is the new value for the parameter
+#' @param isString to indicate if its a string param.
 #' @return A tibble of simulation results
 #' @export
 #' @examples

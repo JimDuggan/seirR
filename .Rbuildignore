@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*\.Rproj$
+^\.Rproj\.user$
+^data-raw$
+^CRAN-RELEASE$
+^cran-comments.mf

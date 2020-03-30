@@ -37,6 +37,7 @@ Imports:
     testthat,
     readr,
     RCurl,
-    readxl
+    readxl,
+    lubridate
 LazyData: true
 RoxygenNote: 6.1.1

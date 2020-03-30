@@ -1,6 +1,7 @@
 library(dplyr)
 library(deSolve)
 library(lubridate)
+library(magrittr)
 
 #-------------------------------------------------------------------------------------
 #' Creates the initial state vector for ODE
@@ -128,19 +129,20 @@ run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=
                        parms=NULL,
                        method="euler"))
 
-  results <- mutate(results,Date=sim_state$ActualStartDay+floor(time)) %>% select(Date,everything())
-  irl_data <- filter(world_covid_data,Country=="Ireland")
-  results <- suppressMessages(results %>%
-                              dplyr::rename(SimDay=time) %>%
-                              dplyr::left_join(irl_data) %>%
-                              dplyr::select(Date,
-                                            SimDay,
-                                            Country,
-                                            ReportedNewCases,
-                                            ReportedNewDeaths,
-                                            ReportedTotalCases,
-                                            ReportedTotalDeaths,
-                                            everything()))
+  results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+floor(time))
+  results <-  dplyr::select(results,Date,everything())
+  irl_data <- dplyr::filter(world_covid_data,Country=="Ireland")
+  results <-  dplyr::rename(results,SimDay=time)
+  results <-  dplyr::left_join(results,irl_data)
+  results <-  dplyr::select(results,
+                           Date,
+                           SimDay,
+                           Country,
+                           ReportedNewCases,
+                           ReportedNewDeaths,
+                           ReportedTotalCases,
+                           ReportedTotalDeaths,
+                           everything())
 
   if(!return_all){
     lg <- c(T,rep(F,1/DT-1))
