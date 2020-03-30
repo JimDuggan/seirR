@@ -1,12 +1,26 @@
+#' \code{seirR} package
+#'
+#' Package to run an SEIR model
+#'
+#'
+#' @docType package
+#' @name seirR
+#' @importFrom dplyr %>%
+NULL
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("world_data"))
+
 library(dplyr)
 library(tibble)
 library(readr)
 library(RCurl)
-
+library(rlang)
 
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("Welcome to package seirR v0.0.0.9000")
+  world_data <<- new.env()
   get_world_data()
 }
 
@@ -14,16 +28,15 @@ get_world_data <- function(){
   url_data <-"https://covid.ourworldindata.org/data/ecdc/full_data.csv"
 
   if(RCurl::url.exists(url_data)){
-    packageStartupMessage(paste("Loading",url_data," to global variable world_covid_data"))
-    suppressMessages(world_covid_data <- readr::read_csv(url_data))
-    world_covid_data <- dplyr::rename(world_covid_data,
-                                       Date=date,
-                                       Country=location,
-                                       ReportedNewCases=new_cases,
-                                       ReportedNewDeaths=new_deaths,
-                                       ReportedTotalCases=total_cases,
-                                       ReportedTotalDeaths=total_deaths)
-    world_covid_data <<- world_covid_data
+    packageStartupMessage(paste("Loading",url_data," to global environment world_data"))
+    suppressMessages(world_data$covid_data <- readr::read_csv(url_data))
+    world_data$covid_data <- dplyr::rename(world_data$covid_data,
+                                           Date=date,
+                                           Country=location,
+                                           ReportedNewCases=new_cases,
+                                           ReportedNewDeaths=new_deaths,
+                                           ReportedTotalCases=total_cases,
+                                           ReportedTotalDeaths=total_deaths)
   }
 }
 #-------------------------------------------------------------------------------------

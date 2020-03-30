@@ -26,7 +26,8 @@ Authors@R:
          family = "More",
          role = c("aut"),
          email = "simon.more@ucd.ie"))
-Description: The package provides an API to an SEIR model for disease transmission, implemented in deSolve
+Description: The package provides an API to an SEIR model for disease transmission, implemented in deSolve.
+    The structure of the model includes transmisson dynamics, physcial distancing measures, and hospital flows.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 2.10)

@@ -130,24 +130,25 @@ run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=
                        method="euler"))
 
   results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+floor(time))
-  results <-  dplyr::select(results,Date,everything())
-  irl_data <- dplyr::filter(world_covid_data,Country=="Ireland")
+  results <-  dplyr::select(results,Date,dplyr::everything())
+  irl_data <- dplyr::filter(world_data$covid_data,Country=="Ireland")
   results <-  dplyr::rename(results,SimDay=time)
-  results <-  dplyr::left_join(results,irl_data)
+  results <-  suppressMessages(dplyr::left_join(results,irl_data))
   results <-  dplyr::select(results,
-                           Date,
-                           SimDay,
-                           Country,
-                           ReportedNewCases,
-                           ReportedNewDeaths,
-                           ReportedTotalCases,
-                           ReportedTotalDeaths,
-                           everything())
+                            Date,
+                            SimDay,
+                            Country,
+                            ReportedNewCases,
+                            ReportedNewDeaths,
+                            ReportedTotalCases,
+                            ReportedTotalDeaths,
+                            dplyr::everything())
 
   if(!return_all){
     lg <- c(T,rep(F,1/DT-1))
     results <- results[lg,]
   }
-  sim_state$Results <- dplyr::as_tibble(results)
+
+  dplyr::as_tibble(results)
 }
 
