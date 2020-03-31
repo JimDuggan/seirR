@@ -7,7 +7,7 @@ library(deSolve)
 #' @param stocks is the vector of model compartments
 #' @param auxs vector of auxiliaries (alway NULL) as these are passed via \code{sim_state} environment
 #' @return list of new compartment values, and other relevant variables
-seir_model <- function(time, stocks, auxs){
+model_seir_p <- function(time, stocks, auxs){
   with(as.list(c(stocks, auxs)),{
 
     TotalSevereinNonICUHospital <- SevereCasesHospital01 + SevereCasesHospital02

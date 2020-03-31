@@ -14,17 +14,17 @@ test_that("Mitigated Vensim Benchmark file available ...", {
 })
 
 test_that("Create an SEIR S3 object ...", {
-  mod <- create_seir()
-  expect_true(class(mod)[1]=="seir")
+  mod <- create_seir_p()
+  expect_true(class(mod)[1]=="seir_p")
 })
 
 test_that("Check that a tibble is returned...", {
-  mod <- create_seir()
+  mod <- create_seir_p()
   o <- run(mod)
   expect_true(class(o)[1]=="tbl_df")
 })
 
-mod <- create_seir()
+mod <- create_seir_p()
 o_unmit <- run(mod,return_all = T)
 
 test_that("Check Total Infectious (Unmitigated) ...", {

@@ -5,7 +5,7 @@
 \title{Runs a model}
 \usage{
 run(o, start = 0, finish = 300, DT = 0.125, return_all = F,
-  offset = 0)
+  mod_offset = 0)
 }
 \arguments{
 \item{o}{is the seir S3 object}

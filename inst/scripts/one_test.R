@@ -1,7 +1,7 @@
 library(seirR)
 library(ggplot2)
 
-mod <- create_seir()
+mod <- create_seir_p()
 
 out1 <- run(mod,mod_offset = 10)
 

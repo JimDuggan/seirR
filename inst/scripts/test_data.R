@@ -1,7 +1,7 @@
 library(seirR)
 library(ggplot2)
 
-ds <- filter(world_data$covid_data,
+ds <- filter(data_env$covid_data,
              Country %in% c("Ireland",
                             "South Korea"))
 
