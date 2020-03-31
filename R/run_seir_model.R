@@ -109,7 +109,7 @@ run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=
   # Create a new environment for all the simulation variable
   sim_state                <<- new.env()
   sim_state$TimeOfRun      <-Sys.time()
-  sim_state$ActualStartDay <- lubridate::ymd(get_param(mod_object,"start_day",T))
+  sim_state$ActualStartDay <- (lubridate::ymd(get_param(mod_object,"start_day",T)))-offset
 
   # Copy all the params to this new state
   set_model_parameters(mod_object)

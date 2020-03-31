@@ -8,8 +8,6 @@
 #' @importFrom dplyr %>%
 NULL
 
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("world_data"))
 
 library(dplyr)
 library(tibble)
@@ -410,13 +408,13 @@ create_seir <- function (){
 #' m <- create_seir()
 #' o <- run(m)
 #' }
-run <- function(o,start=0, finish=300, DT=0.125,return_all = F, offset=0){
+run <- function(o,start=0, finish=300, DT=0.125,return_all = F, mod_offset=0){
   UseMethod("run")
 }
 
 #' @export
-run.seir <- function(o,start=0, finish=300, DT=0.125,return_all = F, offset=0){
-  run_seir_model(o,start, finish,DT,return_all,offset)
+run.seir <- function(o,start=0, finish=300, DT=0.125,return_all = F, mod_offset=0){
+  run_seir_model(o,start, finish,DT,return_all,mod_offset)
   # for the result, return the timestamp as a unique identifer.
   # Sys.time()
 }
