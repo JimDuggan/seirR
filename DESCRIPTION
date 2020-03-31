@@ -39,6 +39,9 @@ Imports:
     readr,
     RCurl,
     readxl,
-    lubridate
+    lubridate,
+    socialmixr,
+    magrittr,
+    stringr
 LazyData: true
 RoxygenNote: 6.1.1
