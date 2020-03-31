@@ -3,6 +3,28 @@ library(deSolve)
 library(lubridate)
 library(magrittr)
 
+populate_results <- function(results,return_all,DT){
+  results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+floor(time))
+  results <-  dplyr::select(results,Date,dplyr::everything())
+  irl_data <- dplyr::filter(data_env$covid_data,Country=="Ireland")
+  results <-  dplyr::rename(results,SimDay=time)
+  results <-  suppressMessages(dplyr::left_join(results,irl_data))
+  results <-  dplyr::select(results,
+                            Date,
+                            SimDay,
+                            Country,
+                            ReportedNewCases,
+                            ReportedNewDeaths,
+                            ReportedTotalCases,
+                            ReportedTotalDeaths,
+                            dplyr::everything())
+  if(!return_all){
+    lg <- c(T,rep(F,1/DT-1))
+    results <- results[lg,]
+  }
+
+  results
+}
 #-------------------------------------------------------------------------------------
 #' Prepares all variables and calls \code{deSolve::ode()}
 #'
@@ -41,31 +63,20 @@ run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=
                        func = model_seir_p,
                        parms=NULL,
                        method="euler"))
-  }else{
+  }else if(class(mod_object)[1]=="seir_a"){
+    stocks               <- init_compartments_a()
+    results <-data.frame(deSolve::ode(y=stocks,
+                                      times=simtime,
+                                      func = model_seir_a,
+                                      parms=NULL,
+                                      method="euler"))
+
+  }
+  else{
     stop(paste("Unrecognised S3 class ",class(mod_object)))
   }
 
-
-  results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+floor(time))
-  results <-  dplyr::select(results,Date,dplyr::everything())
-  irl_data <- dplyr::filter(data_env$covid_data,Country=="Ireland")
-  results <-  dplyr::rename(results,SimDay=time)
-  results <-  suppressMessages(dplyr::left_join(results,irl_data))
-  results <-  dplyr::select(results,
-                            Date,
-                            SimDay,
-                            Country,
-                            ReportedNewCases,
-                            ReportedNewDeaths,
-                            ReportedTotalCases,
-                            ReportedTotalDeaths,
-                            dplyr::everything())
-
-  if(!return_all){
-    lg <- c(T,rep(F,1/DT-1))
-    results <- results[lg,]
-  }
-
+  results <- populate_results(results,return_all,DT)
   dplyr::as_tibble(results)
 }
 

@@ -2,7 +2,7 @@ library(deSolve)
 #-------------------------------------------------------------------------------------
 #' The set of ODEs to solve for the model
 #'
-#' \code{seir_model} Solves the model for each timestep, is called by \code{ode}
+#' \code{seir_model_p} Solves the population model for each timestep, is called by \code{ode}
 #' @param time is the current simulation time
 #' @param stocks is the vector of model compartments
 #' @param auxs vector of auxiliaries (alway NULL) as these are passed via \code{sim_state} environment

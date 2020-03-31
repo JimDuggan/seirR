@@ -38,4 +38,9 @@ set_model_parameters <- function(p){
   sim_state$P_avr_results_wait         <- get_param(p, "avr_results_wait")
   sim_state$P_icu_residency            <- get_param(p, "icu_residency")
   sim_state$P_icu_capacity             <- get_param(p, "icu_capacity")
+
+  # Age cohort model
+  sim_state$P_number_age_cohorts       <- 4
+  sim_state$P_stock_names              <- c("Susceptible","Exposed")
+  sim_state$P_cohorts                  <- c("Age_00_04","Age_05_14","Age_15_64","Age_65_PLUS")
 }

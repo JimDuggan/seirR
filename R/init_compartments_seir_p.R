@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------
-#' Creates the initial state vector for ODE
+#' Creates the initial state vector for population ODE
 #'
 #' @return A vector of compartments and their initial conditions
 init_compartments_p <- function(){

@@ -9,7 +9,6 @@ library(RCurl)
 #' @param tb is input seir object
 #' @return tibble of class seir
 get_world_data <- function(){
-  data_env <<- new.env()
   url_data <-"https://covid.ourworldindata.org/data/ecdc/full_data.csv"
 
   if(RCurl::url.exists(url_data)){
@@ -44,18 +43,18 @@ get_initial_conditions_01<-function(tb){
                        ParameterName="total_population",
                        ParameterType="InitialCondition",
                        Description="Total number of people in all compartments",
-                       Value=4800000,
-                       UpperEstimate=4800000,
-                       LowerEstimate=4800000,
+                       Value=sum(age_data$population),
+                       UpperEstimate=sum(age_data$population),
+                       LowerEstimate=sum(age_data$population),
                        Varying=F,
                        Source="National Statistics")
   tb <- dplyr::add_row(tb,
                        ParameterName="init_susceptible",
                        ParameterType="InitialCondition",
                        Description="Initial number susceptible",
-                       Value=4800000-1,
-                       UpperEstimate=4800000-1,
-                       LowerEstimate=4800000-1,
+                       Value=sum(age_data$population)-1,
+                       UpperEstimate=sum(age_data$population)-1,
+                       LowerEstimate=sum(age_data$population)-1,
                        Varying=F,
                        Source="Arbitrary value")
   tb <- dplyr::add_row(tb,

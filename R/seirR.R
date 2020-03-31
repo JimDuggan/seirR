@@ -12,7 +12,9 @@ library(tibble)
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("Welcome to package seirR v0.0.0.9000")
+  data_env <<- new.env()
   get_world_data()
+  load_social_contacts()
 }
 
 #-------------------------------------------------------------------------------------
@@ -50,7 +52,7 @@ create_seir_common <- function (){
 #-------------------------------------------------------------------------------------
 #' Creates an object to facilitate running the simulation
 #'
-#' \code{create_seir_p} returns an seir object to the calling program.
+#' \code{create_seir_p} returns a population seir object to the calling program.
 #' This object contains a tibble with default parameter, any of which
 #' can be modified before the model is rum
 #' @return An S3 object of class seir
@@ -63,6 +65,24 @@ create_seir_p <- function (){
   tb <- create_seir_common()
   structure(tb, class=c("seir_p","seir", "tbl_df","tbl","data.frame"))
 }
+
+#-------------------------------------------------------------------------------------
+#' Creates an object to facilitate running the simulation
+#'
+#' \code{create_seir_a} returns an age cohort seir object to the calling program.
+#' This object contains a tibble with default parameter, any of which
+#' can be modified before the model is rum
+#' @return An S3 object of class seir
+#' @export
+#' @examples
+#' \dontrun{
+#' mod <- create_seir()
+#' }
+create_seir_a <- function (){
+  tb <- create_seir_common()
+  structure(tb, class=c("seir_a","seir", "tbl_df","tbl","data.frame"))
+}
+
 
 #-------------------------------------------------------------------------------------
 #' Runs a model
@@ -90,7 +110,7 @@ run <- function(o,start=0, finish=300, DT=0.125,return_all = F, mod_offset=0){
 }
 
 #' @export
-run.seir_p <- function(o,start=0, finish=300, DT=0.125,return_all = F, mod_offset=0){
+run.seir <- function(o,start=0, finish=300, DT=0.125,return_all = F, mod_offset=0){
   run_seir_model(o,start, finish,DT,return_all,mod_offset)
   # for the result, return the timestamp as a unique identifer.
   # Sys.time()
