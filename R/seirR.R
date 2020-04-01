@@ -59,7 +59,7 @@ create_simtime_tibble <- function(mod, mod_offset=0){
   data_env$model_offset     <- mod_offset
   col_simtime               <- start_day:end_day
   col_date                  <- actual_start_date + (col_simtime - 1)
-  simtime_map               <- tibble (SimTime=col_simtime,
+  simtime_map               <- dplyr::tibble (SimTime=col_simtime,
                                        Date=col_date)
   simtime_map
 }
