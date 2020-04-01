@@ -12,10 +12,6 @@ run(o, DT = 0.125, return_all = F)
 \item{DT}{is the simulation time step (Euler)}
 
 \item{return_all}{a flag used to decide how many observations to return}
-
-\item{start}{is thesimulation start time}
-
-\item{finish}{is the simulation finish time}
 }
 \value{
 A tibble of simulation results

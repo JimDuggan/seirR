@@ -6,13 +6,16 @@
 \usage{
 create_seir_p(model_offset = 0)
 }
+\arguments{
+\item{model_offset}{the offset for the model (subtracted from start time)}
+}
 \value{
 An S3 object of class seir
 }
 \description{
 \code{create_seir_p} returns a population seir object to the calling program.
 This object contains a tibble with default parameter, any of which
-can be modified before the model is rum
+can be modified before the model is run
 }
 \examples{
 \dontrun{

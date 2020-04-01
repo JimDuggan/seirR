@@ -69,7 +69,8 @@ create_simtime_tibble <- function(mod, mod_offset=0){
 #'
 #' \code{create_seir_p} returns a population seir object to the calling program.
 #' This object contains a tibble with default parameter, any of which
-#' can be modified before the model is rum
+#' can be modified before the model is run
+#' @param model_offset the offset for the model (subtracted from start time)
 #' @return An S3 object of class seir
 #' @export
 #' @examples
@@ -119,8 +120,6 @@ create_seir_a <- function (){
 #' As it's a generic function, this call is dispatched to run.seir
 #'
 #' @param o is the seir S3 object
-#' @param start is thesimulation start time
-#' @param finish is the simulation finish time
 #' @param DT is the simulation time step (Euler)
 #' @param return_all a flag used to decide how many observations to return
 #' @return A tibble of simulation results
@@ -202,11 +201,6 @@ get_param.seir <- function(o, p, isString=F){
   }else{
     dplyr::pull(o[o_params$ParameterName==p,"ValueS"])
   }
-}
-
-#' @export
-summary.seir <- function(o){
-  print(o)
 }
 
 #-------------------------------------------------------------------------------------

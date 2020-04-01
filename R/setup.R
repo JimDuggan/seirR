@@ -2,11 +2,11 @@ library(dplyr)
 library(tibble)
 library(readr)
 library(RCurl)
+
 #-------------------------------------------------------------------------------------
 #' Gets the latest world covid data
 #'
 #' \code{get_world_data} creates a tibble in the data_env
-#' @param tb is input seir object
 #' @return tibble of class seir
 get_world_data <- function(){
   url_data <-"https://covid.ourworldindata.org/data/ecdc/full_data.csv"

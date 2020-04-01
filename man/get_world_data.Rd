@@ -6,9 +6,6 @@
 \usage{
 get_world_data()
 }
-\arguments{
-\item{tb}{is input seir object}
-}
 \value{
 tibble of class seir
 }

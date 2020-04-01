@@ -34,11 +34,8 @@ populate_results <- function(results,return_all,DT){
 #' As it's a generic function, this call is dispatched to run.seir
 #'
 #' @param mod_object are the simulation parameters
-#' @param start is thesimulation start time
-#' @param finish is the simulation finish time
 #' @param DT is the simulation time step (Euler)
 #' @param return_all a flag used to decide how many observations to return
-#' @param offset is the simulation offset time
 #' @return A tibble of simulation results
 run_seir_model <- function (mod_object, DT=0.125,return_all=F){
   # Create a new environment for all the simulation variable
