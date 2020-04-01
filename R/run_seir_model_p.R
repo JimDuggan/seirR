@@ -78,6 +78,9 @@ run_seir_model <- function (mod_object, DT=0.125,return_all=F){
   }
 
   results <- populate_results(results,return_all,DT)
+
+  sim_state$RESULTS <- dplyr::as_tibble(results)
+
   dplyr::as_tibble(results)
 }
 
