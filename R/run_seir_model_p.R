@@ -40,21 +40,25 @@ populate_results <- function(results,return_all,DT){
 #' @param return_all a flag used to decide how many observations to return
 #' @param offset is the simulation offset time
 #' @return A tibble of simulation results
-run_seir_model <- function (mod_object, start, finish, DT, return_all=F, offset=0){
+run_seir_model <- function (mod_object, DT=0.125,return_all=F){
   # Create a new environment for all the simulation variable
+  mod_object_params               <- mod_object$params
+  # convert it back to
+  class(mod_object_params)        <- c(class(mod_object)[1],"seir","tbl_df","tbl","data.frame")
   sim_state                <<- new.env()
   sim_state$TimeOfRun      <-Sys.time()
-  sim_state$ActualStartDay <- (lubridate::ymd(get_param(mod_object,"start_day",T)))-offset
-
+  sim_state$ActualStartDay <- (lubridate::ymd(get_param(mod_object_params,"start_day",T)))-
+                               data_env$model_offset
   # Copy all the params to this new state
-  set_model_parameters(mod_object)
-  sim_state$params     <- mod_object
+  set_model_parameters(mod_object_params)
+  sim_state$params     <- mod_object_params
   sim_state$return_all <- return_all
   sim_state$offset     <- offset
-  sim_state$start      <- start
-  sim_state$finish     <- finish
-  simtime              <- seq(start, finish, by=DT)
+  simtime              <- seq(sim_state$start_time,
+                              sim_state$end_time,
+                              by=DT)
   sim_state$simtime    <- simtime
+
 
   if(class(mod_object)[1]=="seir_p"){
     stocks               <- init_compartments_p()

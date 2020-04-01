@@ -39,6 +39,9 @@ set_model_parameters <- function(p){
   sim_state$P_icu_residency            <- get_param(p, "icu_residency")
   sim_state$P_icu_capacity             <- get_param(p, "icu_capacity")
 
+  sim_state$start_time                  <- get_param(p, "start_day")
+  sim_state$end_time                    <- get_param(p, "end_day")
+
   # Age cohort model
   sim_state$P_number_age_cohorts       <- 4
   sim_state$P_stock_names              <- c("Susceptible","Exposed")

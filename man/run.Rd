@@ -4,21 +4,18 @@
 \alias{run}
 \title{Runs a model}
 \usage{
-run(o, start = 0, finish = 300, DT = 0.125, return_all = F,
-  mod_offset = 0)
+run(o, DT = 0.125, return_all = F)
 }
 \arguments{
 \item{o}{is the seir S3 object}
-
-\item{start}{is thesimulation start time}
-
-\item{finish}{is the simulation finish time}
 
 \item{DT}{is the simulation time step (Euler)}
 
 \item{return_all}{a flag used to decide how many observations to return}
 
-\item{offset}{is the simulation offset time}
+\item{start}{is thesimulation start time}
+
+\item{finish}{is the simulation finish time}
 }
 \value{
 A tibble of simulation results

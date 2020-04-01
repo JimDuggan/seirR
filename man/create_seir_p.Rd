@@ -4,7 +4,7 @@
 \alias{create_seir_p}
 \title{Creates an object to facilitate running the simulation}
 \usage{
-create_seir_p()
+create_seir_p(model_offset = 0)
 }
 \value{
 An S3 object of class seir
@@ -16,6 +16,6 @@ can be modified before the model is rum
 }
 \examples{
 \dontrun{
-mod <- create_seir()
+mod <- create_seir_p()
 }
 }
