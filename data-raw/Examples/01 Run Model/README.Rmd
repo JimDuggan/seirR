@@ -1,0 +1,66 @@
+---
+output: github_document
+title:  Running a model
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+In order to run a model, the following steps should be taken.
+
+* First, load in the libraries, and include **ggplot2** for visualisation
+
+```{r}
+library(seirR)
+library(ggplot2)
+library(dplyr)
+```
+
+* Next, call the constructor to create an S3 model object
+
+```{r}
+mod <- create_seir_p()
+```
+
+The **mod** variable has the following S3 structure.
+```{r}
+class(mod) 
+```
+
+The **mod** variable has three list elements, as follows:
+```{r}
+str(mod) 
+```
+
+The first is a tibble with the parameters for the simulation run.
+```{r}
+mod$params
+```
+
+The second will contain information on pulse policies that can be activated/deactivated.
+```{r}
+mod$pulse
+```
+
+The third contains a mapping from the simulation time to the calendar date
+```{r}
+mod$sim_date
+```
+
+* A model can then be run based on the **mod** object by calling the function **run()** In this example, we run the model twice, and alter a parmeter using the **set_params()** function
+
+```{r}
+out1 <- run(mod)
+mod <- set_param(mod,"distancing_flag",1)
+out2 <- run(mod)
+```
+
+The output from these models is a tibble, containing a good deal of simulation information.
+```{r}
+glimpse(out1)
+```
+
+Any of these variables can then be printed.
+```{r}
+ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=ReportedIncidence),colour="red")+
+  geom_line(out2,mapping=aes(x=SimDay,y=ReportedIncidence),colour="blue")
+```
+

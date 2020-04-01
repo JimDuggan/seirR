@@ -291,7 +291,8 @@ model_seir_p <- function(time, stocks, auxs){
                      TotalRemoved=TotalRemoved,
                      TotalSevereinNonICUHospital=TotalSevereinNonICUHospital,
                      TotalSevereinICU=TotalSevereinICU,
-                     AdditionalICUPlacesRequired
+                     AdditionalICUPlacesRequired,
+                     ReportedIncidence=ReportedIncidence
                      )
   })
 }

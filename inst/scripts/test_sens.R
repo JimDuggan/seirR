@@ -1,0 +1,28 @@
+library(seirR)
+library(ggplot2)
+library(purrr)
+
+
+NRUNS <- 30
+
+# create the model
+mod <- create_seir_p()
+mod <- set_param(mod,"distancing_flag",1)
+
+lower <- 0.2
+upper <- 0.8
+percentages    <- runif(NRUNS,.1,.9)
+f_asymptomatic <- runif(NRUNS,.15,.7)
+
+res_full <- map_df(1:NRUNS, function(i){
+  cat("iteration = ", i, "with percentage = ", percentages[i], " and f = ",f_asymptomatic[i],"\n")
+  mod <- set_param(mod,"pd_percentage_reduction",percentages[i])
+  mod <- set_param(mod,"prop_asymptomatic",f_asymptomatic[i])
+  out2 <- run(mod) %>% mutate(RunNumber=i) %>%
+     select(RunNumber,everything())
+})
+
+ggplot(res_full,aes(x=Date,y=ReportedIncidence,colour=RunNumber,group=RunNumber))+geom_path()+
+       scale_colour_gradientn(colours=rainbow(12))+guides(color=FALSE)
+
+
