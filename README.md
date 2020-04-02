@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 ### seirR 
 This package contains a SEIR model to model the spread of an infectious disease. The model is a population-level model. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
 
@@ -14,6 +19,7 @@ install_github("JimDuggan/seirR",auth="THE_KEY_GOES_HERE")
 ```
 
 ### Model Overview
+![](https://github.com/JimDuggan/seirR/blob/master/data-raw/Images/ModelStructure.png)
 
 ### Examples
 The following are three examples of how to use the model (and data)
