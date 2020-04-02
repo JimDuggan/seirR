@@ -2,9 +2,6 @@ library(seirR)
 library(ggplot2)
 library(purrr)
 
-
-
-
 # create the model
 mod <- create_seir_p()
 mod <- set_param(mod,"distancing_flag",1)

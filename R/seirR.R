@@ -278,7 +278,7 @@ explain.seir <- function(o){
   }))
 
   cat("\n")
-  cat("(5) Physcial Distancing Parameters\n")
+  cat("(5) Physical Distancing Parameters\n")
   cat("==================================\n")
   target <- data.frame(dplyr::filter(o$params,ParameterType=="Distancing"))
   invisible(sapply(1:nrow(target),function(row){
