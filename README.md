@@ -21,9 +21,9 @@ The following are three examples of how to use the model (and data)
 - [Running a model](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/01%20Run%20Model)
 - [Exploring the data set](
-https://github.com/JimDuggan/aimsir17/tree/master/data-raw/Examples/02%20Storm%20Ophelia)
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/02%20Explore%20Data)
 - [Running a sensitivity analysis](
-https://github.com/JimDuggan/aimsir17/tree/master/data-raw/Examples/03%20Rainfall%20Summary)
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Sensitivity)
 
 
 ### Version History

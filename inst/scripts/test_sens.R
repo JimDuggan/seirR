@@ -3,11 +3,13 @@ library(ggplot2)
 library(purrr)
 
 
-NRUNS <- 30
+
 
 # create the model
 mod <- create_seir_p()
 mod <- set_param(mod,"distancing_flag",1)
+
+NRUNS <- 30
 
 lower <- 0.2
 upper <- 0.8
