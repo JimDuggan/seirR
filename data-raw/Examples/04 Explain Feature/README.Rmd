@@ -1,0 +1,24 @@
+---
+output: github_document
+title:  Model Assumptions
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+At any point, the current model assumptions can be displayed by calling the function **explain()**.
+
+In this example, the model is loaded and checked, and then a parameter is changed, and the model assumptions checked again.
+
+```{r}
+library(seirR)
+```
+
+
+```{r}
+mod <- create_seir_p()
+explain(mod)
+```
+
+Change a parameter and call **explain()** again.
+```{r}
+mod <- set_param(mod,"distancing_flag",1)
+```

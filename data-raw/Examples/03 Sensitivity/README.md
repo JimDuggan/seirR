@@ -32,6 +32,10 @@ library(dplyr)
     ## 
     ## Attaching package: 'dplyr'
 
+    ## The following object is masked from 'package:seirR':
+    ## 
+    ##     explain
+
     ## The following objects are masked from 'package:stats':
     ## 
     ##     filter, lag
@@ -80,19 +84,19 @@ res_full <- map_df(1:NRUNS, function(i){
 })
 ```
 
-    ## iteration =  1 with percentage =  0.8111302  and f =  0.3321293 
-    ## iteration =  2 with percentage =  0.4644677  and f =  0.4446931 
-    ## iteration =  3 with percentage =  0.3347722  and f =  0.3529519 
-    ## iteration =  4 with percentage =  0.4061768  and f =  0.2417666 
-    ## iteration =  5 with percentage =  0.4969444  and f =  0.5376675 
-    ## iteration =  6 with percentage =  0.8439628  and f =  0.5359147 
-    ## iteration =  7 with percentage =  0.3664564  and f =  0.6817857 
-    ## iteration =  8 with percentage =  0.4916832  and f =  0.3351411 
-    ## iteration =  9 with percentage =  0.1317865  and f =  0.4474065 
-    ## iteration =  10 with percentage =  0.8494628  and f =  0.3585277
+    ## iteration =  1 with percentage =  0.5475142  and f =  0.6476609 
+    ## iteration =  2 with percentage =  0.3642019  and f =  0.5198257 
+    ## iteration =  3 with percentage =  0.7078094  and f =  0.4796776 
+    ## iteration =  4 with percentage =  0.2770122  and f =  0.2674452 
+    ## iteration =  5 with percentage =  0.8192057  and f =  0.2859403 
+    ## iteration =  6 with percentage =  0.6060648  and f =  0.5831134 
+    ## iteration =  7 with percentage =  0.2861077  and f =  0.2689446 
+    ## iteration =  8 with percentage =  0.6975361  and f =  0.401058 
+    ## iteration =  9 with percentage =  0.1347621  and f =  0.6087271 
+    ## iteration =  10 with percentage =  0.7293567  and f =  0.4066658
 
   - Show all the results for one of the
-variable
+variables
 
 <!-- end list -->
 

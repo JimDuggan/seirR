@@ -245,6 +245,8 @@ explain.seir <- function(o){
   cat("Package seirR Version = ", as.character(packageVersion("seirR")),"\n")
   cat("Model Class Info = ", as.character(class(o)),"\n")
   cat("\n")
+
+  return()
   cat("(1) Initial Conditions\n")
   cat("======================\n")
   target <- data.frame(filter(o$params,ParameterType=="InitialCondition"))

@@ -28,6 +28,10 @@ library(dplyr)
     ## 
     ## Attaching package: 'dplyr'
 
+    ## The following object is masked from 'package:seirR':
+    ## 
+    ##     explain
+
     ## The following objects are masked from 'package:stats':
     ## 
     ##     filter, lag
@@ -58,7 +62,7 @@ The **mod** variable has three list elements, as follows:
 str(mod) 
 ```
 
-    ## List of 3
+    ## List of 4
     ##  $ params  :Classes 'tbl_df', 'tbl' and 'data.frame':    28 obs. of  9 variables:
     ##   ..$ ParameterName: chr [1:28] "init_seeds" "total_population" "init_susceptible" "start_day" ...
     ##   ..$ ParameterType: chr [1:28] "InitialCondition" "InitialCondition" "InitialCondition" "InitialCondition" ...
@@ -73,6 +77,22 @@ str(mod)
     ##  $ sim_date:Classes 'tbl_df', 'tbl' and 'data.frame':    300 obs. of  2 variables:
     ##   ..$ SimTime: int [1:300] 1 2 3 4 5 6 7 8 9 10 ...
     ##   ..$ Date   : Date[1:300], format: "2020-02-29" ...
+    ##  $ POLYMOD :List of 3
+    ##   ..$ matrix      : num [1:4, 1:4] 1.916 0.624 0.494 0.145 1.243 ...
+    ##   .. ..- attr(*, "dimnames")=List of 2
+    ##   .. .. ..$                  : NULL
+    ##   .. .. ..$ contact.age.group: chr [1:4] "[0,5)" "[5,15)" "[15,65)" "65+"
+    ##   ..$ demography  :Classes 'data.table' and 'data.frame':    4 obs. of  3 variables:
+    ##   .. ..$ lower.age.limit: num [1:4] 0 5 15 65
+    ##   .. ..$ population     : num [1:4] 351883 700216 3220526 727349
+    ##   .. ..$ upper.age.limit: num [1:4] 5 15 65 80
+    ##   .. ..- attr(*, ".internal.selfref")=<externalptr> 
+    ##   .. ..- attr(*, "sorted")= chr "lower.age.limit"
+    ##   ..$ participants:Classes 'data.table' and 'data.frame':    4 obs. of  3 variables:
+    ##   .. ..$ age.group   : chr [1:4] "[0,5)" "[5,15)" "[15,65)" "65+"
+    ##   .. ..$ participants: int [1:4] 95 204 656 56
+    ##   .. ..$ proportion  : num [1:4] 0.094 0.2018 0.6489 0.0554
+    ##   .. ..- attr(*, ".internal.selfref")=<externalptr> 
     ##  - attr(*, "class")= chr [1:3] "seir_p" "seir" "list"
 
 The first is a tibble with the parameters for the simulation run.
@@ -134,7 +154,27 @@ The third contains a mapping fof contacts based on the polymod study
 mod$POLYMOD
 ```
 
-    ## NULL
+    ## $matrix
+    ##       contact.age.group
+    ##            [0,5)    [5,15)  [15,65)       65+
+    ##   [1,] 1.9157895 1.2425307 4.516886 0.3003448
+    ##   [2,] 0.6244151 7.9460784 6.048153 0.5063152
+    ##   [3,] 0.4935266 1.3150068 9.169207 0.9526663
+    ##   [4,] 0.1453033 0.4874277 4.218177 1.7142857
+    ## 
+    ## $demography
+    ##    lower.age.limit population upper.age.limit
+    ## 1:               0     351883               5
+    ## 2:               5     700216              15
+    ## 3:              15    3220526              65
+    ## 4:              65     727349              80
+    ## 
+    ## $participants
+    ##    age.group participants proportion
+    ## 1:     [0,5)           95 0.09396637
+    ## 2:    [5,15)          204 0.20178042
+    ## 3:   [15,65)          656 0.64886251
+    ## 4:       65+           56 0.05539070
 
   - A model can then be run based on the **mod** object by calling the
     function **run()** In this example, we run the model twice, and
