@@ -6,7 +6,7 @@ output:
 ### seirR 
 This package contains a SEIR model to model the spread of an infectious disease. The model is a population-level model. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
 
-### Current Version 0.0.0.1
+### Current Version 0.1
 This package is currently undergoing testing and has not yet been released. See version history below for a record of changes and version
 
 
