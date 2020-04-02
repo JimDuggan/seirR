@@ -246,10 +246,9 @@ explain.seir <- function(o){
   cat("Model Class Info = ", as.character(class(o)),"\n")
   cat("\n")
 
-  return()
   cat("(1) Initial Conditions\n")
   cat("======================\n")
-  target <- data.frame(filter(o$params,ParameterType=="InitialCondition"))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="InitialCondition"))
   invisible(sapply(1:nrow(target),function(row){
     cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
   }))
@@ -257,7 +256,7 @@ explain.seir <- function(o){
   cat("\n")
   cat("(2) Transmission Parameters\n")
   cat("===========================\n")
-  target <- data.frame(filter(o$params,ParameterType=="Transmission"))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="Transmission"))
   invisible(sapply(1:nrow(target),function(row){
     cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
   }))
@@ -265,7 +264,7 @@ explain.seir <- function(o){
   cat("\n")
   cat("(3) Biological Parameters\n")
   cat("===========================\n")
-  target <- data.frame(filter(o$params,ParameterType=="Biological"))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="Biological"))
   invisible(sapply(1:nrow(target),function(row){
     cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
   }))
@@ -273,7 +272,7 @@ explain.seir <- function(o){
   cat("\n")
   cat("(4) Pathway Flow Parameters\n")
   cat("===========================\n")
-  target <- data.frame(filter(o$params,ParameterType=="PathwayFlow"))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="PathwayFlow"))
   invisible(sapply(1:nrow(target),function(row){
     cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
   }))
@@ -281,7 +280,7 @@ explain.seir <- function(o){
   cat("\n")
   cat("(5) Physcial Distancing Parameters\n")
   cat("==================================\n")
-  target <- data.frame(filter(o$params,ParameterType=="Distancing"))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="Distancing"))
   invisible(sapply(1:nrow(target),function(row){
     cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
   }))
@@ -289,7 +288,7 @@ explain.seir <- function(o){
   cat("\n")
   cat("(6) Health System Parameters\n")
   cat("==================================\n")
-  target <- data.frame(filter(o$params,ParameterType=="HealthSystem"))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="HealthSystem"))
   invisible(sapply(1:nrow(target),function(row){
     cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
   }))
