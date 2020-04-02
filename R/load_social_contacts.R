@@ -14,7 +14,7 @@ load_social_contacts <- function(){
                                                             survey.pop = age_data,
                                                             symmetric = TRUE))
 
-  data_env$IRL_POLYMOD <- scenario_1
+ scenario_1
 }
 
 

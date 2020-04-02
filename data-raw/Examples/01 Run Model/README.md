@@ -14,7 +14,11 @@ In order to run a model, the following steps should be taken.
 library(seirR)
 ```
 
-    ## Welcome to package seirR v0.0.0.9000
+    ## Welcome to package seirR v0.0.0.1
+
+    ## Checking https://covid.ourworldindata.org/data/ecdc/full_data.csv  for data update...
+
+    ## Loading https://covid.ourworldindata.org/data/ecdc/full_data.csv  to global environment data_env
 
 ``` r
 library(ggplot2)
@@ -32,16 +36,13 @@ library(dplyr)
     ## 
     ##     intersect, setdiff, setequal, union
 
-  - Next, call the constructor to create an S3 model
-    object
+  - Next, call the constructor to create an S3 model object
 
 <!-- end list -->
 
 ``` r
 mod <- create_seir_p()
 ```
-
-    ## Loading https://covid.ourworldindata.org/data/ecdc/full_data.csv  to global environment data_env
 
 The **mod** variable has the following S3 structure.
 
@@ -126,6 +127,14 @@ mod$sim_date
     ##  9       9 2020-03-08
     ## 10      10 2020-03-09
     ## # … with 290 more rows
+
+The third contains a mapping fof contacts based on the polymod study
+
+``` r
+mod$POLYMOD
+```
+
+    ## NULL
 
   - A model can then be run based on the **mod** object by calling the
     function **run()** In this example, we run the model twice, and
@@ -217,4 +226,4 @@ ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=ReportedIncidence),colour="red")+
   geom_line(out2,mapping=aes(x=SimDay,y=ReportedIncidence),colour="blue")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->

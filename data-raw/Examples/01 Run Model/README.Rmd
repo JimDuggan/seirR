@@ -45,6 +45,12 @@ The third contains a mapping from the simulation time to the calendar date
 mod$sim_date
 ```
 
+The third contains a mapping fof contacts based on the polymod study
+```{r}
+mod$POLYMOD
+```
+
+
 * A model can then be run based on the **mod** object by calling the function **run()** In this example, we run the model twice, and alter a parmeter using the **set_params()** function
 
 ```{r}

@@ -15,7 +15,6 @@ library(lubridate)
   packageStartupMessage("Welcome to package seirR v0.0.0.1")
   data_env <<- new.env()
   get_world_data()
-  load_social_contacts()
 }
 
 #-------------------------------------------------------------------------------------
@@ -78,10 +77,12 @@ create_simtime_tibble <- function(mod, mod_offset=0){
 #' mod <- create_seir_p()
 #' }
 create_seir_p <- function (model_offset = 0){
-  tb <- create_seir_common()
+  tb      <- create_seir_common()
+  polymod <- load_social_contacts()
   lst <- list(params=tb,       # The main parameters
               pulse="TBD",     # Pulse information for social distancing
-              sim_date="TBD")  # Lookup table to translate from sim time to dates
+              sim_date="TBD",   # Lookup table to translate from sim time to dates
+              POLYMOD=polymod)
   mod <- structure(lst, class=c("seir_p","seir", "list"))
   # Add the sim_date tibble
   mod$sim_date <-create_simtime_tibble(mod, model_offset)
@@ -102,9 +103,11 @@ create_seir_p <- function (model_offset = 0){
 #' }
 create_seir_a <- function (){
   tb <- create_seir_common()
+  polymod <- load_social_contacts()
   lst <- list(params=tb,       # The main parameters
               pulse="TBD",     # Pulse information for social distancing
-              sim_date="TBD")  # Lookup table to translate from sim time to dates
+              sim_date="TBD",   # Lookup table to translate from sim time to dates
+              POLYMOD=polymod)
   mod <- structure(lst, class=c("seir_a","seir", "list"))
   mod$sim_date <-create_simtime_tibble(mod, model_offset)
   mod
