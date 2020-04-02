@@ -5,6 +5,7 @@ library(magrittr)
 
 populate_results <- function(results,return_all,DT){
   results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+floor(time))
+  results <-  dplyr::mutate(results,Week=lubridate::week(Date))
   results <-  dplyr::select(results,Date,dplyr::everything())
   irl_data <- dplyr::filter(data_env$covid_data,Country=="Ireland")
   results <-  dplyr::rename(results,SimDay=time)
