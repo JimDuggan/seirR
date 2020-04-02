@@ -4,4 +4,5 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^CRAN-RELEASE$
-^cran-comments.mf
+^cran-comments.md$
+^release-comments.md$

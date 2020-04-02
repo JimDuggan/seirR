@@ -18,7 +18,8 @@ mod <- create_seir_p()
 explain(mod)
 ```
 
-Change a parameter and call **explain()** again.
+Change a parameter and call **explain()** again (see parameter **distancing_flag** has changed)
 ```{r}
 mod <- set_param(mod,"distancing_flag",1)
+explain(mod)
 ```

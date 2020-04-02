@@ -25,7 +25,7 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/02%20Explore%20
 - [Running a sensitivity analysis](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Sensitivity)
 - [Explain Feature](
-https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Sensitivity)
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Explain%20Feature)
 
 ### Version History
 #### Version 0.0.0.1
