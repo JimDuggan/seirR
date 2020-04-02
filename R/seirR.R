@@ -222,3 +222,76 @@ params.seir <- function(o){
   print(o[["params"]])
 }
 
+#-------------------------------------------------------------------------------------
+#' Explains the current model assumptions
+#'
+#' \code{explain()} summarises the model
+#'
+#'
+#' As it's a generic function, this call is dispatched to run.seir
+#'
+#' @param o is the seir S3 object
+#' @export
+explain <- function(o){
+  UseMethod("explain")
+}
+#' @export
+explain.seir <- function(o){
+  cat("\n")
+  cat("seirR model assumptions\n")
+  cat("Package seirR Version = ", as.character(packageVersion("seirR")),"\n")
+  cat("Model Class Info = ", as.character(class(o)),"\n")
+  cat("\n")
+  cat("(1) Initial Conditions\n")
+  cat("======================\n")
+  target <- data.frame(filter(o$params,ParameterType=="InitialCondition"))
+  invisible(sapply(1:nrow(target),function(row){
+    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+  }))
+
+  cat("\n")
+  cat("(2) Transmission Parameters\n")
+  cat("===========================\n")
+  target <- data.frame(filter(o$params,ParameterType=="Transmission"))
+  invisible(sapply(1:nrow(target),function(row){
+    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+  }))
+
+  cat("\n")
+  cat("(3) Biological Parameters\n")
+  cat("===========================\n")
+  target <- data.frame(filter(o$params,ParameterType=="Biological"))
+  invisible(sapply(1:nrow(target),function(row){
+    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+  }))
+
+  cat("\n")
+  cat("(4) Pathway Flow Parameters\n")
+  cat("===========================\n")
+  target <- data.frame(filter(o$params,ParameterType=="PathwayFlow"))
+  invisible(sapply(1:nrow(target),function(row){
+    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+  }))
+
+  cat("\n")
+  cat("(5) Physcial Distancing Parameters\n")
+  cat("==================================\n")
+  target <- data.frame(filter(o$params,ParameterType=="Distancing"))
+  invisible(sapply(1:nrow(target),function(row){
+    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+  }))
+
+  cat("\n")
+  cat("(6) Health System Parameters\n")
+  cat("==================================\n")
+  target <- data.frame(filter(o$params,ParameterType=="HealthSystem"))
+  invisible(sapply(1:nrow(target),function(row){
+    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+  }))
+
+
+
+
+}
+
+

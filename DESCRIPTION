@@ -1,6 +1,6 @@
 Package: seirR
 Title: Implementation of an SEIR model
-Version: 0.0.0.1
+Version: 0.1
 Authors@R: 
     c(person(given = "Jim",
            family = "Duggan",

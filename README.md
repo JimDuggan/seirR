@@ -2,7 +2,7 @@
 This package contains a SEIR model to model the spread of an infectious disease. The model is a population-level model. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
 
 ### Current Version 0.0.0.1
-This package is currently undergoing testing and has not yet been released.See version history below for a record of changes and version
+This package is currently undergoing testing and has not yet been released. See version history below for a record of changes and version
 
 
 
@@ -27,7 +27,7 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Sensitivit
 
 
 ### Version History
-#### Version 0.0.0.9
+#### Version 0.0.0.1
 * Release date: April 2nd 2020
 * First beta version. Contains a population level SEIR model based on agreed structure. 
 
