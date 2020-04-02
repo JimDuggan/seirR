@@ -1,0 +1,49 @@
+---
+output: github_document
+title:  Exploring available data
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+The package downloads up-to-date COVID-19 numbers from the https://covid.ourworldindata.org/data/ecdc/full_data.csv. 
+
+This data is stored in the **date_env** environment, and can be accessed. The following is the process for doing this
+
+* First, load in the libraries, and include **ggplot2** for visualisation, and **dplyr** and **tidyr** for data manipulation.
+
+```{r}
+library(seirR)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+* Explore the data contained in the R environment data_env
+
+```{r}
+data_env$covid_data
+```
+
+* Filter out a country of interest, and reshape to tidy data format
+
+```{r}
+countries <- c("South Korea")
+
+ds <- filter(data_env$covid_data,
+             Country %in% countries)
+
+ds_piv <- ds %>% pivot_longer(-c(Date,Country),names_to ="Measure",values_to = "Number") %>%
+   filter(Measure %in% c("ReportedNewCases","ReportedNewDeaths"))
+```
+
+* Explore the re-shaped dataset
+```{r}
+ds_piv
+```
+
+* Visualise some of the results
+
+```{r}
+ggplot(ds_piv,aes(x=Date,y=Number,colour=Measure))+
+  geom_point()+geom_line()
+```
+

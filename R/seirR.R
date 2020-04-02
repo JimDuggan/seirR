@@ -12,7 +12,10 @@ library(tibble)
 library(lubridate)
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to package seirR v0.0.0.9000")
+  packageStartupMessage("Welcome to package seirR v0.0.0.1")
+  data_env <<- new.env()
+  get_world_data()
+  load_social_contacts()
 }
 
 #-------------------------------------------------------------------------------------
@@ -27,9 +30,6 @@ library(lubridate)
 #' mod <- create_seir()
 #' }
 create_seir_common <- function (){
-  data_env <<- new.env()
-  get_world_data()
-  load_social_contacts()
   tb <- tibble::tibble(ParameterName=character(),
                        ParameterType=character(),
                        Description=character(),

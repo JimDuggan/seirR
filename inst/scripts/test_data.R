@@ -2,7 +2,7 @@ library(seirR)
 library(ggplot2)
 library(tidyr)
 
-countries <- c("Ireland")
+countries <- c("South Korea")
 
 ds <- filter(data_env$covid_data,
              Country %in% countries)
