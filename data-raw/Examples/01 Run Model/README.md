@@ -147,7 +147,7 @@ glimpse(out1)
 ```
 
     ## Observations: 300
-    ## Variables: 59
+    ## Variables: 60
     ## $ Date                                        <date> 2020-03-01, 2020-03…
     ## $ SimDay                                      <dbl> 1, 2, 3, 4, 5, 6, 7,…
     ## $ Country                                     <chr> "Ireland", "Ireland"…
@@ -207,3 +207,14 @@ glimpse(out1)
     ## $ TotalSevereinNonICUHospital                 <dbl> 0, 0, 0, 0, 0, 0, 0,…
     ## $ TotalSevereinICU                            <dbl> 0, 0, 0, 0, 0, 0, 0,…
     ## $ V53                                         <dbl> 0, 0, 0, 0, 0, 0, 0,…
+    ## $ ReportedIncidence                           <dbl> 0.00000000, 0.099158…
+
+Any of these variables can then be
+printed.
+
+``` r
+ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=ReportedIncidence),colour="red")+
+  geom_line(out2,mapping=aes(x=SimDay,y=ReportedIncidence),colour="blue")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
