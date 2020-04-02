@@ -10,7 +10,8 @@ This data is stored in the **date\_env** environment, and can be
 accessed. The following is the process for doing this
 
   - First, load in the libraries, and include **ggplot2** for
-    visualisation, and **dplyr** and **tidyr** for data manipulation.
+    visualisation, and **dplyr** and **tidyr** for data
+    manipulation.
 
 <!-- end list -->
 
@@ -18,7 +19,11 @@ accessed. The following is the process for doing this
 library(seirR)
 ```
 
-    ## Welcome to package seirR v0.0.0.9000
+    ## Welcome to package seirR v0.0.0.1
+
+    ## Checking https://covid.ourworldindata.org/data/ecdc/full_data.csv  for data update...
+
+    ## Loading https://covid.ourworldindata.org/data/ecdc/full_data.csv  to global environment data_env
 
 ``` r
 library(ggplot2)
@@ -39,17 +44,6 @@ library(dplyr)
 ``` r
 library(tidyr)
 ```
-
-  - Create a model and this will provide access to the tibble with the
-    data
-
-<!-- end list -->
-
-``` r
-mod <- create_seir_p()
-```
-
-    ## Loading https://covid.ourworldindata.org/data/ecdc/full_data.csv  to global environment data_env
 
   - Explore the data contained in the R environment data\_env
 
@@ -120,4 +114,4 @@ ggplot(ds_piv,aes(x=Date,y=Number,colour=Measure))+
   geom_point()+geom_line()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
