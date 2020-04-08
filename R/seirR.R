@@ -12,8 +12,7 @@ library(tibble)
 library(lubridate)
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to package seirR v0.0.0.1")
-  data_env <<- new.env()
+  packageStartupMessage("Welcome to package seirR v0.2")
   get_world_data()
 }
 
@@ -77,15 +76,18 @@ create_simtime_tibble <- function(mod, mod_offset=0){
 #' mod <- create_seir_p()
 #' }
 create_seir_p <- function (model_offset = 0){
-  tb      <- create_seir_common()
+  #tb      <- create_seir_common()
+  tb      <- xmile_setup_parameters()
   polymod <- load_social_contacts()
   lst <- list(params=tb,       # The main parameters
-              pulse="TBD",     # Pulse information for social distancing
+              #pulse="TBD",     # Pulse information for social distancing
               sim_date="TBD",   # Lookup table to translate from sim time to dates
               POLYMOD=polymod)
   mod <- structure(lst, class=c("seir_p","seir", "list"))
   # Add the sim_date tibble
   mod$sim_date <-create_simtime_tibble(mod, model_offset)
+  mod$package_version  <- packageVersion("seirR")
+  mod$type  <- "SEIR Population Model"
   mod
 }
 
@@ -105,7 +107,7 @@ create_seir_a <- function (){
   tb <- create_seir_common()
   polymod <- load_social_contacts()
   lst <- list(params=tb,       # The main parameters
-              pulse="TBD",     # Pulse information for social distancing
+              #pulse="TBD",     # Pulse information for social distancing
               sim_date="TBD",   # Lookup table to translate from sim time to dates
               POLYMOD=polymod)
   mod <- structure(lst, class=c("seir_a","seir", "list"))
@@ -138,7 +140,13 @@ run <- function(o,DT=0.125,return_all = F){
 
 #' @export
 run.seir <- function(o,DT=0.125,return_all = F){
-  run_seir_model(o,DT,return_all)
+  #run_seir_model(o,DT,return_all)
+  if(class(o)[1]=="seir_p"){
+      run_model_seir_p(o,DT,return_all)
+  }
+  else{
+    cat("Unrecognised model object ",class(o)[1],"\n")
+  }
   # for the result, return the timestamp as a unique identifer.
   # Sys.time()
 }
@@ -228,72 +236,117 @@ params.seir <- function(o){
 #-------------------------------------------------------------------------------------
 #' Explains the current model assumptions
 #'
-#' \code{explain()} summarises the model
+#' \code{summary()} summarises the model
 #'
 #'
 #' As it's a generic function, this call is dispatched to run.seir
 #'
-#' @param o is the seir S3 object
+#' @param object is the seir S3 object
+#' @param ... are additional params
 #' @export
-explain <- function(o){
-  UseMethod("explain")
-}
-#' @export
-explain.seir <- function(o){
+summary.seir <- function(object,...){
+  o <- object
   cat("\n")
   cat("seirR model assumptions\n")
   cat("Package seirR Version = ", as.character(packageVersion("seirR")),"\n")
   cat("Model Class Info = ", as.character(class(o)),"\n")
   cat("\n")
 
-  cat("(1) Initial Conditions\n")
-  cat("======================\n")
+  counter <- 1
+
   target <- data.frame(dplyr::filter(o$params,ParameterType=="InitialCondition"))
-  invisible(sapply(1:nrow(target),function(row){
-    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
-  }))
+  if(nrow(target)>0){
+    cat(paste0("(",counter,")"),"Initial Conditions\n")
+    cat("======================\n")
+    invisible(sapply(1:nrow(target),function(row){
+       cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+       if(target[row,"ParameterName"] == "start_day"){
+         cat(target[row,"ParameterName"]," = ",target[row,"ValueS"],"\n");
+     }
+     }))
+    counter<-counter+1
+  }
 
-  cat("\n")
-  cat("(2) Transmission Parameters\n")
-  cat("===========================\n")
+
   target <- data.frame(dplyr::filter(o$params,ParameterType=="Transmission"))
-  invisible(sapply(1:nrow(target),function(row){
-    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
-  }))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Transmission Parameters\n")
+    cat("===========================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      }))
+    counter<-counter+1
+  }
 
-  cat("\n")
-  cat("(3) Biological Parameters\n")
-  cat("===========================\n")
   target <- data.frame(dplyr::filter(o$params,ParameterType=="Biological"))
-  invisible(sapply(1:nrow(target),function(row){
-    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
-  }))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Biological Parameters\n")
+    cat("=========================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+    }))
+    counter<-counter+1
+  }
 
-  cat("\n")
-  cat("(4) Pathway Flow Parameters\n")
-  cat("===========================\n")
-  target <- data.frame(dplyr::filter(o$params,ParameterType=="PathwayFlow"))
-  invisible(sapply(1:nrow(target),function(row){
-    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
-  }))
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="Pathway"))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Pathway Flow Parameters\n")
+    cat("===========================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+    }))
+    counter<-counter+1
+  }
 
-  cat("\n")
-  cat("(5) Physical Distancing Parameters\n")
-  cat("==================================\n")
+
   target <- data.frame(dplyr::filter(o$params,ParameterType=="Distancing"))
-  invisible(sapply(1:nrow(target),function(row){
-    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
-  }))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Physical Distancing Parameters\n")
+    cat("==================================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+    }))
+    counter<-counter+1
+  }
 
-  cat("\n")
-  cat("(6) Health System Parameters\n")
-  cat("==================================\n")
   target <- data.frame(dplyr::filter(o$params,ParameterType=="HealthSystem"))
-  invisible(sapply(1:nrow(target),function(row){
-    cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
-  }))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Health System Parameters\n")
+    cat("============================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+    }))
+    counter<-counter+1
+  }
 
 
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="Pulse"))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Pulse Policy Parameters\n")
+    cat("===========================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+    }))
+    counter<-counter+1
+  }
+
+
+  target <- data.frame(dplyr::filter(o$params,ParameterType=="Model"))
+  if(nrow(target)>0){
+    cat("\n")
+    cat(paste0("(",counter,")"),"Additional Model Parameters\n")
+    cat("===============================\n")
+    invisible(sapply(1:nrow(target),function(row){
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+    }))
+    counter<-counter+1
+  }
 
 
 }

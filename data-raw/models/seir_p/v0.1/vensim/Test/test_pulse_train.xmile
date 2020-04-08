@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0">
+	<header>
+		<product version="1.0" lang="en">Vensim</product>
+		<vendor>Ventana Systems, Inc.</vendor>
+		<created>
+		</created>
+		<modified>
+		</modified>
+		<name>
+		</name>
+		<caption>
+		</caption>
+	</header>
+	<sim_specs method="RK4" time_units="Month">
+		<start>0</start>
+		<stop>100</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<dimensions>
+		<dim name=".Control">
+		</dim>
+		<dim name=".test pulse train">
+		</dim>
+	</dimensions>
+	<model>
+		<variables>
+			<stock name="Population">
+				<units></units>
+				<doc></doc>
+					<eqn>
+					100
+					</eqn>
+					<inflow>
+					Net growth
+					</inflow>
+			</stock>
+			<aux name="growth_rate">
+				<units></units>
+				<doc></doc>
+					<eqn>0.01 * PULSE_TRAIN(2, 3, 10, 30)					</eqn>
+			</aux>
+			<aux name="Net_growth">
+				<units></units>
+				<doc></doc>
+					<eqn>Population * growth_rate					</eqn>
+			</aux>
+			<aux name="Time">
+				<units>Month</units>
+				<doc>Internally defined simulation time.</doc>
+					<eqn>INTEG( 1, 
+             INITIAL_TIME )					</eqn>
+			</aux>
+		</variables>
+	</model>
+</xmile>

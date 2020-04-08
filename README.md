@@ -6,8 +6,8 @@ output:
 ### seirR 
 This package contains a SEIR model to model the spread of an infectious disease. The model is a population-level model. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
 
-### Current Version 0.1
-This package is currently undergoing testing and has not yet been released. See version history below for a record of changes and version
+### Current Version 0.2
+This package is currently undergoing testing and has not yet been released. See version history below for a record of changes and version.
 
 
 
@@ -34,7 +34,13 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Sensitivit
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Explain%20Feature)
 
 ### Version History
-#### Version 0.0.0.1
+#### Version 0.1
 * Release date: April 2nd 2020
 * First beta version. Contains a population level SEIR model based on agreed structure. 
+
+#### Version 0.2
+* Release date: April 6th 2020
+* Added week column to output data frame so that weekly aggergations can be made
+* Renamed **explain()** function to **summary()** as **explain()** is already in dplyr
+* Changed model workflow so that xmile files can be configured (using package **readsdr**). Model interface is the same, but the workflow for including a new model is speeded up considerable. Main constraints needed is the all constants in the xmile file must be preceeded by a prefix "ZZ". This allows for the separation of all params into the **sim_state** environment.
 

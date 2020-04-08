@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0">
+	<header>
+		<product version="1.0" lang="en">Vensim</product>
+		<vendor>Ventana Systems, Inc.</vendor>
+		<created>
+		</created>
+		<modified>
+		</modified>
+		<name>
+		</name>
+		<caption>
+		</caption>
+	</header>
+	<sim_specs method="RK4" time_units="Day">
+		<start>1</start>
+		<stop>300</stop>
+		<dt>0.125</dt>
+	</sim_specs>
+	<dimensions>
+		<dim name=".Control">
+		</dim>
+		<dim name=".seir irl population v0.1">
+		</dim>
+	</dimensions>
+	<model>
+		<variables>
+			<stock name="Asymptomatic_Infected_01">
+				<units>People</units>
+				<doc>Model Equation (4) - Compartment 1</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IP02a
+					</inflow>
+					<outflow>
+					ASI1
+					</outflow>
+			</stock>
+			<stock name="Asymptomatic_Infected_02">
+				<units>People</units>
+				<doc>Model Equation (4) - Compartment 2</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ASI1
+					</inflow>
+					<outflow>
+					ASI2
+					</outflow>
+			</stock>
+			<stock name="Awaiting_Results_01">
+				<units>People</units>
+				<doc>Model Equation (6)</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IP02c
+					</inflow>
+					<outflow>
+					AR1
+					</outflow>
+			</stock>
+			<stock name="Awaiting_Results_02">
+				<units>People</units>
+				<doc>Model Equation (7)</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					AR1
+					</inflow>
+					<outflow>
+					EntHos
+					</outflow>
+					<outflow>
+					EntRem
+					</outflow>
+			</stock>
+			<stock name="Cumulative_Immediate_Isolation">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICII
+					</inflow>
+			</stock>
+			<stock name="Cumulative_Infectious_Asymptomatic">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICIA
+					</inflow>
+			</stock>
+			<stock name="Cumulative_Model_Infected">
+				<units>People</units>
+				<doc>Keep track of the total number infected (cumulative)</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICI
+					</inflow>
+			</stock>
+			<stock name="Cumulative_Not_Quarantined">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICNQ
+					</inflow>
+			</stock>
+			<stock name="Cumulative_Test_Incidence">
+				<units>People</units>
+				<doc>Model Equation (10)</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICTI
+					</inflow>
+			</stock>
+			<stock name="Cumulative_Tests_Positive">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICTP
+					</inflow>
+			</stock>
+			<stock name="Expected_ICU_Exits">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					CEICUE
+					</inflow>
+			</stock>
+			<stock name="Exposed_01">
+				<units>People</units>
+				<doc>Model Equation (2) First Compartment</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IR
+					</inflow>
+					<outflow>
+					E01
+					</outflow>
+			</stock>
+			<stock name="Exposed_02">
+				<units>People</units>
+				<doc>Model Equation (2) Second Compartment</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					E01
+					</inflow>
+					<outflow>
+					E02
+					</outflow>
+			</stock>
+			<stock name="In_Hospital_01">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					EntHos
+					</inflow>
+					<outflow>
+					EXH01a
+					</outflow>
+					<outflow>
+					EXH01b
+					</outflow>
+			</stock>
+			<stock name="In_Hospital_02">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					EXH01b
+					</inflow>
+					<outflow>
+					EXH02
+					</outflow>
+			</stock>
+			<stock name="In_Hospital_03">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					EXH02
+					</inflow>
+					<outflow>
+					EXH03
+					</outflow>
+			</stock>
+			<stock name="In_Hospital_Severe">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					EXH01a
+					</inflow>
+					<outflow>
+					IHS01
+					</outflow>
+					<outflow>
+					IHS02
+					</outflow>
+			</stock>
+			<stock name="Infected_Presymptomatic_01">
+				<units>People</units>
+				<doc>Model Equation (3) - Compartment 1</doc>
+					<eqn>
+					ZZNumber_Seeds
+					</eqn>
+					<inflow>
+					E02
+					</inflow>
+					<outflow>
+					IP01
+					</outflow>
+			</stock>
+			<stock name="Infected_Presymptomatic_02">
+				<units>People</units>
+				<doc>Model Equation (3) - Compartment 2</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IP01
+					</inflow>
+					<outflow>
+					IP02a
+					</outflow>
+					<outflow>
+					IP02b
+					</outflow>
+					<outflow>
+					IP02c
+					</outflow>
+					<outflow>
+					IP02d
+					</outflow>
+			</stock>
+			<stock name="Not_Quarantine_Infectious_01">
+				<units>People</units>
+				<doc>Model Equation (8) - Compartment 1</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IP02d
+					</inflow>
+					<outflow>
+					NQI1
+					</outflow>
+			</stock>
+			<stock name="Not_Quarantine_Infectious_02">
+				<units>People</units>
+				<doc>Model Equation (8) - Compartment 2</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					NQI1
+					</inflow>
+					<outflow>
+					NQI2
+					</outflow>
+			</stock>
+			<stock name="Physical_Distancing_Smoothed_Value">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>
+					1
+					</eqn>
+					<inflow>
+					CPDSV
+					</inflow>
+			</stock>
+			<stock name="Removed_Asymptomatic">
+				<units>People</units>
+				<doc>Model Equation (9) - First Term</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ASI2
+					</inflow>
+			</stock>
+			<stock name="Removed_Awaiting_Results">
+				<units>People</units>
+				<doc>Model Equation (9) - Third Term</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					EntRem
+					</inflow>
+			</stock>
+			<stock name="Removed_Hospital">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					EXH03
+					</inflow>
+			</stock>
+			<stock name="Removed_Not_Quarantine">
+				<units>People</units>
+				<doc>Model Equation (9) - Fourth Term</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					NQI2
+					</inflow>
+			</stock>
+			<stock name="Removed_Severe_Cases_Hospital">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					SCH02
+					</inflow>
+			</stock>
+			<stock name="Removed_Severe_Cases_ICU">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICU02
+					</inflow>
+			</stock>
+			<stock name="Removed_Symptomatic_Immediate_Isolation">
+				<units>People</units>
+				<doc>Model Equation (9) - Second Term</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					SII02
+					</inflow>
+			</stock>
+			<stock name="Severe_Cases_Hospital_01">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IHS02
+					</inflow>
+					<outflow>
+					SCH01
+					</outflow>
+			</stock>
+			<stock name="Severe_Cases_Hospital_02">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					SCH01
+					</inflow>
+					<outflow>
+					SCH02
+					</outflow>
+			</stock>
+			<stock name="Severe_Cases_ICU_01">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IHS01
+					</inflow>
+					<outflow>
+					ICU01
+					</outflow>
+			</stock>
+			<stock name="Severe_Cases_ICU_02">
+				<units>People</units>
+				<doc></doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					ICU01
+					</inflow>
+					<outflow>
+					ICU02
+					</outflow>
+			</stock>
+			<stock name="Susceptible">
+				<units>People</units>
+				<doc>Model Equation (1)</doc>
+					<eqn>
+					ZZTotal_Population-ZZNumber_Seeds
+					</eqn>
+					<outflow>
+					IR
+					</outflow>
+			</stock>
+			<stock name="Symptomatic_Immediate_Isolation_01">
+				<units>People</units>
+				<doc>Model Equation (5) - Compartment 1</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					IP02b
+					</inflow>
+					<outflow>
+					SII01
+					</outflow>
+			</stock>
+			<stock name="Symptomatic_Immediate_Isolation_02">
+				<units>People</units>
+				<doc>Model Equation (5) - Compartment 2</doc>
+					<eqn>
+					0
+					</eqn>
+					<inflow>
+					SII01
+					</inflow>
+					<outflow>
+					SII02
+					</outflow>
+			</stock>
+			<aux name="Additional_ICU_Places_Required">
+				<units>People</units>
+				<doc></doc>
+					<eqn>max(0,Total_Severe_in_NonICU_Hospital-Total_Severe_in_ICU)					</eqn>
+			</aux>
+			<aux name="AR1">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Awaiting_Results_01/ZZAverage_Wait_for_Results					</eqn>
+			</aux>
+			<aux name="ASI1">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Asymptomatic_Infected_01/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="ASI2">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Asymptomatic_Infected_02/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="Asymptomatic_Infectious_Period">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>ZZIncubation_Period_C-ZZLatent_Period_L					</eqn>
+			</aux>
+			<aux name="Beta">
+				<units>1/Day</units>
+				<doc>Transmission parameter = R0/Total Infectious Period</doc>
+					<eqn>ZZBeta_Calibrated*Effect_of_Physical_Distancing_on_Beta					</eqn>
+			</aux>
+			<aux name="C01_Total_Infected_Presymptomatic">
+				<units>People</units>
+				<doc>Total Presymptomatic Infected (Subclinical infectious)</doc>
+					<eqn>Infected_Presymptomatic_01+Infected_Presymptomatic_02					</eqn>
+			</aux>
+			<aux name="C02_Total_Asymptomatic_Infected">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Asymptomatic_Infected_01+Asymptomatic_Infected_02					</eqn>
+			</aux>
+			<aux name="C03_Total_Symptomatic_Immediate_Isolation_Infectious">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Symptomatic_Immediate_Isolation_01+Symptomatic_Immediate_Isolation_02					</eqn>
+			</aux>
+			<aux name="C04_Total_Awaiting_Results_Infectious">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Awaiting_Results_01					</eqn>
+			</aux>
+			<aux name="C05_Total_Isolated_After_Test_Infected">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Awaiting_Results_02					</eqn>
+			</aux>
+			<aux name="C06_Total_Not_Quarantining_Infected">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Not_Quarantine_Infectious_01+Not_Quarantine_Infectious_02					</eqn>
+			</aux>
+			<aux name="CEICUE">
+				<units>People/(Day*Day)</units>
+				<doc></doc>
+					<eqn>Error_Delta/ZZAT					</eqn>
+			</aux>
+			<aux name="Checksum_Cumulative_Flows">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Cumulative_Immediate_Isolation+Cumulative_Infectious_Asymptomatic+Cumulative_Not_Quarantined+Cumulative_Tests_Positive					</eqn>
+			</aux>
+			<aux name="CheckSum_Population">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Susceptible+Total_Exposed+Total_Infectious+Total_Removed+Total_in_Hospital					</eqn>
+			</aux>
+			<aux name="CPDSV">
+				<units>Dmnl/Day</units>
+				<doc></doc>
+					<eqn>PDSVG/ZZPDAT					</eqn>
+			</aux>
+			<aux name="E01">
+				<units>People/Day</units>
+				<doc>Exit rate from Exposed 01</doc>
+					<eqn>Exposed_01/(ZZLatent_Period_L/2)					</eqn>
+			</aux>
+			<aux name="E02">
+				<units>People/Day</units>
+				<doc>Exit rate from Exposed 02</doc>
+					<eqn>Exposed_02/(ZZLatent_Period_L/2)					</eqn>
+			</aux>
+			<aux name="Effect_of_Physical_Distancing_on_Beta">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>IF_THEN_ELSE(ZZPhysical_Distancing_Policy_Flag=1 , Physical_Distancing_Smoothed_Value , 1 )					</eqn>
+			</aux>
+			<aux name="EntHos">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>ZZProportion_Hospitalised*Total_Exiting_AR02					</eqn>
+			</aux>
+			<aux name="EntRem">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>(1-ZZProportion_Hospitalised)*Total_Exiting_AR02					</eqn>
+			</aux>
+			<aux name="Error_Delta">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>ICU02-Expected_ICU_Exits					</eqn>
+			</aux>
+			<aux name="EXH01a">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>ZZFraction_in_Risk_Group*ZZFraction_In_Hospital_Severe*Total_Exiting_Hospital_01					</eqn>
+			</aux>
+			<aux name="EXH01b">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>(1-ZZFraction_In_Hospital_Severe)*Total_Exiting_Hospital_01					</eqn>
+			</aux>
+			<aux name="EXH02">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>In_Hospital_02/(ZZAverage_HLOS/3)					</eqn>
+			</aux>
+			<aux name="EXH03">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>In_Hospital_03/(ZZAverage_HLOS/3)					</eqn>
+			</aux>
+			<aux name="ICI">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>IR					</eqn>
+			</aux>
+			<aux name="ICIA">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>IP02a					</eqn>
+			</aux>
+			<aux name="ICII">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>IP02b					</eqn>
+			</aux>
+			<aux name="ICNQ">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>IP02d					</eqn>
+			</aux>
+			<aux name="ICTI">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>AR1					</eqn>
+			</aux>
+			<aux name="ICTP">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>IP02c					</eqn>
+			</aux>
+			<aux name="ICU_Available_Space">
+				<units>People</units>
+				<doc></doc>
+					<eqn>ICU_Daily_Freed_Up_Space+ZZICU_Available_Capacity-Total_Severe_in_ICU					</eqn>
+			</aux>
+			<aux name="ICU_Daily_Freed_Up_Space">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Expected_ICU_Exits/ZZLag_Time					</eqn>
+			</aux>
+			<aux name="ICU01">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Severe_Cases_ICU_01/(ZZICU_Residency_Time/2)					</eqn>
+			</aux>
+			<aux name="ICU02">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Severe_Cases_ICU_02/(ZZICU_Residency_Time/2)					</eqn>
+			</aux>
+			<aux name="IHS01">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>min(ICU_Available_Space,Total_Exiting_Hospital_Severe)					</eqn>
+			</aux>
+			<aux name="IHS02">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Total_Exiting_Hospital_Severe-min(ICU_Available_Space,Total_Exiting_Hospital_Severe)					</eqn>
+			</aux>
+			<aux name="IP01">
+				<units>People/Day</units>
+				<doc>Exit rate from Infected Presymptomatic 01</doc>
+					<eqn>Infected_Presymptomatic_01/(Asymptomatic_Infectious_Period/2)					</eqn>
+			</aux>
+			<aux name="IP02_Outflow_Total_Exiting_Checksum">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>IP02a+IP02b+IP02c+IP02d					</eqn>
+			</aux>
+			<aux name="IP02a">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Total_Exiting_IP02*ZZProportion_Asymptomatic_f					</eqn>
+			</aux>
+			<aux name="IP02b">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Total_Exiting_IP02*(1-ZZProportion_Asymptomatic_f)*ZZProportion_Quarantined_q					</eqn>
+			</aux>
+			<aux name="IP02c">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Total_Exiting_IP02*(1-ZZProportion_Asymptomatic_f)*ZZProportion_Tested_t					</eqn>
+			</aux>
+			<aux name="IP02d">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Total_Exiting_IP02*(1-ZZProportion_Asymptomatic_f)*(1-ZZProportion_Tested_t-ZZProportion_Quarantined_q)					</eqn>
+			</aux>
+			<aux name="IR">
+				<units>People/Day</units>
+				<doc>Infection rate (indicence) in the population</doc>
+					<eqn>Lambda*Susceptible					</eqn>
+			</aux>
+			<aux name="Lambda">
+				<units>1/Day</units>
+				<doc>Force of infection, with contributions from all of the infected compartments.</doc>
+					<eqn>((Beta*C01_Total_Infected_Presymptomatic)+(Beta*ZZBeta_Multiplier_h*ZZBeta_Multiplier_k*C02_Total_Asymptomatic_Infected)+(Beta*ZZBeta_Multiplier_i
+	*C03_Total_Symptomatic_Immediate_Isolation_Infectious)+(Beta*C04_Total_Awaiting_Results_Infectious)+(Beta*ZZBeta_Multiplier_j
+	*C05_Total_Isolated_After_Test_Infected)+(Beta*C06_Total_Not_Quarantining_Infected))/ZZTotal_Population					</eqn>
+			</aux>
+			<aux name="Net_Infectious_Period_for_Infection_Compartments">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>ZZTotal_Infectious_Period_D+ZZLatent_Period_L-ZZIncubation_Period_C					</eqn>
+			</aux>
+			<aux name="NQI1">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Not_Quarantine_Infectious_01/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="NQI2">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Not_Quarantine_Infectious_02/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="PDSVG">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>Physical_Distancing_Fractional_Reduction_Amount-Physical_Distancing_Smoothed_Value					</eqn>
+			</aux>
+			<aux name="Physical_Distancing_Fractional_Reduction_Amount">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>IF_THEN_ELSE(Time>=ZZStart_Time_of_Physical_Distancing :AND: Time <=ZZEnd_Time_of_Physical_Distancing , 1-ZZPercentage_Reduction_of_Physical_Disancing , 1 )					</eqn>
+			</aux>
+			<aux name="Population_Attack_Rate">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>Total_Removed/ZZTotal_Population					</eqn>
+			</aux>
+			<aux name="Reported_Incidence">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>AR1					</eqn>
+			</aux>
+			<aux name="SCH01">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Severe_Cases_Hospital_01/(ZZAverage_HLOS/2)					</eqn>
+			</aux>
+			<aux name="SCH02">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Severe_Cases_Hospital_02/(ZZAverage_HLOS/2)					</eqn>
+			</aux>
+			<aux name="SII01">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Symptomatic_Immediate_Isolation_01/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="SII02">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Symptomatic_Immediate_Isolation_02/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="Total_Exiting_AR02">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>Awaiting_Results_02/(max(1,Net_Infectious_Period_for_Infection_Compartments-ZZAverage_Wait_for_Results))					</eqn>
+			</aux>
+			<aux name="Total_Exiting_Hospital_01">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>In_Hospital_01/(ZZAverage_HLOS/3)					</eqn>
+			</aux>
+			<aux name="Total_Exiting_Hospital_Severe">
+				<units>People/Day</units>
+				<doc></doc>
+					<eqn>In_Hospital_Severe/ZZRTime_Severe					</eqn>
+			</aux>
+			<aux name="Total_Exiting_IP02">
+				<units>People/Day</units>
+				<doc>Total exit rate from Infected Presymptomatic 02</doc>
+					<eqn>Infected_Presymptomatic_02/(Asymptomatic_Infectious_Period/2)					</eqn>
+			</aux>
+			<aux name="Total_Exposed">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Exposed_01+Exposed_02					</eqn>
+			</aux>
+			<aux name="Total_Hospitalised">
+				<units>People</units>
+				<doc></doc>
+					<eqn>In_Hospital_01+In_Hospital_02+In_Hospital_03					</eqn>
+			</aux>
+			<aux name="Total_in_Hospital">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Total_in_Hospital_Non_Severe+Total_Severe_in_NonICU_Hospital+Total_Severe_in_ICU+In_Hospital_Severe					</eqn>
+			</aux>
+			<aux name="Total_in_Hospital_Non_Severe">
+				<units>People</units>
+				<doc></doc>
+					<eqn>In_Hospital_01+In_Hospital_02+In_Hospital_03					</eqn>
+			</aux>
+			<aux name="Total_Infectious">
+				<units>People</units>
+				<doc></doc>
+					<eqn>C01_Total_Infected_Presymptomatic+C02_Total_Asymptomatic_Infected+C03_Total_Symptomatic_Immediate_Isolation_Infectious+C04_Total_Awaiting_Results_Infectious+C05_Total_Isolated_After_Test_Infected+C06_Total_Not_Quarantining_Infected					</eqn>
+			</aux>
+			<aux name="Total_Removed">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Removed_Asymptomatic+Removed_Awaiting_Results+Removed_Hospital+Removed_Not_Quarantine+Removed_Severe_Cases_Hospital+Removed_Severe_Cases_ICU+Removed_Symptomatic_Immediate_Isolation					</eqn>
+			</aux>
+			<aux name="Total_Severe_in_Hospital">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Total_Severe_in_ICU+Total_Severe_in_NonICU_Hospital					</eqn>
+			</aux>
+			<aux name="Total_Severe_in_ICU">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Severe_Cases_ICU_01+Severe_Cases_ICU_02					</eqn>
+			</aux>
+			<aux name="Total_Severe_in_NonICU_Hospital">
+				<units>People</units>
+				<doc></doc>
+					<eqn>Severe_Cases_Hospital_01+Severe_Cases_Hospital_02					</eqn>
+			</aux>
+			<aux name="ZZAT">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZAverage_HLOS">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>15					</eqn>
+			</aux>
+			<aux name="ZZAverage_Wait_for_Results">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>2					</eqn>
+			</aux>
+			<aux name="ZZBeta_Calibrated">
+				<units>1/Day</units>
+				<doc>Beta value calibrated to Irish data</doc>
+					<eqn>1.12					</eqn>
+			</aux>
+			<aux name="ZZBeta_Multiplier_h">
+				<units>Dmnl</units>
+				<doc>Multiplicative factor for reduction in infectiousness of asymptomatic infected compartment</doc>
+					<eqn>0.21					</eqn>
+			</aux>
+			<aux name="ZZBeta_Multiplier_i">
+				<units>Dmnl</units>
+				<doc>Multiplier on isolation compartment</doc>
+					<eqn>0.08					</eqn>
+			</aux>
+			<aux name="ZZBeta_Multiplier_j">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>0.12					</eqn>
+			</aux>
+			<aux name="ZZBeta_Multiplier_k">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZEnd_Time_of_Physical_Distancing">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>300					</eqn>
+			</aux>
+			<aux name="ZZFraction_In_Hospital_Severe">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>0					</eqn>
+			</aux>
+			<aux name="ZZFraction_in_Risk_Group">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>0					</eqn>
+			</aux>
+			<aux name="ZZICU_Available_Capacity">
+				<units>People</units>
+				<doc></doc>
+					<eqn>250					</eqn>
+			</aux>
+			<aux name="ZZICU_Residency_Time">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>10					</eqn>
+			</aux>
+			<aux name="ZZIncubation_Period_C">
+				<units>Day</units>
+				<doc>Duration of time at incubation stage</doc>
+					<eqn>5.19					</eqn>
+			</aux>
+			<aux name="ZZLag_Time">
+				<units>1/Day</units>
+				<doc></doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZLatent_Period_L">
+				<units>Day</units>
+				<doc>Duration of time in incubation stage</doc>
+					<eqn>3.55					</eqn>
+			</aux>
+			<aux name="ZZNumber_Seeds">
+				<units>People</units>
+				<doc>Number of seeds initially importing the virus</doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZPDAT">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZPercentage_Reduction_of_Physical_Disancing">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>0.6					</eqn>
+			</aux>
+			<aux name="ZZPhysical_Distancing_Policy_Flag">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZProportion_Asymptomatic_f">
+				<units>Dmnl</units>
+				<doc>Proportion of infected who show symptoms</doc>
+					<eqn>0.25					</eqn>
+			</aux>
+			<aux name="ZZProportion_Hospitalised">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>0					</eqn>
+			</aux>
+			<aux name="ZZProportion_Quarantined_q">
+				<units>Dmnl</units>
+				<doc>Proportion quarantined</doc>
+					<eqn>0.05					</eqn>
+			</aux>
+			<aux name="ZZProportion_Tested_t">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>0.88					</eqn>
+			</aux>
+			<aux name="ZZRTime_Severe">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>1					</eqn>
+			</aux>
+			<aux name="ZZStart_Time_of_Physical_Distancing">
+				<units>Day</units>
+				<doc></doc>
+					<eqn>20					</eqn>
+			</aux>
+			<aux name="ZZTotal_Infectious_Period_D">
+				<units>Day</units>
+				<doc>Duration of infectiousness</doc>
+					<eqn>4.13					</eqn>
+			</aux>
+			<aux name="ZZTotal_Population">
+				<units>People</units>
+				<doc>Total Population at outset of epidemic</doc>
+					<eqn>4.99997e+06					</eqn>
+			</aux>
+			<aux name="Time">
+				<units>Day</units>
+				<doc>Internally defined simulation time.</doc>
+					<eqn>INTEG( 1, 
+             INITIAL_TIME )					</eqn>
+			</aux>
+		</variables>
+	</model>
+</xmile>

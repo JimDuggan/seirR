@@ -1,0 +1,85 @@
+{UTF-8}
+growth rate=
+	0.01 * PULSE TRAIN(startp, 3, 10, 30)
+	~	
+	~		|
+
+startp=
+	2
+	~	
+	~		|
+
+Net growth=
+	Population * growth rate
+	~	
+	~		|
+
+Population= INTEG (
+	Net growth,
+		100)
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|72,72,100,0
+10,1,Population,384,135,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,2,48,217,133,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(317,133)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(253,133)|
+11,5,48,285,133,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Net growth,285,149,29,8,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,growth rate,198,195,30,8,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,8,7,5,0,0,0,0,0,128,0,-1--1--1,,1|(238,165)|
+1,9,1,5,1,0,0,0,0,128,0,-1--1--1,,1|(320,95)|
+10,10,startp,165,300,16,8,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,11,10,7,0,0,0,0,0,128,0,-1--1--1,,1|(178,254)|
+///---\\\
+:L<%^E!@
+1:Current.vdfx
+9:Current
+15:0,0,0,0,0,0
+19:100,0
+27:0,
+34:0,
+4:Time
+5:growth rate
+76:0
+77:0
+78:0
+79:0
+80:0
+81:0
+24:0
+25:100
+26:100
+75:
+43:
