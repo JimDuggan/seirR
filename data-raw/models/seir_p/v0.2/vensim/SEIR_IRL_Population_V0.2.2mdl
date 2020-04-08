@@ -1,9 +1,4 @@
 {UTF-8}
-Test=
-	0+Step(1,20)
-	~	
-	~		|
-
 Actual Pulse Flag=
 	PULSE TRAIN(ZZPulse Start Time , ZZPulse Duration , Pulse Repeat , ZZPulse End )
 	~	
@@ -1388,7 +1383,7 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|72,72,7
 27:0,
 34:0,
 4:Time
-5:Test
+5:Beta Pulse Reduction Factor
 35:Date
 36:YYYY-MM-DD
 37:2020

@@ -57,6 +57,7 @@ run_model_seir_p <- function (mod_object, DT=0.125,return_all=F){
 
   sim_state$RESULTS <- results
 
+
   results
 }
 
