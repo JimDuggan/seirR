@@ -94,12 +94,22 @@ xmile_setup_parameters <- function(){
 		Source='TBD')
 
 	p_tb <- dplyr::add_row(p_tb,
-		ParameterName='End_Time_of_Physical_Distancing',
+		ParameterName='Distancing_Start_Time',
 		ParameterType='Distancing',
 		Description='TBD',
-		Value=300,
-		UpperEstimate=300,
-		LowerEstimate=300,
+		Value=20,
+		UpperEstimate=20,
+		LowerEstimate=20,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='Distancing_Switch',
+		ParameterType='Distancing',
+		Description='TBD',
+		Value=1,
+		UpperEstimate=1,
+		LowerEstimate=1,
 		Varying=F,
 		Source='TBD')
 
@@ -187,9 +197,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='PDAT',
 		ParameterType='Distancing',
 		Description='TBD',
-		Value=1,
-		UpperEstimate=1,
-		LowerEstimate=1,
+		Value=4,
+		UpperEstimate=4,
+		LowerEstimate=4,
 		Varying=F,
 		Source='TBD')
 
@@ -200,16 +210,6 @@ xmile_setup_parameters <- function(){
 		Value=0.6,
 		UpperEstimate=0.6,
 		LowerEstimate=0.6,
-		Varying=F,
-		Source='TBD')
-
-	p_tb <- dplyr::add_row(p_tb,
-		ParameterName='Physical_Distancing_Policy_Flag',
-		ParameterType='Distancing',
-		Description='TBD',
-		Value=1,
-		UpperEstimate=1,
-		LowerEstimate=1,
 		Varying=F,
 		Source='TBD')
 
@@ -254,6 +254,46 @@ xmile_setup_parameters <- function(){
 		Source='TBD')
 
 	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='Pulse_Duration',
+		ParameterType='Pulse',
+		Description='TBD',
+		Value=21,
+		UpperEstimate=21,
+		LowerEstimate=21,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='Pulse_End',
+		ParameterType='Pulse',
+		Description='TBD',
+		Value=300,
+		UpperEstimate=300,
+		LowerEstimate=300,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='Pulse_Off_Duration',
+		ParameterType='Pulse',
+		Description='TBD',
+		Value=10,
+		UpperEstimate=10,
+		LowerEstimate=10,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='Pulse_Switch',
+		ParameterType='Pulse',
+		Description='TBD',
+		Value=1,
+		UpperEstimate=1,
+		LowerEstimate=1,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='RTime_Severe',
 		ParameterType='Model',
 		Description='TBD',
@@ -264,12 +304,12 @@ xmile_setup_parameters <- function(){
 		Source='TBD')
 
 	p_tb <- dplyr::add_row(p_tb,
-		ParameterName='Start_Time_of_Physical_Distancing',
-		ParameterType='Distancing',
+		ParameterName='Switch_Time',
+		ParameterType='Pulse',
 		Description='TBD',
-		Value=20,
-		UpperEstimate=20,
-		LowerEstimate=20,
+		Value=60,
+		UpperEstimate=60,
+		LowerEstimate=60,
 		Varying=F,
 		Source='TBD')
 
