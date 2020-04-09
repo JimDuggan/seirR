@@ -3,7 +3,7 @@ library(ggplot2)
 library(tidyr)
 library(dplyr)
 
-countries <- c("Austria","Denmark","Ireland")
+countries <- c("Norway")
 
 ds <- filter(data_env$covid_data,
              Country %in% countries)
@@ -14,7 +14,7 @@ ds_piv <- ds %>% pivot_longer(-c(Date,Country),names_to ="Measure",values_to = "
 
 
 ggplot(ds_piv,aes(x=Date,y=Number,colour=Measure))+
-  facet_grid(Country~.)+
-  geom_point()+geom_line()
+  facet_grid(Measure~.,scales = "free_y")+
+  geom_point()+geom_line()+ggtitle("Norway Data")
 
 

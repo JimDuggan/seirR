@@ -37,9 +37,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Average_Wait_for_Results',
 		ParameterType='HealthSystem',
 		Description='TBD',
-		Value=2,
-		UpperEstimate=2,
-		LowerEstimate=2,
+		Value=3.16,
+		UpperEstimate=3.16,
+		LowerEstimate=3.16,
 		Varying=F,
 		Source='TBD')
 
@@ -47,9 +47,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Beta_Calibrated',
 		ParameterType='Transmission',
 		Description='TBD',
-		Value=1.12,
-		UpperEstimate=1.12,
-		LowerEstimate=1.12,
+		Value=0.91,
+		UpperEstimate=0.91,
+		LowerEstimate=0.91,
 		Varying=F,
 		Source='TBD')
 
@@ -57,9 +57,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Beta_Multiplier_h',
 		ParameterType='Transmission',
 		Description='TBD',
-		Value=0.21,
-		UpperEstimate=0.21,
-		LowerEstimate=0.21,
+		Value=0.11,
+		UpperEstimate=0.11,
+		LowerEstimate=0.11,
 		Varying=F,
 		Source='TBD')
 
@@ -67,9 +67,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Beta_Multiplier_i',
 		ParameterType='Transmission',
 		Description='TBD',
-		Value=0.08,
-		UpperEstimate=0.08,
-		LowerEstimate=0.08,
+		Value=0.07,
+		UpperEstimate=0.07,
+		LowerEstimate=0.07,
 		Varying=F,
 		Source='TBD')
 
@@ -77,9 +77,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Beta_Multiplier_j',
 		ParameterType='Transmission',
 		Description='TBD',
-		Value=0.12,
-		UpperEstimate=0.12,
-		LowerEstimate=0.12,
+		Value=0.0612326,
+		UpperEstimate=0.0612326,
+		LowerEstimate=0.0612326,
 		Varying=F,
 		Source='TBD')
 
@@ -157,9 +157,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Incubation_Period_C',
 		ParameterType='Biological',
 		Description='TBD',
-		Value=5.19,
-		UpperEstimate=5.19,
-		LowerEstimate=5.19,
+		Value=5.79,
+		UpperEstimate=5.79,
+		LowerEstimate=5.79,
 		Varying=F,
 		Source='TBD')
 
@@ -177,9 +177,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Latent_Period_L',
 		ParameterType='Biological',
 		Description='TBD',
-		Value=3.55,
-		UpperEstimate=3.55,
-		LowerEstimate=3.55,
+		Value=3.58,
+		UpperEstimate=3.58,
+		LowerEstimate=3.58,
 		Varying=F,
 		Source='TBD')
 
@@ -204,8 +204,8 @@ xmile_setup_parameters <- function(){
 		Source='TBD')
 
 	p_tb <- dplyr::add_row(p_tb,
-		ParameterName='Percentage_Reduction_of_Physical_Disancing',
-		ParameterType='Distancing',
+		ParameterName='Percentage_Reduction_of_Physical_Distancing',
+		ParameterType='Model',
 		Description='TBD',
 		Value=0.6,
 		UpperEstimate=0.6,
@@ -237,9 +237,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Proportion_Quarantined_q',
 		ParameterType='Pathway',
 		Description='TBD',
-		Value=0.05,
-		UpperEstimate=0.05,
-		LowerEstimate=0.05,
+		Value=0.21,
+		UpperEstimate=0.21,
+		LowerEstimate=0.21,
 		Varying=F,
 		Source='TBD')
 
@@ -247,9 +247,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Proportion_Tested_t',
 		ParameterType='Pathway',
 		Description='TBD',
-		Value=0.88,
-		UpperEstimate=0.88,
-		LowerEstimate=0.88,
+		Value=0.55,
+		UpperEstimate=0.55,
+		LowerEstimate=0.55,
 		Varying=F,
 		Source='TBD')
 
@@ -287,9 +287,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Pulse_Switch',
 		ParameterType='Pulse',
 		Description='TBD',
-		Value=1,
-		UpperEstimate=1,
-		LowerEstimate=1,
+		Value=0,
+		UpperEstimate=0,
+		LowerEstimate=0,
 		Varying=F,
 		Source='TBD')
 
@@ -307,9 +307,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Switch_Time',
 		ParameterType='Pulse',
 		Description='TBD',
-		Value=60,
-		UpperEstimate=60,
-		LowerEstimate=60,
+		Value=200,
+		UpperEstimate=200,
+		LowerEstimate=200,
 		Varying=F,
 		Source='TBD')
 
@@ -317,9 +317,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Total_Infectious_Period_D',
 		ParameterType='Biological',
 		Description='TBD',
-		Value=4.13,
-		UpperEstimate=4.13,
-		LowerEstimate=4.13,
+		Value=5.46,
+		UpperEstimate=5.46,
+		LowerEstimate=5.46,
 		Varying=F,
 		Source='TBD')
 

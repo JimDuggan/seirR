@@ -22,6 +22,9 @@ install_github("JimDuggan/seirR",auth="THE_KEY_GOES_HERE")
 ### Model Overview
 ![](https://github.com/JimDuggan/seirR/blob/master/data-raw/Images/ModelStructure.png)
 
+### Updating a model
+A new model can be created (xmile format) - arrays not supported - and processed into the package structure. For this, the package will have to be rebuilt. [Check out the code for this]
+
 ### Examples
 The following are three examples of how to use the model (and data)
 

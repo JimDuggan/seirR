@@ -40,12 +40,26 @@ with(as.list(c(stocks, auxs)), {
         sim_state$Latent_Period_L - sim_state$Incubation_Period_C
     NQI1 <- Not_Quarantine_Infectious_01/(Net_Infectious_Period_for_Infection_Compartments/2)
     NQI2 <- Not_Quarantine_Infectious_02/(Net_Infectious_Period_for_Infection_Compartments/2)
+    Numerator_Term_1 <- (sim_state$Incubation_Period_C - sim_state$Latent_Period_L) * 
+        (-sim_state$Proportion_Asymptomatic_f * sim_state$Beta_Multiplier_h + 
+            (sim_state$Proportion_Asymptomatic_f - 1) * (sim_state$Beta_Multiplier_i - 
+                1) * sim_state$Proportion_Quarantined_q + sim_state$Proportion_Asymptomatic_f)
+    Numerator_Term_2 <- (sim_state$Proportion_Asymptomatic_f - 1) * (sim_state$Beta_Multiplier_j - 
+        1) * sim_state$Proportion_Tested_t * (sim_state$Incubation_Period_C - 
+        sim_state$Latent_Period_L + sim_state$Average_Wait_for_Results)
+    Numerator_Term_3 <- sim_state$Total_Infectious_Period_D * (sim_state$Proportion_Asymptomatic_f * 
+        (sim_state$Beta_Multiplier_h - sim_state$Beta_Multiplier_i * sim_state$Proportion_Quarantined_q - 
+            sim_state$Beta_Multiplier_j * sim_state$Proportion_Tested_t + sim_state$Proportion_Quarantined_q + 
+            sim_state$Proportion_Tested_t - 1) + (sim_state$Beta_Multiplier_i - 
+        1) * sim_state$Proportion_Quarantined_q + (sim_state$Beta_Multiplier_j - 
+        1) * sim_state$Proportion_Tested_t + 1)
     Pulse_Repeat <- sim_state$Pulse_Duration + sim_state$Pulse_Off_Duration
     Reported_Incidence <- AR1
     SCH01 <- Severe_Cases_Hospital_01/(sim_state$Average_HLOS/2)
     SCH02 <- Severe_Cases_Hospital_02/(sim_state$Average_HLOS/2)
     SII01 <- Symptomatic_Immediate_Isolation_01/(Net_Infectious_Period_for_Infection_Compartments/2)
     SII02 <- Symptomatic_Immediate_Isolation_02/(Net_Infectious_Period_for_Infection_Compartments/2)
+    Test <- 0 + ifelse(time >= 20, 1, 0)
     Total_Exiting_AR02 <- Awaiting_Results_02/(max(1, Net_Infectious_Period_for_Infection_Compartments - 
         sim_state$Average_Wait_for_Results))
     Total_Exiting_Hospital_01 <- In_Hospital_01/(sim_state$Average_HLOS/3)
@@ -104,6 +118,8 @@ with(as.list(c(stocks, auxs)), {
         (Beta * C06_Total_Not_Quarantining_Infected))/sim_state$Total_Population
     Population_Attack_Rate <- Total_Removed/sim_state$Total_Population
     Pulse_Policy <- sim_state$Pulse_Strategy_Flag * Actual_Pulse_Flag
+    R0 <- (Numerator_Term_1 + Numerator_Term_2 + Numerator_Term_3) * 
+        Beta
     Total_in_Hospital <- Total_in_Hospital_Non_Severe + Total_Severe_in_NonICU_Hospital + 
         Total_Severe_in_ICU + In_Hospital_Severe
     Total_Severe_in_Hospital <- Total_Severe_in_ICU + Total_Severe_in_NonICU_Hospital
@@ -118,7 +134,7 @@ with(as.list(c(stocks, auxs)), {
         IP02d
     IR <- Lambda * Susceptible
     Physical_Distancing_Fractional_Reduction_Amount <- ifelse(Pulse_Policy == 
-        1 | sim_state$Distancing_Flag == 1, 1 - sim_state$Percentage_Reduction_of_Physical_Disancing, 
+        1 | sim_state$Distancing_Flag == 1, 1 - sim_state$Percentage_Reduction_of_Physical_Distancing, 
         1)
     ICI <- IR
     PDSVG <- Physical_Distancing_Fractional_Reduction_Amount - 
@@ -189,9 +205,11 @@ with(as.list(c(stocks, auxs)), {
         E01 = E01, E02 = E02, EXH02 = EXH02, EXH03 = EXH03, ICTI = ICTI, 
         ICU_Daily_Freed_Up_Space = ICU_Daily_Freed_Up_Space, 
         ICU01 = ICU01, ICU02 = ICU02, IP01 = IP01, Net_Infectious_Period_for_Infection_Compartments = Net_Infectious_Period_for_Infection_Compartments, 
-        NQI1 = NQI1, NQI2 = NQI2, Pulse_Repeat = Pulse_Repeat, 
-        Reported_Incidence = Reported_Incidence, SCH01 = SCH01, 
-        SCH02 = SCH02, SII01 = SII01, SII02 = SII02, Total_Exiting_AR02 = Total_Exiting_AR02, 
+        NQI1 = NQI1, NQI2 = NQI2, Numerator_Term_1 = Numerator_Term_1, 
+        Numerator_Term_2 = Numerator_Term_2, Numerator_Term_3 = Numerator_Term_3, 
+        Pulse_Repeat = Pulse_Repeat, Reported_Incidence = Reported_Incidence, 
+        SCH01 = SCH01, SCH02 = SCH02, SII01 = SII01, SII02 = SII02, 
+        Test = Test, Total_Exiting_AR02 = Total_Exiting_AR02, 
         Total_Exiting_Hospital_01 = Total_Exiting_Hospital_01, 
         Total_Exiting_Hospital_Severe = Total_Exiting_Hospital_Severe, 
         Total_Exiting_IP02 = Total_Exiting_IP02, Total_Exposed = Total_Exposed, 
@@ -206,7 +224,7 @@ with(as.list(c(stocks, auxs)), {
         EXH01b = EXH01b, ICU_Available_Space = ICU_Available_Space, 
         IHS01 = IHS01, IHS02 = IHS02, IP02a = IP02a, IP02b = IP02b, 
         IP02c = IP02c, IP02d = IP02d, Lambda = Lambda, Population_Attack_Rate = Population_Attack_Rate, 
-        Pulse_Policy = Pulse_Policy, Total_in_Hospital = Total_in_Hospital, 
+        Pulse_Policy = Pulse_Policy, R0 = R0, Total_in_Hospital = Total_in_Hospital, 
         Total_Severe_in_Hospital = Total_Severe_in_Hospital, 
         CEICUE = CEICUE, CheckSum_Population = CheckSum_Population, 
         ICIA = ICIA, ICII = ICII, ICNQ = ICNQ, ICTP = ICTP, IP02_Outflow_Total_Exiting_Checksum = IP02_Outflow_Total_Exiting_Checksum, 
@@ -221,7 +239,7 @@ with(as.list(c(stocks, auxs)), {
          sim_state$ICU_Available_Capacity, 
          sim_state$Incubation_Period_C, 
          sim_state$Latent_Period_L, 
-         sim_state$Percentage_Reduction_of_Physical_Disancing, 
+         sim_state$Percentage_Reduction_of_Physical_Distancing, 
          sim_state$Proportion_Asymptomatic_f, 
          sim_state$Proportion_Hospitalised, 
          sim_state$Proportion_Quarantined_q, 

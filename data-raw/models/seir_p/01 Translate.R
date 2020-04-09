@@ -3,6 +3,8 @@ library(readsdr) # Sys.getenv("GITHUB_PAT") Sys.unsetenv("GITHUB_PAT")
 library(stringr)
 library(dplyr)
 
+TARGET_XMILE <- "data-raw/models/seir_p/v0.2/vensim/xmile/SEIR_IRL_Population_V0.2.xmile"
+
 MODEL_ID <- "seir_p"
 
 get_ptype_lookup <- function(){
@@ -180,11 +182,7 @@ conv2params <- function (v)
   paste(c(header, body, tail),collapse = "")
 }
 
-#mdl <- readsdr::read_xmile("inst/models/seir_p/v0.1/vensim/SEIR_IRL_Population_V0.1.xmile")
-#mdl <- readsdr::read_xmile("data-raw/models/seir_p/v0.1/vensim/SEIR_IRL_Population_V0.1.xmile")
-mdl <- readsdr::read_xmile("data-raw/models/seir_p/v0.2/vensim/xmile/SEIR_IRL_Population_V0.2.xmile")
-#mdl <- readsdr::read_xmile("data-raw/models/seir_p/v0.2/vensim/test/test_pulse_train.xmile")
-
+mdl <- readsdr::read_xmile(TARGET_XMILE)
 
 ##########################################################################################
 #  OUTPUT FILE 1/5: XMILE_MODEL_SEIR_P.R

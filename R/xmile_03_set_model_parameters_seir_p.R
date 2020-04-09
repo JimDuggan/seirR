@@ -18,7 +18,7 @@ set_model_parameters_xmile <- function(p){
 	sim_state$Latent_Period_L  <- get_param(p,'Latent_Period_L') 
 	sim_state$Number_Seeds  <- get_param(p,'Number_Seeds') 
 	sim_state$PDAT  <- get_param(p,'PDAT') 
-	sim_state$Percentage_Reduction_of_Physical_Disancing  <- get_param(p,'Percentage_Reduction_of_Physical_Disancing') 
+	sim_state$Percentage_Reduction_of_Physical_Distancing  <- get_param(p,'Percentage_Reduction_of_Physical_Distancing') 
 	sim_state$Proportion_Asymptomatic_f  <- get_param(p,'Proportion_Asymptomatic_f') 
 	sim_state$Proportion_Hospitalised  <- get_param(p,'Proportion_Hospitalised') 
 	sim_state$Proportion_Quarantined_q  <- get_param(p,'Proportion_Quarantined_q') 

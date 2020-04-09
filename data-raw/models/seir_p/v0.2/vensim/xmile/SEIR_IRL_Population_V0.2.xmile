@@ -14,7 +14,7 @@
 	</header>
 	<sim_specs method="RK4" time_units="Day">
 		<start>1</start>
-		<stop>300</stop>
+		<stop>200</stop>
 		<dt>0.125</dt>
 	</sim_specs>
 	<dimensions>
@@ -464,7 +464,7 @@
 					</outflow>
 			</stock>
 			<aux name="Actual_Pulse_Flag">
-				<units></units>
+				<units>Dmnl</units>
 				<doc></doc>
 					<eqn>PULSE_TRAIN(ZZPulse_Start_Time , ZZPulse_Duration , Pulse_Repeat , ZZPulse_End )					</eqn>
 			</aux>
@@ -499,9 +499,9 @@
 					<eqn>ZZBeta_Calibrated*Physical_Distancing_Smoothed_Value*Beta_Pulse_Reduction_Factor					</eqn>
 			</aux>
 			<aux name="Beta_Pulse_Reduction_Factor">
-				<units></units>
+				<units>Dmnl</units>
 				<doc>An assumption that there is limited social distancing during the reopen phase</doc>
-					<eqn>1-Step(0.2,ZZSwitch_Time)					</eqn>
+					<eqn>1 - Step( 0.2,ZZSwitch_Time)					</eqn>
 			</aux>
 			<aux name="C01_Total_Infected_Presymptomatic">
 				<units>People</units>
@@ -715,6 +715,21 @@
 				<doc></doc>
 					<eqn>Not_Quarantine_Infectious_02/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
 			</aux>
+			<aux name="Numerator_Term_1">
+				<units>Dmnl</units>
+				<doc></doc>
+					<eqn>(ZZIncubation_Period_C-ZZLatent_Period_L)*(-ZZProportion_Asymptomatic_f*ZZBeta_Multiplier_h+(ZZProportion_Asymptomatic_f-1)*(ZZBeta_Multiplier_i-1)*ZZProportion_Quarantined_q+ZZProportion_Asymptomatic_f)					</eqn>
+			</aux>
+			<aux name="Numerator_Term_2">
+				<units></units>
+				<doc></doc>
+					<eqn>(ZZProportion_Asymptomatic_f-1)*(ZZBeta_Multiplier_j-1)*ZZProportion_Tested_t*(ZZIncubation_Period_C-ZZLatent_Period_L+ZZAverage_Wait_for_Results)					</eqn>
+			</aux>
+			<aux name="Numerator_Term_3">
+				<units></units>
+				<doc></doc>
+					<eqn>ZZTotal_Infectious_Period_D*(ZZProportion_Asymptomatic_f*(ZZBeta_Multiplier_h-ZZBeta_Multiplier_i*ZZProportion_Quarantined_q-ZZBeta_Multiplier_j*ZZProportion_Tested_t+ZZProportion_Quarantined_q+ZZProportion_Tested_t-1)+(ZZBeta_Multiplier_i-1)*ZZProportion_Quarantined_q+(ZZBeta_Multiplier_j-1)*ZZProportion_Tested_t+1)					</eqn>
+			</aux>
 			<aux name="PDSVG">
 				<units>Dmnl</units>
 				<doc></doc>
@@ -723,7 +738,7 @@
 			<aux name="Physical_Distancing_Fractional_Reduction_Amount">
 				<units>Dmnl</units>
 				<doc>If any policy is active, physical distancing occurs</doc>
-					<eqn>IF_THEN_ELSE(Pulse_Policy=1 :OR: ZZDistancing_Flag=1 , 1-ZZPercentage_Reduction_of_Physical_Disancing
+					<eqn>IF_THEN_ELSE(Pulse_Policy=1 :OR: ZZDistancing_Flag=1 , 1-ZZPercentage_Reduction_of_Physical_Distancing
 	 , 1 )					</eqn>
 			</aux>
 			<aux name="Population_Attack_Rate">
@@ -732,14 +747,19 @@
 					<eqn>Total_Removed/ZZTotal_Population					</eqn>
 			</aux>
 			<aux name="Pulse_Policy">
-				<units></units>
+				<units>Dmnl</units>
 				<doc>The overall policy</doc>
 					<eqn>ZZPulse_Strategy_Flag*Actual_Pulse_Flag					</eqn>
 			</aux>
 			<aux name="Pulse_Repeat">
-				<units></units>
+				<units>Day</units>
 				<doc>The lag time between pulse peaks</doc>
 					<eqn>ZZPulse_Duration+ZZPulse_Off_Duration					</eqn>
+			</aux>
+			<aux name="R0">
+				<units></units>
+				<doc></doc>
+					<eqn>(Numerator_Term_1+Numerator_Term_2+Numerator_Term_3)*Beta					</eqn>
 			</aux>
 			<aux name="Reported_Incidence">
 				<units>People/Day</units>
@@ -765,6 +785,11 @@
 				<units>People/Day</units>
 				<doc></doc>
 					<eqn>Symptomatic_Immediate_Isolation_02/(Net_Infectious_Period_for_Infection_Compartments/2)					</eqn>
+			</aux>
+			<aux name="Test">
+				<units></units>
+				<doc></doc>
+					<eqn>0+Step(1,20)					</eqn>
 			</aux>
 			<aux name="Total_Exiting_AR02">
 				<units>People/Day</units>
@@ -832,17 +857,17 @@
 					<eqn>Severe_Cases_Hospital_01+Severe_Cases_Hospital_02					</eqn>
 			</aux>
 			<aux name="ZZDistancing_Flag">
-				<units></units>
+				<units>Dmnl</units>
 				<doc>Whether or not physical distancing is being implemented</doc>
 					<eqn>(0+Step(1,ZZDistancing_Start_Time)-Step(1,ZZSwitch_Time))*ZZDistancing_Switch					</eqn>
 			</aux>
 			<aux name="ZZPulse_Start_Time">
-				<units></units>
+				<units>Day</units>
 				<doc>The start time for the pulse strategy</doc>
 					<eqn>ZZSwitch_Time+ZZPulse_Off_Duration					</eqn>
 			</aux>
 			<aux name="ZZPulse_Strategy_Flag">
-				<units></units>
+				<units>Dmnl</units>
 				<doc>Whether or not the pulse startegy is enabled. It will start after the physical distancing has ended (following an initial lag)</doc>
 					<eqn>(0+Step(1,ZZSwitch_Time+ZZPulse_Off_Duration))*ZZPulse_Switch					</eqn>
 			</aux>
@@ -859,27 +884,27 @@
 			<aux name="ZZAverage_Wait_for_Results">
 				<units>Day</units>
 				<doc></doc>
-					<eqn>2					</eqn>
+					<eqn>3.16					</eqn>
 			</aux>
 			<aux name="ZZBeta_Calibrated">
 				<units>1/Day</units>
 				<doc>Beta value calibrated to Irish data</doc>
-					<eqn>1.12					</eqn>
+					<eqn>0.91					</eqn>
 			</aux>
 			<aux name="ZZBeta_Multiplier_h">
 				<units>Dmnl</units>
 				<doc>Multiplicative factor for reduction in infectiousness of asymptomatic infected compartment</doc>
-					<eqn>0.21					</eqn>
+					<eqn>0.11					</eqn>
 			</aux>
 			<aux name="ZZBeta_Multiplier_i">
 				<units>Dmnl</units>
 				<doc>Multiplier on isolation compartment</doc>
-					<eqn>0.08					</eqn>
+					<eqn>0.07					</eqn>
 			</aux>
 			<aux name="ZZBeta_Multiplier_j">
 				<units>Dmnl</units>
 				<doc></doc>
-					<eqn>0.12					</eqn>
+					<eqn>0.0612326					</eqn>
 			</aux>
 			<aux name="ZZBeta_Multiplier_k">
 				<units>Dmnl</units>
@@ -887,12 +912,12 @@
 					<eqn>1					</eqn>
 			</aux>
 			<aux name="ZZDistancing_Start_Time">
-				<units></units>
+				<units>Day</units>
 				<doc>Start time for physical distancing</doc>
 					<eqn>20					</eqn>
 			</aux>
 			<aux name="ZZDistancing_Switch">
-				<units></units>
+				<units>Dmnl</units>
 				<doc>A switch that activates physical distancing</doc>
 					<eqn>1					</eqn>
 			</aux>
@@ -919,7 +944,7 @@
 			<aux name="ZZIncubation_Period_C">
 				<units>Day</units>
 				<doc>Duration of time at incubation stage</doc>
-					<eqn>5.19					</eqn>
+					<eqn>5.79					</eqn>
 			</aux>
 			<aux name="ZZLag_Time">
 				<units>1/Day</units>
@@ -929,7 +954,7 @@
 			<aux name="ZZLatent_Period_L">
 				<units>Day</units>
 				<doc>Duration of time in incubation stage</doc>
-					<eqn>3.55					</eqn>
+					<eqn>3.58					</eqn>
 			</aux>
 			<aux name="ZZNumber_Seeds">
 				<units>People</units>
@@ -941,7 +966,7 @@
 				<doc></doc>
 					<eqn>4					</eqn>
 			</aux>
-			<aux name="ZZPercentage_Reduction_of_Physical_Disancing">
+			<aux name="ZZPercentage_Reduction_of_Physical_Distancing">
 				<units>Dmnl</units>
 				<doc></doc>
 					<eqn>0.6					</eqn>
@@ -959,20 +984,20 @@
 			<aux name="ZZProportion_Quarantined_q">
 				<units>Dmnl</units>
 				<doc>Proportion quarantined</doc>
-					<eqn>0.05					</eqn>
+					<eqn>0.21					</eqn>
 			</aux>
 			<aux name="ZZProportion_Tested_t">
 				<units>Dmnl</units>
 				<doc></doc>
-					<eqn>0.88					</eqn>
+					<eqn>0.55					</eqn>
 			</aux>
 			<aux name="ZZPulse_Duration">
-				<units></units>
+				<units>Day</units>
 				<doc>The duration of the pulsed social distancing</doc>
 					<eqn>21					</eqn>
 			</aux>
 			<aux name="ZZPulse_End">
-				<units></units>
+				<units>Day</units>
 				<doc></doc>
 					<eqn>300					</eqn>
 			</aux>
@@ -982,9 +1007,9 @@
 					<eqn>10					</eqn>
 			</aux>
 			<aux name="ZZPulse_Switch">
-				<units></units>
+				<units>Dmnl</units>
 				<doc>A switch to activate the pulse policy</doc>
-					<eqn>1					</eqn>
+					<eqn>0					</eqn>
 			</aux>
 			<aux name="ZZRTime_Severe">
 				<units>Day</units>
@@ -992,14 +1017,14 @@
 					<eqn>1					</eqn>
 			</aux>
 			<aux name="ZZSwitch_Time">
-				<units></units>
+				<units>Day</units>
 				<doc>The time that continuous physical distancing ends</doc>
-					<eqn>60					</eqn>
+					<eqn>200					</eqn>
 			</aux>
 			<aux name="ZZTotal_Infectious_Period_D">
 				<units>Day</units>
 				<doc>Duration of infectiousness</doc>
-					<eqn>4.13					</eqn>
+					<eqn>5.46					</eqn>
 			</aux>
 			<aux name="ZZTotal_Population">
 				<units>People</units>
