@@ -12,6 +12,7 @@ In order to run a model, the following steps should be taken.
 library(seirR)
 library(ggplot2)
 library(dplyr)
+library(readsdr)
 ```
 
 * Next, call the constructor to create an S3 model object
@@ -25,29 +26,14 @@ The **mod** variable has the following S3 structure.
 class(mod) 
 ```
 
-The **mod** variable has three list elements, as follows:
+The **mod** variable has a number of  list elements, as follows:
 ```{r}
 str(mod) 
 ```
 
-The first is a tibble with the parameters for the simulation run.
+The paramters that drive the model can be viewed using the **summary** function
 ```{r}
-mod$params
-```
-
-The second will contain information on pulse policies that can be activated/deactivated.
-```{r}
-mod$pulse
-```
-
-The third contains a mapping from the simulation time to the calendar date
-```{r}
-mod$sim_date
-```
-
-The third contains a mapping fof contacts based on the polymod study
-```{r}
-mod$POLYMOD
+summary(mod) 
 ```
 
 
@@ -66,7 +52,7 @@ glimpse(out1)
 
 Any of these variables can then be printed.
 ```{r}
-ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=ReportedIncidence),colour="red")+
-  geom_line(out2,mapping=aes(x=SimDay,y=ReportedIncidence),colour="blue")
+ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")+
+  geom_line(out2,mapping=aes(x=SimDay,y=Reported_Incidence),colour="blue")
 ```
 
