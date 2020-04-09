@@ -3,8 +3,8 @@ library(socialmixr)
 library(stringr)
 
 load_social_contacts <- function(){
-  lower_lims <- stringr::str_split(age_data$AgeCohort, "-|\\+") %>%
-  sapply(function(interval) interval[[1]])
+  lower_lims <- stringr::str_split(age_data$AgeCohort, "-|\\+")
+  lower_lims <- sapply(lower_lims,function(interval) interval[[1]])
 
   age_data$lower.age.limit <- as.numeric(lower_lims)
 
