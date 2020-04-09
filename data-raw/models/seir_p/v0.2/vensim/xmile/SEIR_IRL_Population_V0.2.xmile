@@ -17,12 +17,6 @@
 		<stop>200</stop>
 		<dt>0.125</dt>
 	</sim_specs>
-	<dimensions>
-		<dim name=".Control">
-		</dim>
-		<dim name=".seir irl population v0.2">
-		</dim>
-	</dimensions>
 	<model>
 		<variables>
 			<stock name="Asymptomatic_Infected_01">
@@ -496,7 +490,17 @@
 			<aux name="Beta">
 				<units>1/Day</units>
 				<doc>Transmission parameter = R0/Total Infectious Period</doc>
-					<eqn>ZZBeta_Calibrated*Physical_Distancing_Smoothed_Value*Beta_Pulse_Reduction_Factor					</eqn>
+					<eqn>Beta_Intermediate*Physical_Distancing_Smoothed_Value*Beta_Pulse_Reduction_Factor					</eqn>
+			</aux>
+			<aux name="Beta_From_R0">
+				<units></units>
+				<doc></doc>
+					<eqn>ZZR0_Input/(Numerator_Term_1+Numerator_Term_2+Numerator_Term_3)					</eqn>
+			</aux>
+			<aux name="Beta_Intermediate">
+				<units></units>
+				<doc></doc>
+					<eqn>IF_THEN_ELSE( ZZR0_Fixed_Flag=1 , Beta_From_R0 , ZZBeta_Calibrated )					</eqn>
 			</aux>
 			<aux name="Beta_Pulse_Reduction_Factor">
 				<units>Dmnl</units>
@@ -1011,6 +1015,16 @@
 				<doc>A switch to activate the pulse policy</doc>
 					<eqn>0					</eqn>
 			</aux>
+			<aux name="ZZR0_Fixed_Flag">
+				<units></units>
+				<doc></doc>
+					<eqn>0					</eqn>
+			</aux>
+			<aux name="ZZR0_Input">
+				<units></units>
+				<doc></doc>
+					<eqn>2.8					</eqn>
+			</aux>
 			<aux name="ZZRTime_Severe">
 				<units>Day</units>
 				<doc></doc>
@@ -1030,12 +1044,6 @@
 				<units>People</units>
 				<doc>Total Population at outset of epidemic</doc>
 					<eqn>4.99997e+06					</eqn>
-			</aux>
-			<aux name="Time">
-				<units>Day</units>
-				<doc>Internally defined simulation time.</doc>
-					<eqn>INTEG( 1, 
-             INITIAL_TIME )					</eqn>
 			</aux>
 		</variables>
 	</model>

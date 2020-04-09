@@ -27,6 +27,8 @@ set_model_parameters_xmile <- function(p){
 	sim_state$Pulse_End  <- get_param(p,'Pulse_End') 
 	sim_state$Pulse_Off_Duration  <- get_param(p,'Pulse_Off_Duration') 
 	sim_state$Pulse_Switch  <- get_param(p,'Pulse_Switch') 
+	sim_state$R0_Fixed_Flag  <- get_param(p,'R0_Fixed_Flag') 
+	sim_state$R0_Input  <- get_param(p,'R0_Input') 
 	sim_state$RTime_Severe  <- get_param(p,'RTime_Severe') 
 	sim_state$Switch_Time  <- get_param(p,'Switch_Time') 
 	sim_state$Total_Infectious_Period_D  <- get_param(p,'Total_Infectious_Period_D') 

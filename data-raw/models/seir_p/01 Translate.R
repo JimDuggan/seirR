@@ -20,6 +20,8 @@ get_ptype_lookup <- function(){
         dplyr::add_row(ParameterName="Beta_Multiplier_i",               ParameterType="Transmission")     %>%
         dplyr::add_row(ParameterName="Beta_Multiplier_j",               ParameterType="Transmission")     %>%
         dplyr::add_row(ParameterName="Beta_Multiplier_k",               ParameterType="Transmission")     %>%
+        dplyr::add_row(ParameterName="R0_Fixed_Flag",                   ParameterType="Transmission")     %>%
+        dplyr::add_row(ParameterName="R0_Input",                        ParameterType="Transmission")     %>%
         dplyr::add_row(ParameterName="End_Time_of_Physical_Distancing",  ParameterType="Distancing")       %>%
         dplyr::add_row(ParameterName="Fraction_In_Hospital_Severe",     ParameterType="HealthSystem")     %>%
         dplyr::add_row(ParameterName="Fraction_in_Risk_Group",          ParameterType="Pathway")          %>%
@@ -30,7 +32,7 @@ get_ptype_lookup <- function(){
         dplyr::add_row(ParameterName="Latent_Period_L",                 ParameterType="Biological")       %>%
         dplyr::add_row(ParameterName="Number_Seeds",                    ParameterType="InitialCondition") %>%
         dplyr::add_row(ParameterName="PDAT",                            ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Percentage_Reduction_of_Physical_Disancing",
+        dplyr::add_row(ParameterName="Percentage_Reduction_of_Physical_Distancing",
                                                                         ParameterType="Distancing")       %>%
         dplyr::add_row(ParameterName="Physical_Distancing_Policy_Flag", ParameterType="Distancing")       %>%
         dplyr::add_row(ParameterName="Proportion_Asymptomatic_f",       ParameterType="Pathway")          %>%

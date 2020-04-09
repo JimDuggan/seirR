@@ -90,8 +90,10 @@ with(as.list(c(stocks, auxs)), {
         Total_Severe_in_ICU)
     ASI1 <- Asymptomatic_Infected_01/(Net_Infectious_Period_for_Infection_Compartments/2)
     ASI2 <- Asymptomatic_Infected_02/(Net_Infectious_Period_for_Infection_Compartments/2)
-    Beta <- sim_state$Beta_Calibrated * Physical_Distancing_Smoothed_Value * 
-        Beta_Pulse_Reduction_Factor
+    Beta_From_R0 <- sim_state$R0_Input/(Numerator_Term_1 + Numerator_Term_2 + 
+        Numerator_Term_3)
+    Beta_Intermediate <- ifelse(sim_state$R0_Fixed_Flag == 1, Beta_From_R0, 
+        sim_state$Beta_Calibrated)
     EntHos <- sim_state$Proportion_Hospitalised * Total_Exiting_AR02
     EntRem <- (1 - sim_state$Proportion_Hospitalised) * Total_Exiting_AR02
     Error_Delta <- ICU02 - Expected_ICU_Exits
@@ -110,19 +112,13 @@ with(as.list(c(stocks, auxs)), {
         sim_state$Proportion_Tested_t
     IP02d <- Total_Exiting_IP02 * (1 - sim_state$Proportion_Asymptomatic_f) * 
         (1 - sim_state$Proportion_Tested_t - sim_state$Proportion_Quarantined_q)
-    Lambda <- ((Beta * C01_Total_Infected_Presymptomatic) + (Beta * 
-        sim_state$Beta_Multiplier_h * sim_state$Beta_Multiplier_k * C02_Total_Asymptomatic_Infected) + 
-        (Beta * sim_state$Beta_Multiplier_i * C03_Total_Symptomatic_Immediate_Isolation_Infectious) + 
-        (Beta * C04_Total_Awaiting_Results_Infectious) + (Beta * 
-        sim_state$Beta_Multiplier_j * C05_Total_Isolated_After_Test_Infected) + 
-        (Beta * C06_Total_Not_Quarantining_Infected))/sim_state$Total_Population
     Population_Attack_Rate <- Total_Removed/sim_state$Total_Population
     Pulse_Policy <- sim_state$Pulse_Strategy_Flag * Actual_Pulse_Flag
-    R0 <- (Numerator_Term_1 + Numerator_Term_2 + Numerator_Term_3) * 
-        Beta
     Total_in_Hospital <- Total_in_Hospital_Non_Severe + Total_Severe_in_NonICU_Hospital + 
         Total_Severe_in_ICU + In_Hospital_Severe
     Total_Severe_in_Hospital <- Total_Severe_in_ICU + Total_Severe_in_NonICU_Hospital
+    Beta <- Beta_Intermediate * Physical_Distancing_Smoothed_Value * 
+        Beta_Pulse_Reduction_Factor
     CEICUE <- Error_Delta/sim_state$AT
     CheckSum_Population <- Susceptible + Total_Exposed + Total_Infectious + 
         Total_Removed + Total_in_Hospital
@@ -132,14 +128,22 @@ with(as.list(c(stocks, auxs)), {
     ICTP <- IP02c
     IP02_Outflow_Total_Exiting_Checksum <- IP02a + IP02b + IP02c + 
         IP02d
-    IR <- Lambda * Susceptible
+    Lambda <- ((Beta * C01_Total_Infected_Presymptomatic) + (Beta * 
+        sim_state$Beta_Multiplier_h * sim_state$Beta_Multiplier_k * C02_Total_Asymptomatic_Infected) + 
+        (Beta * sim_state$Beta_Multiplier_i * C03_Total_Symptomatic_Immediate_Isolation_Infectious) + 
+        (Beta * C04_Total_Awaiting_Results_Infectious) + (Beta * 
+        sim_state$Beta_Multiplier_j * C05_Total_Isolated_After_Test_Infected) + 
+        (Beta * C06_Total_Not_Quarantining_Infected))/sim_state$Total_Population
     Physical_Distancing_Fractional_Reduction_Amount <- ifelse(Pulse_Policy == 
         1 | sim_state$Distancing_Flag == 1, 1 - sim_state$Percentage_Reduction_of_Physical_Distancing, 
         1)
-    ICI <- IR
+    R0 <- (Numerator_Term_1 + Numerator_Term_2 + Numerator_Term_3) * 
+        Beta
+    IR <- Lambda * Susceptible
     PDSVG <- Physical_Distancing_Fractional_Reduction_Amount - 
         Physical_Distancing_Smoothed_Value
     CPDSV <- PDSVG/sim_state$PDAT
+    ICI <- IR
     d_Asymptomatic_Infected_01_dt <- IP02a - ASI1
     d_Asymptomatic_Infected_02_dt <- ASI1 - ASI2
     d_Awaiting_Results_01_dt <- IP02c - AR1
@@ -219,17 +223,18 @@ with(as.list(c(stocks, auxs)), {
          sim_state$Pulse_Start_Time, 
          Actual_Pulse_Flag, 
         Additional_ICU_Places_Required = Additional_ICU_Places_Required, 
-        ASI1 = ASI1, ASI2 = ASI2, Beta = Beta, EntHos = EntHos, 
+        ASI1 = ASI1, ASI2 = ASI2, Beta_From_R0 = Beta_From_R0, 
+        Beta_Intermediate = Beta_Intermediate, EntHos = EntHos, 
         EntRem = EntRem, Error_Delta = Error_Delta, EXH01a = EXH01a, 
         EXH01b = EXH01b, ICU_Available_Space = ICU_Available_Space, 
         IHS01 = IHS01, IHS02 = IHS02, IP02a = IP02a, IP02b = IP02b, 
-        IP02c = IP02c, IP02d = IP02d, Lambda = Lambda, Population_Attack_Rate = Population_Attack_Rate, 
-        Pulse_Policy = Pulse_Policy, R0 = R0, Total_in_Hospital = Total_in_Hospital, 
+        IP02c = IP02c, IP02d = IP02d, Population_Attack_Rate = Population_Attack_Rate, 
+        Pulse_Policy = Pulse_Policy, Total_in_Hospital = Total_in_Hospital, 
         Total_Severe_in_Hospital = Total_Severe_in_Hospital, 
-        CEICUE = CEICUE, CheckSum_Population = CheckSum_Population, 
+        Beta = Beta, CEICUE = CEICUE, CheckSum_Population = CheckSum_Population, 
         ICIA = ICIA, ICII = ICII, ICNQ = ICNQ, ICTP = ICTP, IP02_Outflow_Total_Exiting_Checksum = IP02_Outflow_Total_Exiting_Checksum, 
-        IR = IR, Physical_Distancing_Fractional_Reduction_Amount = Physical_Distancing_Fractional_Reduction_Amount, 
-        ICI = ICI, PDSVG = PDSVG, CPDSV = CPDSV,  sim_state$AT, 
+        Lambda = Lambda, Physical_Distancing_Fractional_Reduction_Amount = Physical_Distancing_Fractional_Reduction_Amount, 
+        R0 = R0, IR = IR, PDSVG = PDSVG, CPDSV = CPDSV, ICI = ICI, 
          sim_state$Average_Wait_for_Results, 
          sim_state$Beta_Multiplier_h, 
          sim_state$Beta_Multiplier_j, 
@@ -245,6 +250,7 @@ with(as.list(c(stocks, auxs)), {
          sim_state$Proportion_Quarantined_q, 
          sim_state$Pulse_Duration, 
          sim_state$Pulse_Off_Duration, 
+         sim_state$R0_Fixed_Flag, 
          sim_state$RTime_Severe, 
          sim_state$Total_Infectious_Period_D, 
          sim_state$Total_Population))

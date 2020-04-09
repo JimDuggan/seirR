@@ -205,7 +205,7 @@ xmile_setup_parameters <- function(){
 
 	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='Percentage_Reduction_of_Physical_Distancing',
-		ParameterType='Model',
+		ParameterType='Distancing',
 		Description='TBD',
 		Value=0.6,
 		UpperEstimate=0.6,
@@ -290,6 +290,26 @@ xmile_setup_parameters <- function(){
 		Value=0,
 		UpperEstimate=0,
 		LowerEstimate=0,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='R0_Fixed_Flag',
+		ParameterType='Transmission',
+		Description='TBD',
+		Value=0,
+		UpperEstimate=0,
+		LowerEstimate=0,
+		Varying=F,
+		Source='TBD')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='R0_Input',
+		ParameterType='Transmission',
+		Description='TBD',
+		Value=2.8,
+		UpperEstimate=2.8,
+		LowerEstimate=2.8,
 		Varying=F,
 		Source='TBD')
 
