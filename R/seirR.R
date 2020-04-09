@@ -163,6 +163,7 @@ run.seir <- function(o,DT=0.125,return_all = F){
 #' @param p is the parameter name
 #' @param v is the new value for the parameter
 #' @param isString to indicate if its a string param.
+#' @param checkStr check the match
 #' @return A tibble of simulation results
 #' @export
 #' @examples
@@ -170,14 +171,22 @@ run.seir <- function(o,DT=0.125,return_all = F){
 #' m <- create_seir()
 #' o <- run(m)
 #' }
-set_param <- function(o, p, v, isString=F){
+set_param <- function(o, p, v, isString=F, checkStr=F){
   UseMethod("set_param")
 }
 
 #' @export
-set_param.seir <- function(o, p, v, isString=F){
+set_param.seir <- function(o, p, v, isString=F,checkStr=F){
   class_o <- class(o)
   o_params <- o[["params"]]
+
+  if(checkStr){
+    v1 <- paste0("Input param:",p,":\n")
+    v2 <- paste0("Lookup param:",o_params[o_params$ParameterName==p,"Value"],":\n")
+    cat(v1)
+    cat(v2)
+  }
+
   if(!isString){
      o_params[o_params$ParameterName==p,"Value"] <- v
   }else{

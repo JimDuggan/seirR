@@ -21,13 +21,13 @@ populate_results <- function(results,return_all,DT){
                             dplyr::everything())
 
   # Remove all the unnamed variables, required due to workaround in deSolve function
-  results <- select(results, !matches("^V\\d+"))
+  results <- dplyr::select(results, !dplyr::matches("^V\\d+"))
 
   # Need to add all the constants to the results
   constants <- xmile_get_constants()
   for(i in seq_along(constants)){
     varname <- names(constants[i])
-    results <- mutate(results,!!varname := constants[i])
+    results <- dplyr::mutate(results,!!varname := constants[i])
   }
 
   if(!return_all){

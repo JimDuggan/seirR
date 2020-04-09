@@ -6,6 +6,7 @@ output:
 ### seirR 
 This package contains a SEIR model to model the spread of an infectious disease. The model is a population-level model. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
 
+
 ### Current Version 0.2
 This package is currently undergoing testing and has not yet been released. See version history below for a record of changes and version.
 
@@ -46,5 +47,5 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Explain%20
 * Added a new function **get_curve_analysis()** to detect bheaviour mode changes for any time series
 * Reimplemented the simulation results as a "res_seri_p" and res_seir" class (also inherits from tibble)
 * Added pulsing logic so that interventions can be switched on and off, to see the impact on infections. This new paramter set can be viewed by typing **summary(mod)**
-* Adding functions to process Vensim sesnitivity analysis output
+* Adding new function to get behaviour modes for a variable **get_curve_analysis()**
 

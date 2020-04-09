@@ -4,7 +4,7 @@
 \alias{set_param}
 \title{Sets a parameter value}
 \usage{
-set_param(o, p, v, isString = F)
+set_param(o, p, v, isString = F, checkStr = F)
 }
 \arguments{
 \item{o}{is the seir S3 object}
@@ -14,6 +14,8 @@ set_param(o, p, v, isString = F)
 \item{v}{is the new value for the parameter}
 
 \item{isString}{to indicate if its a string param.}
+
+\item{checkStr}{check the match}
 }
 \value{
 A tibble of simulation results

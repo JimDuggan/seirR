@@ -6,7 +6,7 @@ library(purrr)
 mod <- create_seir_p()
 mod <- set_param(mod,"distancing_flag",1)
 
-NRUNS <- 30
+NRUNS <- 5
 
 lower <- 0.2
 upper <- 0.8

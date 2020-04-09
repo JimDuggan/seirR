@@ -25,7 +25,15 @@ Authors@R:
     person(given = "Simon",
          family = "More",
          role = c("aut"),
-         email = "simon.more@ucd.ie"))
+         email = "simon.more@ucd.ie"),
+   person(given = "Maire",
+         family = "Connolly",
+         role = c("aut"),
+         email = "maire.connolly@nuigalway.ie"),
+  person(given = "Jair",
+         family = "Andrade",
+         role = c("aut"),
+         email = "jair.albert.andrade@gmail.com"))
 Description: The package provides an API to an SEIR model for disease transmission, implemented in deSolve.
     The structure of the model includes transmisson dynamics, physcial distancing measures, and hospital flows.
 License: MIT + file LICENSE
@@ -42,6 +50,8 @@ Imports:
     lubridate,
     socialmixr,
     magrittr,
-    stringr
+    stringr,
+    tidyr,
+    readsdr
 LazyData: true
 RoxygenNote: 6.1.1
