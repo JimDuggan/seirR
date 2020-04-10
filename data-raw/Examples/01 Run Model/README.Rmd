@@ -8,7 +8,7 @@ In order to run a model, the following steps should be taken.
 
 * First, load in the libraries, and include **ggplot2** for visualisation
 
-```{r}
+```{r,message=F}
 library(seirR)
 library(ggplot2)
 library(dplyr)

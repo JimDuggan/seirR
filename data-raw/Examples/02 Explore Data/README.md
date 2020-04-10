@@ -10,38 +10,14 @@ This data is stored in the **date\_env** environment, and can be
 accessed. The following is the process for doing this
 
   - First, load in the libraries, and include **ggplot2** for
-    visualisation, and **dplyr** and **tidyr** for data
-    manipulation.
+    visualisation, and **dplyr** and **tidyr** for data manipulation.
 
 <!-- end list -->
 
 ``` r
 library(seirR)
-```
-
-    ## Welcome to package seirR v0.0.0.1
-
-    ## Checking https://covid.ourworldindata.org/data/ecdc/full_data.csv  for data update...
-
-    ## Loading https://covid.ourworldindata.org/data/ecdc/full_data.csv  to global environment data_env
-
-``` r
 library(ggplot2)
 library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(tidyr)
 ```
 
@@ -53,7 +29,7 @@ library(tidyr)
 data_env$covid_data
 ```
 
-    ## # A tibble: 8,195 x 6
+    ## # A tibble: 10,024 x 6
     ##    Date       Country ReportedNewCases ReportedNewDeat… ReportedTotalCa…
     ##    <date>     <chr>              <dbl>            <dbl>            <dbl>
     ##  1 2019-12-31 Afghan…                0                0                0
@@ -66,14 +42,14 @@ data_env$covid_data
     ##  8 2020-01-07 Afghan…                0                0                0
     ##  9 2020-01-08 Afghan…                0                0                0
     ## 10 2020-01-09 Afghan…                0                0                0
-    ## # … with 8,185 more rows, and 1 more variable: ReportedTotalDeaths <dbl>
+    ## # … with 10,014 more rows, and 1 more variable: ReportedTotalDeaths <dbl>
 
   - Filter out a country of interest, and reshape to tidy data format
 
 <!-- end list -->
 
 ``` r
-countries <- c("South Korea")
+countries <- c("Norway")
 
 ds <- filter(data_env$covid_data,
              Country %in% countries)
@@ -90,20 +66,20 @@ ds_piv <- ds %>% pivot_longer(-c(Date,Country),names_to ="Measure",values_to = "
 ds_piv
 ```
 
-    ## # A tibble: 186 x 4
-    ##    Date       Country     Measure           Number
-    ##    <date>     <chr>       <chr>              <dbl>
-    ##  1 2019-12-31 South Korea ReportedNewCases       0
-    ##  2 2019-12-31 South Korea ReportedNewDeaths      0
-    ##  3 2020-01-01 South Korea ReportedNewCases       0
-    ##  4 2020-01-01 South Korea ReportedNewDeaths      0
-    ##  5 2020-01-02 South Korea ReportedNewCases       0
-    ##  6 2020-01-02 South Korea ReportedNewDeaths      0
-    ##  7 2020-01-03 South Korea ReportedNewCases       0
-    ##  8 2020-01-03 South Korea ReportedNewDeaths      0
-    ##  9 2020-01-04 South Korea ReportedNewCases       0
-    ## 10 2020-01-04 South Korea ReportedNewDeaths      0
-    ## # … with 176 more rows
+    ## # A tibble: 204 x 4
+    ##    Date       Country Measure           Number
+    ##    <date>     <chr>   <chr>              <dbl>
+    ##  1 2019-12-31 Norway  ReportedNewCases       0
+    ##  2 2019-12-31 Norway  ReportedNewDeaths      0
+    ##  3 2020-01-01 Norway  ReportedNewCases       0
+    ##  4 2020-01-01 Norway  ReportedNewDeaths      0
+    ##  5 2020-01-02 Norway  ReportedNewCases       0
+    ##  6 2020-01-02 Norway  ReportedNewDeaths      0
+    ##  7 2020-01-03 Norway  ReportedNewCases       0
+    ##  8 2020-01-03 Norway  ReportedNewDeaths      0
+    ##  9 2020-01-04 Norway  ReportedNewCases       0
+    ## 10 2020-01-04 Norway  ReportedNewDeaths      0
+    ## # … with 194 more rows
 
   - Visualise some of the results
 
@@ -111,7 +87,8 @@ ds_piv
 
 ``` r
 ggplot(ds_piv,aes(x=Date,y=Number,colour=Measure))+
-  geom_point()+geom_line()
+  facet_grid(Measure~.,scales = "free_y")+
+  geom_point()+geom_line()+ggtitle("Norway Data")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->

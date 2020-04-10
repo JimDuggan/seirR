@@ -12,31 +12,8 @@ In order to run a model, the following steps should be taken.
 
 ``` r
 library(seirR)
-```
-
-    ## Welcome to package seirR v0.2
-
-    ## Checking https://covid.ourworldindata.org/data/ecdc/full_data.csv  for data update...
-
-    ## Loading https://covid.ourworldindata.org/data/ecdc/full_data.csv  to global environment data_env
-
-``` r
 library(ggplot2)
 library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(readsdr)
 ```
 
