@@ -72,7 +72,7 @@ get_ptype_lookup <- function(){
                        Models="seir_p")     %>%
         dplyr::add_row(ParameterName="ICU_Residency_Time",
                        ParameterType="HealthSystem",
-                       Description="Average residencu time in ICU (day)",
+                       Description="Average residence time in ICU (day)",
                        Models="seir_p")     %>%
         dplyr::add_row(ParameterName="Incubation_Period_C",
                        ParameterType="Biological",
@@ -156,7 +156,7 @@ get_ptype_lookup <- function(){
                        Models="seir_p")            %>%
         dplyr::add_row(ParameterName="Pulse_Switch",
                        ParameterType="Pulse",
-                       Description="Activate/deactive the pulse policy",
+                       Description="Activate/deactivate the pulse policy",
                        Models="seir_p")            %>%
         dplyr::add_row(ParameterName="Switch_Time",
                        ParameterType="Pulse",
