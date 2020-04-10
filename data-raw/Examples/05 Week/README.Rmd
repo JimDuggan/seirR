@@ -1,25 +1,38 @@
 ---
 output: github_document
-title:  Model Assumptions
+title:  Gathering data by week (aggregating daily results)
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-At any point, the current model assumptions can be displayed by calling the function **explain()**.
+The libraries are loaded
 
-In this example, the model is loaded and checked, and then a parameter is changed, and the model assumptions checked again.
-
-```{r}
+```{r,message=FALSE}
 library(seirR)
+library(ggplot2)
+library(dplyr)
+library(readsdr)
 ```
 
+The model is run
 
 ```{r}
 mod <- create_seir_p()
-explain(mod)
+
+out1 <- run(mod)
 ```
 
-Change a parameter and call **explain()** again (see parameter **distancing_flag** has changed)
+Using dplyr, the results are aggregated
+
 ```{r}
-mod <- set_param(mod,"distancing_flag",1)
-explain(mod)
+weekly <- out1 %>% select(SimDay,Date,Week,Reported_Incidence) %>%
+                   group_by(Week) %>%
+                   summarise(WeeklyReportedIncidence=sum(Reported_Incidence),
+                             WeekDate=max(Date)) %>%
+                   arrange(Week)
 ```
+
+The weekly values are then displayed
+```{r}
+ggplot(weekly,aes(x=WeekDate,y=WeeklyReportedIncidence))+geom_point()+geom_line()
+```
+

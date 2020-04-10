@@ -24,6 +24,8 @@ install_github("JimDuggan/seirR",auth="THE_KEY_GOES_HERE")
 ### Model Overview
 ![](https://github.com/JimDuggan/seirR/blob/master/data-raw/Images/ModelStructure.png)
 
+[The model equations can be viewed](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/Equations/Model%20V0.2.pdf)
+
 ### Updating a model
 A new model can be created (xmile format) - arrays not supported - and processed into the package structure. For this, the package will have to be rebuilt. [Check out the code for this]
 
@@ -36,8 +38,12 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/01%20Run%20Mode
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/02%20Explore%20Data)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/02_test_data.R)
 - [**Exploring Scenarios. ** ](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Scenarios)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/03_test_scenarios.R)
-- [Explain Feature](
-https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Explain%20Feature)
+- [**Sensitivity Runs. ** ](
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Sensitivity)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/04_test_sens.R)
+- [**Weekly Aggregations. ** ](
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Sensitivity)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/04_test_sens.R)
+
+
 
 ### Version History
 #### Version 0.1
