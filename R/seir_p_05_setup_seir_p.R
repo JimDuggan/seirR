@@ -97,9 +97,9 @@ xmile_setup_parameters <- function(){
 		ParameterName='Distancing_Switch',
 		ParameterType='Distancing',
 		Description='A flag that switches on the physcial distancing policy',
-		Value=1,
-		UpperEstimate=1,
-		LowerEstimate=1,
+		Value=0,
+		UpperEstimate=0,
+		LowerEstimate=0,
 		Models='seir_p')
 
 	p_tb <- dplyr::add_row(p_tb,
@@ -268,18 +268,18 @@ xmile_setup_parameters <- function(){
 		ParameterName='R0_Fixed_Flag',
 		ParameterType='Transmission',
 		Description='Flag (0|1) that will fix R0 for the simulation',
-		Value=0,
-		UpperEstimate=0,
-		LowerEstimate=0,
+		Value=1,
+		UpperEstimate=1,
+		LowerEstimate=1,
 		Models='seir_p')
 
 	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='R0_Input',
 		ParameterType='Transmission',
 		Description='If R0_Fixed_Flag is set to 1, this value of R0 will be used.',
-		Value=2.8,
-		UpperEstimate=2.8,
-		LowerEstimate=2.8,
+		Value=3.67,
+		UpperEstimate=3.67,
+		LowerEstimate=3.67,
 		Models='seir_p')
 
 	p_tb <- dplyr::add_row(p_tb,

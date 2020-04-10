@@ -90,9 +90,9 @@ with(as.list(c(stocks, auxs)), {
         Total_Severe_in_ICU)
     ASI1 <- Asymptomatic_Infected_01/(Net_Infectious_Period_for_Infection_Compartments/2)
     ASI2 <- Asymptomatic_Infected_02/(Net_Infectious_Period_for_Infection_Compartments/2)
-    Beta_From_R0 <- sim_state$R0_Input/(Numerator_Term_1 + Numerator_Term_2 + 
+    Beta_From_Input_R0 <- sim_state$R0_Input/(Numerator_Term_1 + Numerator_Term_2 + 
         Numerator_Term_3)
-    Beta_Intermediate <- ifelse(sim_state$R0_Fixed_Flag == 1, Beta_From_R0, 
+    Beta_Intermediate <- ifelse(sim_state$R0_Fixed_Flag == 1, Beta_From_Input_R0, 
         sim_state$Beta_Calibrated)
     EntHos <- sim_state$Proportion_Hospitalised * Total_Exiting_AR02
     EntRem <- (1 - sim_state$Proportion_Hospitalised) * Total_Exiting_AR02
@@ -223,7 +223,7 @@ with(as.list(c(stocks, auxs)), {
          sim_state$Pulse_Start_Time, 
          Actual_Pulse_Flag, 
         Additional_ICU_Places_Required = Additional_ICU_Places_Required, 
-        ASI1 = ASI1, ASI2 = ASI2, Beta_From_R0 = Beta_From_R0, 
+        ASI1 = ASI1, ASI2 = ASI2, Beta_From_Input_R0 = Beta_From_Input_R0, 
         Beta_Intermediate = Beta_Intermediate, EntHos = EntHos, 
         EntRem = EntRem, Error_Delta = Error_Delta, EXH01a = EXH01a, 
         EXH01b = EXH01b, ICU_Available_Space = ICU_Available_Space, 

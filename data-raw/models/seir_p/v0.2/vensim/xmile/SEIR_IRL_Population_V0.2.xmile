@@ -492,7 +492,7 @@
 				<doc>Transmission parameter = R0/Total Infectious Period</doc>
 					<eqn>Beta_Intermediate*Physical_Distancing_Smoothed_Value*Beta_Pulse_Reduction_Factor					</eqn>
 			</aux>
-			<aux name="Beta_From_R0">
+			<aux name="Beta_From_Input_R0">
 				<units></units>
 				<doc></doc>
 					<eqn>ZZR0_Input/(Numerator_Term_1+Numerator_Term_2+Numerator_Term_3)					</eqn>
@@ -500,7 +500,7 @@
 			<aux name="Beta_Intermediate">
 				<units></units>
 				<doc></doc>
-					<eqn>IF_THEN_ELSE( ZZR0_Fixed_Flag=1 , Beta_From_R0 , ZZBeta_Calibrated )					</eqn>
+					<eqn>IF_THEN_ELSE( ZZR0_Fixed_Flag=1 , Beta_From_Input_R0 , ZZBeta_Calibrated )					</eqn>
 			</aux>
 			<aux name="Beta_Pulse_Reduction_Factor">
 				<units>Dmnl</units>
@@ -923,7 +923,7 @@
 			<aux name="ZZDistancing_Switch">
 				<units>Dmnl</units>
 				<doc>A switch that activates physical distancing</doc>
-					<eqn>1					</eqn>
+					<eqn>0					</eqn>
 			</aux>
 			<aux name="ZZFraction_In_Hospital_Severe">
 				<units>Dmnl</units>
@@ -1018,12 +1018,12 @@
 			<aux name="ZZR0_Fixed_Flag">
 				<units></units>
 				<doc></doc>
-					<eqn>0					</eqn>
+					<eqn>1					</eqn>
 			</aux>
 			<aux name="ZZR0_Input">
 				<units></units>
 				<doc></doc>
-					<eqn>2.8					</eqn>
+					<eqn>3.67					</eqn>
 			</aux>
 			<aux name="ZZRTime_Severe">
 				<units>Day</units>

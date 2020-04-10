@@ -2,7 +2,7 @@ library(dplyr)
 library(deSolve)
 library(lubridate)
 
-populate_results <- function(results,return_all,DT){
+populate_results <- function(mod_object,results,return_all,DT){
   # assume start day is always day 1
   results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+(floor(time)-1))
   results <-  dplyr::mutate(results,Week=lubridate::week(Date))
@@ -24,10 +24,18 @@ populate_results <- function(results,return_all,DT){
   results <- dplyr::select(results, !dplyr::matches("^V\\d+"))
 
   # Need to add all the constants to the results
+
   constants <- xmile_get_constants()
+  recent_values <- sapply(names(constants), function(n){
+    get_param(mod_object,n)
+  })
+
+
+
   for(i in seq_along(constants)){
     varname <- names(constants[i])
-    results <- dplyr::mutate(results,!!varname := constants[i])
+    #results <- dplyr::mutate(results,!!varname := constants[i])
+    results <- dplyr::mutate(results,!!varname := recent_values[i])
   }
 
   if(!return_all){

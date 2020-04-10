@@ -50,7 +50,7 @@ run_model_seir_p <- function (mod_object, DT=0.125,return_all=F){
     stop(paste("Unrecognised S3 class ",class(mod_object)))
   }
 
-  results <- populate_results(results,return_all,DT)
+  results <- populate_results(mod_object_params,results,return_all,DT)
 
   class(results) <- c("res_seir_p","res_seir", "tbl_df", "tbl",   "data.frame" )
 
