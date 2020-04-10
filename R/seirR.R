@@ -16,38 +16,6 @@ library(lubridate)
   get_world_data()
 }
 
-#-------------------------------------------------------------------------------------
-#' Creates an object to facilitate running the simulation
-#'
-#' \code{create_seir_p} returns an seir object to the calling program.
-#' This object contains a tibble with default parameter, any of which
-#' can be modified before the model is rum
-#' @return An S3 object of class seir
-#' @examples
-#' \dontrun{
-#' mod <- create_seir()
-#' }
-create_seir_common <- function (){
-  tb <- tibble::tibble(ParameterName=character(),
-                       ParameterType=character(),
-                       Description=character(),
-                       Value=numeric(),
-                       UpperEstimate=numeric(),
-                       LowerEstimate=numeric(),
-                       Varying=logical(),
-                       Source=character(),
-                       ValueS=character())
-
-  tb <- get_initial_conditions_01(tb)
-  tb <- get_transmission_params_02(tb)
-  tb <- get_biological_params_03(tb)
-  tb <- get_flow_params_04(tb)
-  tb <- get_distancing_params_05(tb)
-  tb <- get_health_system_params_06(tb)
-
-  tb
-}
-
 create_simtime_tibble <- function(mod, mod_offset=0){
   mod_object_params         <- mod$params
   class(mod_object_params)  <- c(class(mod)[1],"seir","tbl_df","tbl","data.frame")
@@ -268,7 +236,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Initial Conditions\n")
     cat("======================\n")
     invisible(sapply(1:nrow(target),function(row){
-       cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+       cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+           colourise(target[row,"Description"],"red"),"\n");
        if(target[row,"ParameterName"] == "start_day"){
          cat(target[row,"ParameterName"]," = ",target[row,"ValueS"],"\n");
      }
@@ -283,7 +252,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Transmission Parameters\n")
     cat("===========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
       }))
     counter<-counter+1
   }
@@ -294,7 +264,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Biological Parameters\n")
     cat("=========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
     }))
     counter<-counter+1
   }
@@ -305,7 +276,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Pathway Flow Parameters\n")
     cat("===========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
     }))
     counter<-counter+1
   }
@@ -317,7 +289,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Physical Distancing Parameters\n")
     cat("==================================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
     }))
     counter<-counter+1
   }
@@ -328,7 +301,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Health System Parameters\n")
     cat("============================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
     }))
     counter<-counter+1
   }
@@ -340,7 +314,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Pulse Policy Parameters\n")
     cat("===========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
     }))
     counter<-counter+1
   }
@@ -352,7 +327,8 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Additional Model Parameters\n")
     cat("===============================\n")
     invisible(sapply(1:nrow(target),function(row){
-      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\n");
+      cat(target[row,"ParameterName"]," = ",target[row,"Value"],"\t\t => ",
+          colourise(target[row,"Description"],"red"),"\n");
     }))
     counter<-counter+1
   }

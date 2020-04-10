@@ -9,48 +9,159 @@ MODEL_ID <- "seir_p"
 
 get_ptype_lookup <- function(){
   pl <- tibble::tibble(ParameterName=character(),
-                       ParameterType=character())
+                       ParameterType=character(),
+                       Description=character(),
+                       Models=character())
 
   pl <- pl %>%
-        dplyr::add_row(ParameterName="AT",                              ParameterType="Model")            %>%
-        dplyr::add_row(ParameterName="Average_HLOS",                    ParameterType="HealthSystem")     %>%
-        dplyr::add_row(ParameterName="Average_Wait_for_Results",        ParameterType="HealthSystem")     %>%
-        dplyr::add_row(ParameterName="Beta_Calibrated",                 ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="Beta_Multiplier_h",               ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="Beta_Multiplier_i",               ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="Beta_Multiplier_j",               ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="Beta_Multiplier_k",               ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="R0_Fixed_Flag",                   ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="R0_Input",                        ParameterType="Transmission")     %>%
-        dplyr::add_row(ParameterName="End_Time_of_Physical_Distancing",  ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Fraction_In_Hospital_Severe",     ParameterType="HealthSystem")     %>%
-        dplyr::add_row(ParameterName="Fraction_in_Risk_Group",          ParameterType="Pathway")          %>%
-        dplyr::add_row(ParameterName="ICU_Available_Capacity",          ParameterType="HealthSystem")     %>%
-        dplyr::add_row(ParameterName="ICU_Residency_Time",              ParameterType="HealthSystem")     %>%
-        dplyr::add_row(ParameterName="Incubation_Period_C",             ParameterType="Biological")       %>%
-        dplyr::add_row(ParameterName="Lag_Time",                        ParameterType="Model")            %>%
-        dplyr::add_row(ParameterName="Latent_Period_L",                 ParameterType="Biological")       %>%
-        dplyr::add_row(ParameterName="Number_Seeds",                    ParameterType="InitialCondition") %>%
-        dplyr::add_row(ParameterName="PDAT",                            ParameterType="Distancing")       %>%
+        dplyr::add_row(ParameterName="AT",
+                       ParameterType="Model",
+                       Description="Adjustment time for ICU exits",
+                       Models="seir_p")            %>%
+        dplyr::add_row(ParameterName="Average_HLOS",
+                       ParameterType="HealthSystem",
+                       Description="Average length of stay in hospital (days)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Average_Wait_for_Results",
+                       ParameterType="HealthSystem",
+                       Description="Average wait for test results (days)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Beta_Calibrated",
+                       ParameterType="Transmission",
+                       Description="Estomated effective contact rate (1/day)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Beta_Multiplier_h",
+                       ParameterType="Transmission",
+                       Description="Effective contact rate multiplier for asymptomatic (dmnl)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Beta_Multiplier_i",
+                       ParameterType="Transmission",
+                       Description="Effective contact rate multiplier for those in isolation (dmnl)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Beta_Multiplier_j",
+                       ParameterType="Transmission",
+                       Description="Effective contact rate multiplier for those awaiting results (dmnl)",
+                       Models="seir_p")  %>%
+        dplyr::add_row(ParameterName="Beta_Multiplier_k",
+                       ParameterType="Transmission",
+                       Description="Additional self-quarantine multiplier for asymptomatic (dmnl)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="R0_Fixed_Flag",
+                       ParameterType="Transmission",
+                       Description="Flag (0|1) that will fix R0 for the simulation",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="R0_Input",
+                       ParameterType="Transmission",
+                       Description="If R0_Fixed_Flag is set to 1, this value of R0 will be used.",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="End_Time_of_Physical_Distancing",
+                       ParameterType="Distancing",
+                       Description="When physical distancing is ended. Note, pulse options override this",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Fraction_In_Hospital_Severe",
+                       ParameterType="HealthSystem",
+                       Description="Fraction of those entering hospital who become severely ill (dimn)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Fraction_in_Risk_Group",
+                       ParameterType="Pathway",
+                       Description="Fraction of those hospitalised who are at risk of severe illness",
+                       Models="seir_p")          %>%
+        dplyr::add_row(ParameterName="ICU_Available_Capacity",
+                       ParameterType="HealthSystem",
+                       Description="Available ICU capacity (people)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="ICU_Residency_Time",
+                       ParameterType="HealthSystem",
+                       Description="Average residencu time in ICU (day)",
+                       Models="seir_p")     %>%
+        dplyr::add_row(ParameterName="Incubation_Period_C",
+                       ParameterType="Biological",
+                       Description="Average incubation period, includes infectious element",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Lag_Time",
+                       ParameterType="Model",
+                       Description="Amount of time to make ICU space available (day)",
+                       Models="seir_p")            %>%
+        dplyr::add_row(ParameterName="Latent_Period_L",
+                       ParameterType="Biological",
+                       Description="Average latent time (not infectious)",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Number_Seeds",
+                       ParameterType="InitialCondition",
+                       Description="Initial number of infectious people in the population",
+                       Models="seir_p") %>%
+        dplyr::add_row(ParameterName="PDAT",
+                       ParameterType="Distancing",
+                       Description="Time lag before distancing measures have an impact (day)",
+                       Models="seir_p")       %>%
         dplyr::add_row(ParameterName="Percentage_Reduction_of_Physical_Distancing",
-                                                                        ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Physical_Distancing_Policy_Flag", ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Proportion_Asymptomatic_f",       ParameterType="Pathway")          %>%
-        dplyr::add_row(ParameterName="Proportion_Hospitalised",         ParameterType="Pathway")          %>%
-        dplyr::add_row(ParameterName="Proportion_Quarantined_q",        ParameterType="Pathway")          %>%
-        dplyr::add_row(ParameterName="Proportion_Tested_t",             ParameterType="Pathway")          %>%
-        dplyr::add_row(ParameterName="RTime_Severe",                    ParameterType="Model")            %>%
+                       ParameterType="Distancing",
+                       Description="Percentage reduction in transmission via physical distancing",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Physical_Distancing_Policy_Flag",
+                       ParameterType="Distancing",
+                       Description="A flag that switches on physcial distancing. Interacts with pulse flag.",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Proportion_Asymptomatic_f",
+                       ParameterType="Pathway",
+                       Description="Proportion of the population who are asymptomatic",
+                       Models="seir_p")          %>%
+        dplyr::add_row(ParameterName="Proportion_Hospitalised",
+                       ParameterType="Pathway",
+                       Description="Proportion of the population who are hospitalised",
+                       Models="seir_p")          %>%
+        dplyr::add_row(ParameterName="Proportion_Quarantined_q",
+                       ParameterType="Pathway",
+                       Description="Proportion of the population who are quarantined",
+                       Models="seir_p")          %>%
+        dplyr::add_row(ParameterName="Proportion_Tested_t",
+                       ParameterType="Pathway",
+                       Description="Proportion of the population who are tested",
+                       Models="seir_p")          %>%
+        dplyr::add_row(ParameterName="RTime_Severe",
+                       ParameterType="Model",
+                       Description="Time before developing severe symptoms",
+                       Models="seir_p")            %>%
         dplyr::add_row(ParameterName="Start_Time_of_Physical_Distancing",
-                                                                        ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Total_Infectious_Period_D",       ParameterType="Biological")       %>%
-        dplyr::add_row(ParameterName="Total_Population",                ParameterType="InitialCondition") %>%
-        dplyr::add_row(ParameterName="Distancing_Start_Time",           ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Distancing_Switch",               ParameterType="Distancing")       %>%
-        dplyr::add_row(ParameterName="Pulse_Duration",                  ParameterType="Pulse")            %>%
-        dplyr::add_row(ParameterName="Pulse_End",                       ParameterType="Pulse")            %>%
-        dplyr::add_row(ParameterName="Pulse_Off_Duration",              ParameterType="Pulse")            %>%
-        dplyr::add_row(ParameterName="Pulse_Switch",                    ParameterType="Pulse")            %>%
-        dplyr::add_row(ParameterName="Switch_Time",                     ParameterType="Pulse")
+                       ParameterType="Distancing",
+                       Description="When physical distancing is started.",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Total_Infectious_Period_D",
+                       ParameterType="Biological",
+                       Description="Total infectious period for disease (days)",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Total_Population",
+                       ParameterType="InitialCondition",
+                       Description="Total population (people)",
+                       Models="seir_p") %>%
+        dplyr::add_row(ParameterName="Distancing_Start_Time",
+                       ParameterType="Distancing",
+                       Description="When physical distancing is started",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Distancing_Switch",
+                       ParameterType="Distancing",
+                       Description="A flag that switches on the physcial distancing policy",
+                       Models="seir_p")       %>%
+        dplyr::add_row(ParameterName="Pulse_Duration",
+                       ParameterType="Pulse",
+                       Description="The duration of the pulse intervention (relaxation of distancing)",
+                       Models="seir_p")            %>%
+        dplyr::add_row(ParameterName="Pulse_End",
+                       ParameterType="Pulse",
+                       Description="End of pulse policy",
+                       Models="seir_p")            %>%
+        dplyr::add_row(ParameterName="Pulse_Off_Duration",
+                       ParameterType="Pulse",
+                       Description="Duration of time in between pulses",
+                       Models="seir_p")            %>%
+        dplyr::add_row(ParameterName="Pulse_Switch",
+                       ParameterType="Pulse",
+                       Description="Activate/deactive the pulse policy",
+                       Models="seir_p")            %>%
+        dplyr::add_row(ParameterName="Switch_Time",
+                       ParameterType="Pulse",
+                       Description="The time to switch to the pulse policy",
+                       Models="seir_p")
 
      pl
 }
@@ -61,6 +172,22 @@ get_param_type <- function(tbl, p_name){
     ans
   else
     "Model"
+}
+
+get_param_description <- function(tbl, p_name){
+  ans <- dplyr::filter(tbl,ParameterName==p_name) %>% pull(Description)
+  if(length(ans) > 0)
+    ans
+  else
+    "TBD"
+}
+
+get_param_models <- function(tbl, p_name){
+  ans <- dplyr::filter(tbl,ParameterName==p_name) %>% pull(Models)
+  if(length(ans) > 0)
+    ans
+  else
+    "TBD"
 }
 
 
@@ -80,8 +207,7 @@ create_parameter_tibble <- function(file){
                           "\t\tValue=numeric(),\n",
                           "\t\tUpperEstimate=numeric(),\n",
                           "\t\tLowerEstimate=numeric(),\n",
-                          "\t\tVarying=logical(),\n",
-                          "\t\tSource=character(),\n",
+                          "\t\tModels=character(),\n",
                           "\t\tValueS=character())\n\n")
 
   auxs <- xmile_get_constants()
@@ -91,12 +217,11 @@ create_parameter_tibble <- function(file){
     n_line <- paste0("\tp_tb <- dplyr::add_row(p_tb,\n",
                            "\t\tParameterName=",shQuote(names(auxs[i])),",\n",
                            "\t\tParameterType=",shQuote(get_param_type(p_lookup,names(auxs[i]))),",\n",
-                           "\t\tDescription=",shQuote("TBD"),",\n",
+                           "\t\tDescription=",shQuote(get_param_description(p_lookup,names(auxs[i]))),",\n",
                            "\t\tValue=",auxs[i],",\n",
                            "\t\tUpperEstimate=",auxs[i],",\n",
                            "\t\tLowerEstimate=",auxs[i],",\n",
-                           "\t\tVarying=F,\n",
-                           "\t\tSource=",shQuote("TBD"),")\n\n")
+                           "\t\tModels=",shQuote(get_param_models(p_lookup,names(auxs[i]))),")\n\n")
     lines <- paste0(lines,n_line)
   }
 
@@ -109,8 +234,7 @@ create_parameter_tibble <- function(file){
                        "\t\tValue=1,\n",
                        "\t\tUpperEstimate=0,\n",
                        "\t\tLowerEstimate=0,\n",
-                       "\t\tVarying=F,\n",
-                       "\t\tSource=",shQuote("TBD"),",\n",
+                       "\t\tModels=",shQuote("seir_p|seir_a"),",\n",
                        "\t\tValueS=",shQuote("2020-02-29"),")\n\n")
 
   lines <- paste0(lines,n_line)
@@ -122,8 +246,7 @@ create_parameter_tibble <- function(file){
                    "\t\tValue=300,\n",
                    "\t\tUpperEstimate=0,\n",
                    "\t\tLowerEstimate=0,\n",
-                   "\t\tVarying=F,\n",
-                   "\t\tSource=",shQuote("TBD"),",\n",
+                   "\t\tModels=",shQuote("seir_p|seir_a"),",\n",
                    "\t\tValueS=",shQuote("TBD"),")\n\n")
 
   lines <- paste0(lines,n_line)
