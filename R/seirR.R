@@ -237,7 +237,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Initial Conditions\n")
     cat("======================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
@@ -250,7 +250,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Transmission Parameters\n")
     cat("===========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
       }))
     counter<-counter+1
@@ -262,7 +262,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Biological Parameters\n")
     cat("=========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
@@ -274,7 +274,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Pathway Flow Parameters\n")
     cat("===========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
@@ -287,7 +287,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Physical Distancing Parameters\n")
     cat("==================================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
@@ -299,7 +299,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Health System Parameters\n")
     cat("============================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
@@ -312,7 +312,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Pulse Policy Parameters\n")
     cat("===========================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
@@ -325,7 +325,7 @@ summary.seir <- function(object,...){
     cat(paste0("(",counter,")"),"Additional Model Parameters\n")
     cat("===============================\n")
     invisible(sapply(1:nrow(target),function(row){
-      str <- str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
+      str <- stringr::str_pad(paste0(target[row,"ParameterName"]," = ",target[row,"Value"]),35,side="right")
       cat(str,"=>",colourise(target[row,"Description"],"green"),"\n");
     }))
     counter<-counter+1
