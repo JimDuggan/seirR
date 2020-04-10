@@ -55,7 +55,7 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/07%20Pulse)[*Vi
 * First beta version. Contains a population level SEIR model based on agreed structure. 
 
 #### Version 0.2
-* Release date: April 9th 2020
+* Release date: April 11th 2020
 * Added week column to output data frame so that weekly aggergations can be made
 * Renamed **explain()** function to **summary()** as **explain()** is already in dplyr
 * Changed model workflow so that xmile files can be configured (using package [**readsdr**](https://github.com/jandraor/readsdr)). Model interface is the same, but the workflow for including a new model is speeded up considerable. Main action needed is the all constants in the xmile file must be preceeded by a prefix "ZZ". This allows for the separation of all params into the **sim_state** environment.
