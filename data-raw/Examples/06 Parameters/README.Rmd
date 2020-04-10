@@ -1,0 +1,68 @@
+---
+output: github_document
+title:  Running a model
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+In order to run a model, the following steps should be taken.
+
+* First, load in the libraries, and include **ggplot2** for visualisation
+
+```{r}
+library(seirR)
+library(ggplot2)
+library(dplyr)
+library(readsdr)
+```
+
+* Next, call the constructor to create an S3 model object
+
+```{r}
+mod <- create_seir_p()
+```
+
+The **mod** variable has the following S3 structure.
+```{r}
+class(mod) 
+```
+
+The **mod** variable has a number of  list elements, as follows:
+```{r}
+str(mod) 
+```
+
+The paramters that drive the model can be viewed using the **summary** function. Note that there are escape characters in the output in order that the descriptions are shown in red when used at the console.
+```{r}
+summary(mod) 
+```
+
+
+* A model can then be run based on the **mod** object by calling the function **run()** In this example, we run the model twice, and alter a parmeter using the **set_params()** function
+
+
+```{r}
+mod <- create_seir_p()
+out1 <- run(mod)
+ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")
+```
+
+
+The output from these models is a tibble, containing a good deal of simulation information.
+```{r}
+glimpse(out1)
+```
+
+The behaviour modes of variables can be explored by calling the function **get_curve_analysis()**. The descriptors here include:
+
+- INC-INC (increasing at an increasing rate)
+- INC-DEC (increating at a decreasing rate)
+- DEC-INC (decreasing at an increasing rate)
+- DEC-DEC (decreasing at a decreasing rate)
+```{r}
+vars <- c("Reported_Incidence")
+
+ca <- get_curve_analysis(out1,vars)
+
+ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()+facet_grid(Variable~.)
+```
+

@@ -28,11 +28,11 @@ install_github("JimDuggan/seirR",auth="THE_KEY_GOES_HERE")
 A new model can be created (xmile format) - arrays not supported - and processed into the package structure. For this, the package will have to be rebuilt. [Check out the code for this]
 
 ### Examples
-The following are three examples of how to use the model (and data)
+The following are examples of how to use the model (and data)
 
-- [Running a model](
-https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/01%20Run%20Model) [Code]()
-- [Exploring the data set](
+- [**Running a model**](
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/01%20Run%20Model) [*View Code*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/01_one_test_p.R)
+- [**Exploring the data set**](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/02%20Explore%20Data)
 - [Running a sensitivity analysis](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Sensitivity)
