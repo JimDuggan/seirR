@@ -32,6 +32,8 @@ A new model can be created (xmile format) - arrays not supported - and processed
 ### Examples
 The following are examples of how to use the model (and data)
 
+- [**Exploring Parameters. ** ](
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/06%20Parameters)
 - [**Running a model. **](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/01%20Run%20Model) [*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/01_one_test_p.R)
 - [**Exploring the data set. **](
