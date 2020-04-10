@@ -2,13 +2,11 @@ library(seirR)
 library(ggplot2)
 library(readsdr)
 
-cat("Step 1, creating model...\n")
+
 mod <- create_seir_p()
 
-cat("Step 2, Run model 1...\n")
 out1 <- run(mod)
 
-cat("Step 2, Run model 2...\n")
 mod <- set_param(mod,"Distancing_Switch",1)
 mod <- set_param(mod,"Switch_Time",300) # time to end continuous physcial distancing
 mod <- set_param(mod,"Percentage_Reduction_of_Physical_Distancing",.3)

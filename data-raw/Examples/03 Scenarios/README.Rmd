@@ -9,48 +9,42 @@ The model can be run a number of times to support sensitivity analysis. Here, th
 
 * First, load in the libraries.
 
-```{r}
+```{r,message=F}
 library(seirR)
 library(ggplot2)
-library(purrr)
-library(dplyr)
+library(readsdr)
 ```
 
-* Create the model, and set the physical distancing option
+* Create the model, run it once (unmitigated) and store in **out1**
 
 ```{r}
 mod <- create_seir_p()
-mod <- set_param(mod,"distancing_flag",1)
+
+out1 <- run(mod)
 ```
 
-
-* Set the sensitivity parameter ranges, and the number of runs. Packages such as FME can be used for this,
-as it supports a wider range of random number generations. https://cran.r-project.org/web/packages/FME/index.html
+* Run the model with physical distancing set to a 30% reduction.
 
 ```{r}
-NRUNS <- 10
 
-lower <- 0.2
-upper <- 0.8
-percentages    <- runif(NRUNS,.1,.9)
-f_asymptomatic <- runif(NRUNS,.15,.7)
+mod <- set_param(mod,"Distancing_Switch",1)
+mod <- set_param(mod,"Switch_Time",300) # time to end continuous physcial distancing
+mod <- set_param(mod,"Percentage_Reduction_of_Physical_Distancing",.3)
+out2 <- run(mod)
 ```
 
-* Write a script to run the model a number of times, sampling from the random number streams
-
+* Run the model for a third time with physical distancing set to a 50% reduction.
 ```{r}
-res_full <- map_df(1:NRUNS, function(i){
-  cat("iteration = ", i, "with percentage = ", percentages[i], " and f = ",f_asymptomatic[i],"\n")
-  mod <- set_param(mod,"pd_percentage_reduction",percentages[i])
-  mod <- set_param(mod,"prop_asymptomatic",f_asymptomatic[i])
-  out2 <- run(mod) %>% mutate(RunNumber=i) %>%
-     select(RunNumber,everything())
-})
+mod <- set_param(mod,"Percentage_Reduction_of_Physical_Distancing",.5)
+out3 <- run(mod)
 ```
 
-* Show all the results for one of the variables
+* Display the results
 ```{r}
-ggplot(res_full,aes(x=Date,y=ReportedIncidence,colour=RunNumber,group=RunNumber))+geom_path()+
-       scale_colour_gradientn(colours=rainbow(12))+guides(color=FALSE)
+ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")+
+  geom_line(out2,mapping=aes(x=SimDay,y=Reported_Incidence),colour="blue")+
+  geom_line(out3,mapping=aes(x=SimDay,y=Reported_Incidence),colour="green")
 ```
+
+
 
