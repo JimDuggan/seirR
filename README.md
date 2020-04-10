@@ -32,17 +32,17 @@ A new model can be created (xmile format) - arrays not supported - and processed
 ### Examples
 The following are examples of how to use the model (and data)
 
-- [**Exploring Parameters. ** ](
+- [**Exploring Parameters**.  ](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/06%20Parameters)
-- [**Running a model. **](
+- [**Running a model**.](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/01%20Run%20Model) [*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/01_one_test_p.R)
-- [**Exploring the data set. **](
+- [**Exploring the data set**.](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/02%20Explore%20Data)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/02_test_data.R)
-- [**Exploring Scenarios. ** ](
+- [**Exploring Scenarios**. ](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/03%20Scenarios)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/03_test_scenarios.R)
-- [**Sensitivity Runs. ** ](
+- [**Sensitivity Runs**. ](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Sensitivity)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/04_test_sens.R)
-- [**Weekly. ** ](
+- [**Weekly**. ](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/05%20Week)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/05_test_week.R)
 
 
