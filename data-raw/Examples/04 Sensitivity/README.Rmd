@@ -1,25 +1,74 @@
 ---
 output: github_document
-title:  Model Assumptions
+title:  Sensitivity Analysis
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-At any point, the current model assumptions can be displayed by calling the function **explain()**.
+Sensitivity analysis runs can be  performed. 
 
-In this example, the model is loaded and checked, and then a parameter is changed, and the model assumptions checked again.
+* First, packages are loaded including **purrr**, **dplyr** and **ggplot2**
 
-```{r}
+```{r,message=F}
 library(seirR)
+library(ggplot2)
+library(purrr)
+library(dplyr)
+library(readsdr)
 ```
 
+
+* Next, the model is created with the distancing on, and to be continued until time 300.
 
 ```{r}
 mod <- create_seir_p()
-explain(mod)
+mod <- set_param(mod,"Distancing_Switch",1)
+mod <- set_param(mod,"Switch_Time",300) # time to end continuous physcial distancing
 ```
 
-Change a parameter and call **explain()** again (see parameter **distancing_flag** has changed)
+
+* Setup for 20 runs, varying two parameters.
+
 ```{r}
-mod <- set_param(mod,"distancing_flag",1)
-explain(mod)
+NRUNS <- 10
+
+lower <- 0.2
+upper <- 0.8
+percentages    <- runif(NRUNS,.1,.9)
+f_asymptomatic <- runif(NRUNS,.15,.7)
 ```
+
+* Use purrr function **map_df()** to control the sensitivity process
+
+```{r}
+res_full <- map_df(1:NRUNS, function(i){
+  cat("iteration = ", i, "with percentage = ", percentages[i], " and f = ",f_asymptomatic[i],"\n")
+  mod <- set_param(mod,"Percentage_Reduction_of_Physical_Disancing",percentages[i])
+  mod <- set_param(mod,"Proportion_Asymptomatic_f",f_asymptomatic[i])
+  out2 <- run(mod) %>% mutate(RunNumber=i) %>%
+     select(RunNumber,everything())
+})
+```
+
+* Display the results
+
+```{r}
+ggplot(res_full,aes(x=SimDay,y=Reported_Incidence,colour=RunNumber,group=RunNumber))+geom_path()+
+       scale_colour_gradientn(colours=rainbow(12))+guides(color=FALSE)
+```
+
+* Sample analysis (thanks to Chris Brunsdon (NUIM) for the code)
+```{r}
+res_peaking <- res_full %>%
+  group_by(RunNumber) %>%
+  summarise(Peak_RI=max(Reported_Incidence),
+            Peak_Time=which.max(Reported_Incidence))
+```
+
+* Plot the results
+```{r}
+ggplot(res_peaking %>% filter(Peak_RI>400),
+       aes(x=Peak_Time,y=Peak_RI)) +
+  geom_point() + geom_density_2d()
+```
+
+
