@@ -1,12 +1,9 @@
-Sensitivity runs
+Exploring Scenarios
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-The model can be run a number of times to support sensitivity analysis.
-Here, the package **purrr** is used to generate a large output data set
-(which is essentially a collation of all the individual runs, with a new
-ID added to the table so that the primary key is {RunNumber, SimDay})
+A number of runs can be executed and compared.
 
   - First, load in the libraries.
 
