@@ -18,10 +18,11 @@ ggplot(tb,aes(x=SimDay,y=Value,colour=Variable))+
   facet_grid(Variable~.,scales = "free_y")+
   geom_point()+geom_line()+guides(colour=NULL)
 
+vars <- c("Reported_Incidence")
 
+ca <- get_curve_analysis(out1,vars)
 
-ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")
-ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Physical_Distancing_Smoothed_Value),colour="red")
+ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()
 
 
 
