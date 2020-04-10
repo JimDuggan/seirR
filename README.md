@@ -45,7 +45,7 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/04%20Sensitivit
 - [**Weekly**. ](
 https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/05%20Week)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/05_test_week.R)
 - [**Pulse**. ](
-https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/05%20Week)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/05_test_week.R)
+https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/07%20Pulse)[*View Code.*](https://github.com/JimDuggan/seirR/blob/master/inst/scripts/06_test_pulse.R)
 
 
 
