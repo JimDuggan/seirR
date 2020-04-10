@@ -57,7 +57,6 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/05%20Week)[*Vie
 * Added week column to output data frame so that weekly aggergations can be made
 * Renamed **explain()** function to **summary()** as **explain()** is already in dplyr
 * Changed model workflow so that xmile files can be configured (using package **readsdr**). Model interface is the same, but the workflow for including a new model is speeded up considerable. Main action needed is the all constants in the xmile file must be preceeded by a prefix "ZZ". This allows for the separation of all params into the **sim_state** environment.
-* Added a new function **get_curve_analysis()** to detect bheaviour mode changes for any time series
 * Reimplemented the simulation results as a "res_seri_p" and res_seir" class (also inherits from tibble)
 * Added pulsing logic so that interventions can be switched on and off, to see the impact on infections. This new paramter set can be viewed by typing **summary(mod)**
 * Adding new function to get behaviour modes for a variable **get_curve_analysis()**
