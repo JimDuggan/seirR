@@ -27,7 +27,7 @@ install_github("JimDuggan/seirR",auth="THE_KEY_GOES_HERE")
 [The model equations can be viewed](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/Equations/Model%20V0.2.pdf)
 
 ### Updating a model
-A new model can be created (xmile format) - arrays not supported - and processed into the package structure. For this, the package will have to be rebuilt. [Check out the code for this]
+A new model can be created (xmile format) - arrays not supported - and processed into the package structure. For this, the package will have to be rebuilt. [Check out the code for this](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/seir_p/01%20Translate.R) which automatically creates files in the R sub-directory.
 
 ### Examples
 The following are examples of how to use the model (and data)
