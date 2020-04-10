@@ -1,18 +1,16 @@
 ---
 output: github_document
-title:  Running a model
+title:  Exploring Parameters
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-In order to run a model, the following steps should be taken.
+Parameters can be explored in the model. There are a number of categories, see below for their descriptions, and default values. These can be set and retrieved using the functions **set_params(mod,param,value)** and **get_params(mod,param)**
 
-* First, load in the libraries, and include **ggplot2** for visualisation
+* First, load in the libraries
 
-```{r}
+```{r,message=F}
 library(seirR)
-library(ggplot2)
 library(dplyr)
-library(readsdr)
 ```
 
 * Next, call the constructor to create an S3 model object
@@ -21,48 +19,44 @@ library(readsdr)
 mod <- create_seir_p()
 ```
 
-The **mod** variable has the following S3 structure.
-```{r}
-class(mod) 
-```
-
-The **mod** variable has a number of  list elements, as follows:
-```{r}
-str(mod) 
-```
-
-The paramters that drive the model can be viewed using the **summary** function. Note that there are escape characters in the output in order that the descriptions are shown in red when used at the console.
-```{r}
-summary(mod) 
-```
-
-
-* A model can then be run based on the **mod** object by calling the function **run()** In this example, we run the model twice, and alter a parmeter using the **set_params()** function
+* **(1) Initial conditions**
 
 
 ```{r}
-mod <- create_seir_p()
-out1 <- run(mod)
-ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")
+mod$params %>% filter(ParameterType=="InitialCondition") %>% select(ParameterName,Value,Description)
 ```
 
-
-The output from these models is a tibble, containing a good deal of simulation information.
+* **(2) Transmission**
 ```{r}
-glimpse(out1)
+mod$params %>% filter(ParameterType=="Transmission") %>% select(ParameterName,Value,Description)
 ```
 
-The behaviour modes of variables can be explored by calling the function **get_curve_analysis()**. The descriptors here include:
-
-- INC-INC (increasing at an increasing rate)
-- INC-DEC (increating at a decreasing rate)
-- DEC-INC (decreasing at an increasing rate)
-- DEC-DEC (decreasing at a decreasing rate)
+* **(3) Biological**
 ```{r}
-vars <- c("Reported_Incidence")
-
-ca <- get_curve_analysis(out1,vars)
-
-ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()+facet_grid(Variable~.)
+mod$params %>% filter(ParameterType=="Biological") %>% select(ParameterName,Value,Description)
 ```
 
+* **(4) Pathway**
+```{r}
+mod$params %>% filter(ParameterType=="Pathway") %>% select(ParameterName,Value,Description)
+```
+
+* **(5) Distancing**
+```{r}
+mod$params %>% filter(ParameterType=="Distancing") %>% select(ParameterName,Value,Description)
+```
+
+* **(6) Health System**
+```{r}
+mod$params %>% filter(ParameterType=="HealthSystem") %>% select(ParameterName,Value,Description)
+```
+
+* **(7) Health System**
+```{r}
+mod$params %>% filter(ParameterType=="Pulse") %>% select(ParameterName,Value,Description)
+```
+
+* **(8) Model**
+```{r}
+mod$params %>% filter(ParameterType=="Model") %>% select(ParameterName,Value,Description)
+```
