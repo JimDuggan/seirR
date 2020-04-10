@@ -31,7 +31,7 @@ The **mod** variable has a number of  list elements, as follows:
 str(mod) 
 ```
 
-The paramters that drive the model can be viewed using the **summary** function
+The paramters that drive the model can be viewed using the **summary** function. Note that there are escape characters in the output in order that the descriptions are shown in red when used at the console.
 ```{r}
 summary(mod) 
 ```
@@ -39,20 +39,30 @@ summary(mod)
 
 * A model can then be run based on the **mod** object by calling the function **run()** In this example, we run the model twice, and alter a parmeter using the **set_params()** function
 
+
 ```{r}
+mod <- create_seir_p()
 out1 <- run(mod)
-mod <- set_param(mod,"distancing_flag",1)
-out2 <- run(mod)
+ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")
 ```
+
 
 The output from these models is a tibble, containing a good deal of simulation information.
 ```{r}
 glimpse(out1)
 ```
 
-Any of these variables can then be printed.
+The behaviour modes of variables can be explored by calling the function **get_curve_analysis()**. The descriptors here include:
+
+- INC-INC (increasing at an increasing rate)
+- INC-DEC (increating at a decreasing rate)
+- DEC-INC (decreasing at an increasing rate)
+- DEC-DEC (decreasing at a decreasing rate)
 ```{r}
-ggplot()+geom_line(out1,mapping=aes(x=SimDay,y=Reported_Incidence),colour="red")+
-  geom_line(out2,mapping=aes(x=SimDay,y=Reported_Incidence),colour="blue")
+vars <- c("Reported_Incidence")
+
+ca <- get_curve_analysis(out1,vars)
+
+ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()+facet_grid(Variable~.)
 ```
 

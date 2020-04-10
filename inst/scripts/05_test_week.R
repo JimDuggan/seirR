@@ -4,7 +4,6 @@ library(dplyr)
 library(readsdr)
 
 mod <- create_seir_p()
-mod <- set_param(mod,"end_day",140)
 
 out1 <- run(mod)
 

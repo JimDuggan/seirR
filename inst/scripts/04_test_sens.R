@@ -1,12 +1,14 @@
 library(seirR)
 library(ggplot2)
 library(purrr)
+library(dplyr)
 
 # create the model
 mod <- create_seir_p()
-mod <- set_param(mod,"distancing_flag",1)
+mod <- set_param(mod,"Distancing_Switch",1)
+mod <- set_param(mod,"Switch_Time",300) # time to end continuous physcial distancing
 
-NRUNS <- 5
+NRUNS <- 30
 
 lower <- 0.2
 upper <- 0.8
@@ -21,7 +23,15 @@ res_full <- map_df(1:NRUNS, function(i){
      select(RunNumber,everything())
 })
 
-ggplot(res_full,aes(x=Date,y=Reported_Incidence,colour=RunNumber,group=RunNumber))+geom_path()+
+ggplot(res_full,aes(x=SimDay,y=Reported_Incidence,colour=RunNumber,group=RunNumber))+geom_path()+
        scale_colour_gradientn(colours=rainbow(12))+guides(color=FALSE)
 
+res_peaking <- res_full %>%
+  group_by(RunNumber) %>%
+  summarise(Peak_RI=max(Reported_Incidence),
+            Peak_Time=which.max(Reported_Incidence))
+
+ggplot(res_peaking %>% filter(Peak_RI>400),
+       aes(x=Peak_Time,y=Peak_RI)) +
+  geom_point() + geom_density_2d()
 

@@ -10,11 +10,12 @@ out1 <- run(mod)
 
 cat("Step 2, Run model 2...\n")
 mod <- set_param(mod,"Distancing_Switch",1)
-mod <- set_param(mod,"Percentage_Reduction_of_Physical_Disancing",.5)
+mod <- set_param(mod,"Switch_Time",300) # time to end continuous physcial distancing
+mod <- set_param(mod,"Percentage_Reduction_of_Physical_Distancing",.3)
 out2 <- run(mod)
 
 cat("Step 2, Run model 3...\n")
-mod <- set_param(mod,"Pulse_Switch",1)
+mod <- set_param(mod,"Percentage_Reduction_of_Physical_Distancing",.5)
 out3 <- run(mod)
 
 

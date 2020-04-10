@@ -28,7 +28,7 @@ get_ptype_lookup <- function(){
                        Models="seir_p")     %>%
         dplyr::add_row(ParameterName="Beta_Calibrated",
                        ParameterType="Transmission",
-                       Description="Estomated effective contact rate (1/day)",
+                       Description="Estimated effective contact rate (1/day)",
                        Models="seir_p")     %>%
         dplyr::add_row(ParameterName="Beta_Multiplier_h",
                        ParameterType="Transmission",
