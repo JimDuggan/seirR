@@ -53,3 +53,17 @@ ggplot(tb,aes(x=SimDay,y=Value,colour=Variable))+
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+  - Analyse the curve for evidence of distancing
+
+<!-- end list -->
+
+``` r
+vars <- c("Reported_Incidence")
+
+ca <- get_curve_analysis(out1,vars)
+
+ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->

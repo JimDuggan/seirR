@@ -46,5 +46,11 @@ ggplot(tb,aes(x=SimDay,y=Value,colour=Variable))+
   geom_point()+geom_line()
 ```
 
+* Analyse the curve for evidence of distancing
+```{r}
+vars <- c("Reported_Incidence")
 
+ca <- get_curve_analysis(out1,vars)
 
+ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()
+```
