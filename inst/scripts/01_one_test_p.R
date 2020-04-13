@@ -14,4 +14,3 @@ vars <- c("Reported_Incidence")
 ca <- get_curve_analysis(out1,vars)
 
 ggplot(ca,aes(x=SimDay,y=Value,colour=Behaviour))+geom_point()+facet_grid(Variable~.)
-

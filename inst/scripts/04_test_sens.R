@@ -8,7 +8,7 @@ mod <- create_seir_p()
 mod <- set_param(mod,"Distancing_Switch",1)
 mod <- set_param(mod,"Switch_Time",300) # time to end continuous physcial distancing
 
-NRUNS <- 20
+NRUNS <- 50
 
 lower <- 0.2
 upper <- 0.8

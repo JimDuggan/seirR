@@ -6,7 +6,8 @@ library(dplyr)
 
 TARGET_XMILE <- "data-raw/models/seir_p/v0.2/vensim/xmile/SEIR_IRL_Population_V0.2.xmile"
 
-MODEL_ID <- "seir_p"
+MODEL_ID <- "seir_pf"
+#MODEL_ID <- "seir_p"
 
 get_ptype_lookup <- function(){
   pl <- tibble::tibble(ParameterName=character(),
@@ -199,7 +200,7 @@ create_parameter_tibble <- function(file){
                 "#-------------------------------------------------------------------------------------\n",
                 "#' Populates the parameters tibble for seir_p \n",
                 "#' NOTE: Edit this file to clarify parameter types \n",
-                "xmile_setup_parameters <- function(){\n")
+                "setup_",MODEL_ID,"_parameters <- function(){\n")
 
   lines<- paste0("\tp_tb <- tibble::tibble(ParameterName=character(),\n",
                           "\t\tParameterType=character(),\n",
@@ -210,7 +211,7 @@ create_parameter_tibble <- function(file){
                           "\t\tModels=character(),\n",
                           "\t\tValueS=character())\n\n")
 
-  auxs <- xmile_get_constants()
+  auxs <- get_constants_seir()
 
 
   for (i in seq_along(auxs)){
@@ -295,7 +296,7 @@ conv2vec <- function (v,LHS="Output<-",ASGN="sim_state$CompartmentsINIT <-")
 #------------------------------------------------
 conv2params <- function (v)
 {
-  header <- "set_model_parameters_xmile <- function(p){\n"
+  header <- paste0("set_model_parameters_",MODEL_ID," <- function(p){\n")
   body <-sapply(1:length(v),function(i){
     p_LHS <- paste0("\t",names(v[i]))
     p_RHS <- paste0("get_param(p,",shQuote(names(v[i])),")")
@@ -322,8 +323,8 @@ LHS_M <- paste0("library(deSolve)\n",
                 "#' @param stocks is the vector of model compartments\n",
                 "#' @param auxs vector of auxiliaries (alway NULL) as these are passed via sim_state environment\n",
                 "#' @return list of new compartment values, and other relevant variables\n",
-                "model_xmile_seir_p <- function(time, stocks, auxs){\n")
-file_name <- paste0("R/",MODEL_ID,"_01_model_",MODEL_ID,".R")
+                "model_",MODEL_ID," <- function(time, stocks, auxs){\n")
+file_name <- paste0("R/mod_",MODEL_ID,"_01_model.R")
 fileConn<-file(file_name)
 code_body<-get_code(mdl$deSolve_components$func)
 code <- paste0(LHS_M,code_body,"\n}")
@@ -339,8 +340,8 @@ LHS <- paste0("#----------------------------------------------------------------
               "#' Creates the initial state vector for population ODE\n",
               "#\n",
               "#' @return A vector of compartments and their initial conditions\n",
-              "init_compartments_p_xmile <- function(){\n")
-file_name <- paste0("R/",MODEL_ID,"_02_init_compartments_",MODEL_ID,".R")
+              "init_",MODEL_ID,"_compartments <- function(){\n")
+file_name <- paste0("R/mod_",MODEL_ID,"_02_init_compartments.R")
 fileConn<-file(file_name)
 writeLines(as.character(conv2vec(mdl$deSolve_components$stocks,LHS)),fileConn)
 close(fileConn)
@@ -351,7 +352,7 @@ close(fileConn)
 #                   This file needs a small amount of editing
 ##########################################################################################
 # Output the constants
-file_name <- paste0("R/",MODEL_ID,"_03_set_model_parameters_",MODEL_ID,".R")
+file_name <- paste0("R/mod_",MODEL_ID,"_03_set_model_parameters.R")
 fileConn<-file(file_name)
 auxs <- c(mdl$deSolve_components$consts,ZZstart_day=1,ZZend_day=300)
 writeLines(conv2params(auxs),fileConn)
@@ -365,8 +366,8 @@ close(fileConn)
 LHS <- paste0("#-------------------------------------------------------------------------------------\n",
               "#' Creates the vector of constants that can be used to set params\n",
               "#' @return A vector of constants and their initial conditions\n",
-              "xmile_get_constants <- function(){\n")
-file_name <- paste0("R/",MODEL_ID,"_04_get_constants_",MODEL_ID,".R")
+              "get_constants_seir <- function(){\n")
+file_name <- paste0("R/mod_get_constants_seir.R")
 #file_name <- paste0("R/xmile_04_get_constants_",MODEL_ID,".R")
 fileConn<-file(file_name)
 auxs <- c(mdl$deSolve_components$consts)
@@ -380,9 +381,9 @@ close(fileConn)
 #  OUTPUT FILE 5/5: XMILE_SETUP.R
 #                   Creates the tibble for params
 ##########################################################################################
-target <- paste0("R/",MODEL_ID,"_04_get_constants_",MODEL_ID,".R")
+target <- paste0("R/mod_get_constants_seir.R")
 content <- create_parameter_tibble(target)
-file_name <- paste0("R/",MODEL_ID,"_05_setup_",MODEL_ID,".R")
+file_name <- paste0("R/mod_",MODEL_ID,"_04_setup.R")
 #file_name <- paste0("R/xmile_05_setup_",MODEL_ID,".R")
 fileConn<-file(file_name)
 writeLines(content,fileConn)

@@ -2,7 +2,7 @@ library(dplyr)
 #-------------------------------------------------------------------------------------
 #' Populates the parameters tibble for seir_p 
 #' NOTE: Edit this file to clarify parameter types 
-xmile_setup_parameters <- function(){
+setup_seir_pf_parameters <- function(){
 	p_tb <- tibble::tibble(ParameterName=character(),
 		ParameterType=character(),
 		Description=character(),

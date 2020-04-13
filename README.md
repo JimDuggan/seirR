@@ -4,14 +4,20 @@ output:
   pdf_document: default
 ---
 ### seirR 
-This package contains a SEIR model to model the spread of an infectious disease. The model is a population-level model. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
+This package contains SEIR models. The package is best used in conjunction with R's [tidyverse](https://www.tidyverse.org) tools such as **dplyr** and **ggplot2**.
+
+#### Model 1 - Population Level Model 
+Thismodel the spread of an infectious disease. The model is a population-level model. 
+
+![](https://github.com/JimDuggan/seirR/blob/master/data-raw/Images/ModelStructure.png)
 
 - [Model equations](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/Equations/Model%20V0.2.pdf)
 
+#### Model 2 - Population Level Model (Based on French Published Model)
 
-### Current Version 0.2
+
+### Current Version 0.3
 This package is currently undergoing testing and has not yet been released. See version history below for a record of changes and version.
-
 
 
 ### Installation
@@ -20,11 +26,6 @@ To install, obtain the authorisation key from the repo owner, and type the follo
 ```R
 install_github("JimDuggan/seirR",auth="THE_KEY_GOES_HERE")
 ```
-
-### Model Overview
-![](https://github.com/JimDuggan/seirR/blob/master/data-raw/Images/ModelStructure.png)
-
-[The model equations can be viewed](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/Equations/Model%20V0.2.pdf)
 
 ### Updating a model
 A new model can be created (xmile format) - arrays not supported - and processed into the package structure. For this, the package will have to be rebuilt. [Check out the code for this](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/seir_p/01%20Translate.R) which automatically creates files in the R sub-directory.
@@ -50,9 +51,8 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/07%20Pulse)[*Vi
 
 
 ### Version History
-#### Version 0.1
-* Release date: April 2nd 2020
-* First beta version. Contains a population level SEIR model based on agreed structure. 
+
+#### Version 0.3
 
 #### Version 0.2
 * Release date: April 11th 2020
@@ -62,4 +62,10 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/07%20Pulse)[*Vi
 * Reimplemented the simulation results as a "res_seri_p" and res_seir" class (also inherits from tibble)
 * Added pulsing logic so that interventions can be switched on and off, to see the impact on infections. This new paramter set can be viewed by typing **summary(mod)**
 * Adding new function to get behaviour modes for a variable **get_curve_analysis()**
+
+#### Version 0.1
+* Release date: April 2nd 2020
+* First beta version. Contains a population level SEIR model based on agreed structure. 
+
+
 

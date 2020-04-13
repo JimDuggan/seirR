@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------------
 #' Creates the vector of constants that can be used to set params
 #' @return A vector of constants and their initial conditions
-xmile_get_constants <- function(){
+get_constants_seir <- function(){
 c( AT = 1 ,
 	  Average_HLOS = 15 ,
 	  Average_Wait_for_Results = 3.16 ,

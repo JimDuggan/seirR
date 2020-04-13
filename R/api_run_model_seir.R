@@ -15,7 +15,7 @@ library(magrittr)
 #' @param DT is the simulation time step (Euler)
 #' @param return_all a flag used to decide how many observations to return
 #' @return A tibble of simulation results
-run_model_seir_p <- function (mod_object, DT=0.125,return_all=F){
+run_model_seir <- function (mod_object, DT=0.125,return_all=F){
   # Create a new environment for all the simulation variable
   mod_object_params               <- mod_object$params
   # convert it back to
@@ -24,8 +24,16 @@ run_model_seir_p <- function (mod_object, DT=0.125,return_all=F){
   sim_state$TimeOfRun      <-Sys.time()
   sim_state$ActualStartDay <- (lubridate::ymd(get_param(mod_object_params,"start_day",T)))-
                                data_env$model_offset
-  # Copy all the params to this new state
-  set_model_parameters_xmile(mod_object_params)
+
+  # NEED to call specific set_model_params_*** for each separate model
+  if(class(mod_object)[1]=="seir_p"){
+    set_model_parameters_seir_p(mod_object_params)
+  } else if(class(mod_object)[1]=="seir_pf"){
+    set_model_parameters_seir_pf(mod_object_params)
+  }else{
+    stop(paste("Unrecognised S3 class ",class(mod_object)))
+  }
+
   sim_state$params     <- mod_object_params
   sim_state$return_all <- return_all
   sim_state$offset     <- offset
@@ -39,20 +47,26 @@ run_model_seir_p <- function (mod_object, DT=0.125,return_all=F){
 
 
   if(class(mod_object)[1]=="seir_p"){
-    stocks               <- init_compartments_p_xmile()
+    stocks               <- init_seir_p_compartments()
     results <-data.frame(deSolve::ode(y=stocks,
                        times=simtime,
-                       func = model_xmile_seir_p,
+                       func = model_seir_p,
                        parms=NULL,
                        method="euler"))
-  }
-  else{
+  } else if(class(mod_object)[1]=="seir_pf"){
+    stocks               <- init_seir_pf_compartments()
+    results <-data.frame(deSolve::ode(y=stocks,
+                                      times=simtime,
+                                      func = model_seir_p,
+                                      parms=NULL,
+                                      method="euler"))
+  }else{
     stop(paste("Unrecognised S3 class ",class(mod_object)))
   }
 
   results <- populate_results(mod_object_params,results,return_all,DT)
 
-  class(results) <- c("res_seir_p","res_seir", "tbl_df", "tbl",   "data.frame" )
+  class(results) <- c("res_seir", "tbl_df", "tbl",   "data.frame" )
 
 
   sim_state$RESULTS <- results

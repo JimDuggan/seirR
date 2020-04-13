@@ -7,7 +7,7 @@ library(deSolve)
 #' @param stocks is the vector of model compartments
 #' @param auxs vector of auxiliaries (alway NULL) as these are passed via sim_state environment
 #' @return list of new compartment values, and other relevant variables
-model_xmile_seir_p <- function(time, stocks, auxs){
+model_seir_pf <- function(time, stocks, auxs){
 with(as.list(c(stocks, auxs)), {
     AR1 <- Awaiting_Results_01/sim_state$Average_Wait_for_Results
     Asymptomatic_Infectious_Period <- sim_state$Incubation_Period_C - 

@@ -45,8 +45,7 @@ create_simtime_tibble <- function(mod, mod_offset=0){
 #' mod <- create_seir_p()
 #' }
 create_seir_p <- function (model_offset = 0){
-  #tb      <- create_seir_common()
-  tb      <- xmile_setup_parameters()
+  tb      <- setup_seir_p_parameters()
   polymod <- load_social_contacts()
   lst <- list(params=tb,       # The main parameters
               #pulse="TBD",     # Pulse information for social distancing
@@ -59,6 +58,23 @@ create_seir_p <- function (model_offset = 0){
   mod$type  <- "SEIR Population Model"
   mod
 }
+
+create_seir_pf <- function (model_offset = 0){
+  #tb      <- create_seir_common()
+  tb      <- setup_seir_pf_parameters()
+  polymod <- load_social_contacts()
+  lst <- list(params=tb,       # The main parameters
+              #pulse="TBD",     # Pulse information for social distancing
+              sim_date="TBD",   # Lookup table to translate from sim time to dates
+              POLYMOD=polymod)
+  mod <- structure(lst, class=c("seir_pf","seir", "list"))
+  # Add the sim_date tibble
+  mod$sim_date <-create_simtime_tibble(mod, model_offset)
+  mod$package_version  <- packageVersion("seirR")
+  mod$type  <- "SEIR Population Model (French Model)"
+  mod
+}
+
 
 #-------------------------------------------------------------------------------------
 #' Creates an object to facilitate running the simulation
@@ -109,16 +125,20 @@ run <- function(o,DT=0.125,return_all = F){
 
 #' @export
 run.seir <- function(o,DT=0.125,return_all = F){
-  #run_seir_model(o,DT,return_all)
-  if(class(o)[1]=="seir_p"){
-      run_model_seir_p(o,DT,return_all)
-  }
-  else{
-    cat("Unrecognised model object ",class(o)[1],"\n")
-  }
-  # for the result, return the timestamp as a unique identifer.
-  # Sys.time()
+   run_model_seir(o,DT,return_all)
 }
+
+# run.seir <- function(o,DT=0.125,return_all = F){
+#   #run_seir_model(o,DT,return_all)
+#   if(class(o)[1]=="seir_p"){
+#       run_model_seir_p(o,DT,return_all)
+#   }
+#   else{
+#     cat("Unrecognised model object ",class(o)[1],"\n")
+#   }
+#   # for the result, return the timestamp as a unique identifer.
+#   # Sys.time()
+# }
 
 #-------------------------------------------------------------------------------------
 #' Sets a parameter value

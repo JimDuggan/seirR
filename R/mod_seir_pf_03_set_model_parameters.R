@@ -1,4 +1,4 @@
-set_model_parameters_xmile <- function(p){
+set_model_parameters_seir_pf <- function(p){
 	sim_state$AT  <- get_param(p,'AT') 
 	sim_state$Average_HLOS  <- get_param(p,'Average_HLOS') 
 	sim_state$Average_Wait_for_Results  <- get_param(p,'Average_Wait_for_Results') 

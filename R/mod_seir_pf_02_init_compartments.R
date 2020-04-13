@@ -2,7 +2,7 @@
 #' Creates the initial state vector for population ODE
 #
 #' @return A vector of compartments and their initial conditions
-init_compartments_p_xmile <- function(){
+init_seir_pf_compartments <- function(){
 sim_state$CompartmentsINIT <-c( Asymptomatic_Infected_01 = 0 ,
 	  Asymptomatic_Infected_02 = 0 ,
 	  Awaiting_Results_01 = 0 ,
