@@ -36,7 +36,7 @@ run_model_seir <- function (mod_object, DT=0.125,return_all=F){
 
   sim_state$params     <- mod_object_params
   sim_state$return_all <- return_all
-  sim_state$offset     <- data_env$model_offset
+  sim_state$mod_offset <- data_env$model_offset
   #simtime              <- seq(sim_state$start_time,
   #                            sim_state$end_time,
   #                            by=DT)
