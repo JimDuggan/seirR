@@ -7,7 +7,7 @@
 get_models()
 }
 \value{
-tibble with model list
+tb
 }
 \description{
 \code{get_models} returns a list of models

@@ -6,6 +6,9 @@
 \usage{
 is_model(mod)
 }
+\arguments{
+\item{mod}{is the S3 model class}
+}
 \value{
 logical value
 }

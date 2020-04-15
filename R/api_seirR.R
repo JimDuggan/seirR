@@ -35,8 +35,8 @@ create_simtime_tibble <- function(mod, mod_offset=0){
 #' Creates an object to facilitate running the simulation
 #'
 #' \code{get_models} returns a list of models
-#' @param mod
-#' @return tibble with model list
+#' @param
+#' @return tb
 #' @export
 get_models <- function(){
   tb <- tibble::tibble(ModelClass=character(),
@@ -61,7 +61,7 @@ get_models <- function(){
 #' Creates an object to facilitate running the simulation
 #'
 #' \code{is_model} checks to see if an object is an seir S3 class
-#' @param mod
+#' @param mod is the S3 model class
 #' @return logical value
 #' @export
 is_model <- function(mod){
