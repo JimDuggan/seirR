@@ -34,6 +34,43 @@ create_simtime_tibble <- function(mod, mod_offset=0){
 #-------------------------------------------------------------------------------------
 #' Creates an object to facilitate running the simulation
 #'
+#' \code{get_models} returns a list of models
+#' @param mod
+#' @return tibble with model list
+#' @export
+get_models <- function(){
+  tb <- tibble::tibble(ModelClass=character(),
+                       ModelType=character(),
+                       Constructor=character(),
+                       Description=character(),
+                       OriginalSource=character(),
+                       InitialPackageVersion=character())
+
+  tb <- dplyr::add_row(tb,
+                       ModelClass="seir_p",
+                       ModelType="Population",
+                       Constructor="create_seir_p",
+                       Description="SEIR deterministic model",
+                       OriginalSource="Based on original IEMAG SEIR model equations",
+                       InitialPackageVersion="v0.1")
+
+  tb
+}
+
+#-------------------------------------------------------------------------------------
+#' Creates an object to facilitate running the simulation
+#'
+#' \code{is_model} checks to see if an object is an seir S3 class
+#' @param mod
+#' @return logical value
+#' @export
+is_model <- function(mod){
+  inherits(mod,"seir")
+}
+
+#-------------------------------------------------------------------------------------
+#' Creates an object to facilitate running the simulation
+#'
 #' \code{create_seir_p} returns a population seir object to the calling program.
 #' This object contains a tibble with default parameter, any of which
 #' can be modified before the model is run

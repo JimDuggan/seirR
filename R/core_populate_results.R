@@ -25,7 +25,7 @@ populate_results <- function(mod_object,results,return_all,DT){
 
   # Need to add all the constants to the results
 
-  constants <- xmile_get_constants()
+  constants <- get_constants_seir()
   recent_values <- sapply(names(constants), function(n){
     get_param(mod_object,n)
   })
