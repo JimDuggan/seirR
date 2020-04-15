@@ -9,7 +9,6 @@ library(RCurl)
 #' \code{get_world_data} creates a tibble in the data_env
 #' @return tibble of class seir
 get_world_data <- function(){
-  data_env <<- new.env()
   url_data <-"https://covid.ourworldindata.org/data/ecdc/full_data.csv"
   packageStartupMessage(paste("Checking",url_data," for data update..."))
   if(RCurl::url.exists(url_data)){
