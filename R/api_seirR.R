@@ -14,12 +14,15 @@ library(stringr)
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("Welcome to package seirR v0.2")
-  data_env <<- new.env()
-  data_env$DATA <<- FALSE
-  get_world_data()
+  #data_env <<- new.env()
+  #data_env$DATA <<- FALSE
+  #get_world_data()
 }
 
 create_simtime_tibble <- function(mod, mod_offset=0){
+  data_env <<- new.env()
+  data_env$DATA <<- FALSE
+  get_world_data()
   mod_object_params         <- mod$params
   class(mod_object_params)  <- c(class(mod)[1],"seir","tbl_df","tbl","data.frame")
   actual_start_date         <- (lubridate::ymd(get_param(mod_object_params,"start_day",T))) - mod_offset
