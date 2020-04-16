@@ -6,19 +6,22 @@ populate_results <- function(mod_object,results,return_all,DT){
   # assume start day is always day 1
   results <-  dplyr::mutate(results,Date=sim_state$ActualStartDay+(floor(time)-1))
   results <-  dplyr::mutate(results,Week=lubridate::week(Date))
-  results <-  dplyr::select(results,Date,dplyr::everything())
-  irl_data <- dplyr::filter(data_env$covid_data,Country=="Ireland")
   results <-  dplyr::rename(results,SimDay=time)
-  results <-  suppressMessages(dplyr::left_join(results,irl_data))
-  results <-  dplyr::select(results,
-                            Date,
-                            SimDay,
-                            Country,
-                            ReportedNewCases,
-                            ReportedNewDeaths,
-                            ReportedTotalCases,
-                            ReportedTotalDeaths,
-                            dplyr::everything())
+  results <-  dplyr::select(results,Date,SimDay,dplyr::everything())
+
+  if(data_env$DATA==TRUE){
+    irl_data <- dplyr::filter(data_env$covid_data,Country=="Ireland")
+    results <-  suppressMessages(dplyr::left_join(results,irl_data))
+    results <-  dplyr::select(results,
+                              Date,
+                              SimDay,
+                              Country,
+                              ReportedNewCases,
+                              ReportedNewDeaths,
+                              ReportedTotalCases,
+                              ReportedTotalDeaths,
+                              dplyr::everything())
+  }
 
   # Remove all the unnamed variables, required due to workaround in deSolve function
   results <- dplyr::select(results, !dplyr::matches("^V\\d+"))
