@@ -59,6 +59,14 @@ get_models <- function(){
                        OriginalSource="Based on original IEMAG SEIR model equations",
                        InitialPackageVersion="v0.1")
 
+  tb <- dplyr::add_row(tb,
+                       ModelClass="seir_a",
+                       ModelType="Population",
+                       Constructor="create_seir_a",
+                       Description="SEIR deterministic model, precursor for Age Cohort model",
+                       OriginalSource="Based on original IEMAG SEIR model equations",
+                       InitialPackageVersion="v0.1")
+
   tb
 }
 

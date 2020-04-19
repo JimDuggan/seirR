@@ -4,18 +4,21 @@
 \alias{create_seir_a}
 \title{Creates an object to facilitate running the simulation}
 \usage{
-create_seir_a()
+create_seir_a(model_offset = 0)
+}
+\arguments{
+\item{model_offset}{the offset for the model (subtracted from start time)}
 }
 \value{
 An S3 object of class seir
 }
 \description{
-\code{create_seir_a} returns an age cohort seir object to the calling program.
+\code{create_seir_p} returns a population seir object to the calling program.
 This object contains a tibble with default parameter, any of which
-can be modified before the model is rum
+can be modified before the model is run
 }
 \examples{
 \dontrun{
-mod <- create_seir()
+mod <- create_seir_p()
 }
 }

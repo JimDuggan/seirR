@@ -13,7 +13,7 @@ Thismodel the spread of an infectious disease. The model is a population-level m
 
 - [Model equations](https://github.com/JimDuggan/seirR/blob/master/data-raw/models/Equations/Model%20V0.2.pdf)
 
-#### Model 2 - Population Level Model (Based on French Published Model)
+#### Model 2 - Population Level Model
 
 
 ### Current Version 0.3
@@ -53,6 +53,9 @@ https://github.com/JimDuggan/seirR/tree/master/data-raw/Examples/07%20Pulse)[*Vi
 ### Version History
 
 #### Version 0.3
+* Release date: April 20th 2020
+* Fixed bug for Windows where it could not join with covid-19 data tibble
+* Added new model (SEIR), precursor for an age cohort model
 
 #### Version 0.2
 * Release date: April 11th 2020
