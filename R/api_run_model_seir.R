@@ -28,8 +28,8 @@ run_model_seir <- function (mod_object, DT=0.125,return_all=F){
   # NEED to call specific set_model_params_*** for each separate model
   if(class(mod_object)[1]=="seir_p"){
     set_model_parameters_seir_p(mod_object_params)
-  } else if(class(mod_object)[1]=="seir_pf"){
-    set_model_parameters_seir_pf(mod_object_params)
+  } else if(class(mod_object)[1]=="seir_a"){
+    set_model_parameters_seir_a(mod_object_params)
   }else{
     stop(paste("Unrecognised S3 class ",class(mod_object)))
   }
@@ -53,11 +53,11 @@ run_model_seir <- function (mod_object, DT=0.125,return_all=F){
                        func = model_seir_p,
                        parms=NULL,
                        method="euler"))
-  } else if(class(mod_object)[1]=="seir_pf"){
-    stocks               <- init_seir_pf_compartments()
+  } else if(class(mod_object)[1]=="seir_a"){
+    stocks               <- init_seir_a_compartments()
     results <-data.frame(deSolve::ode(y=stocks,
                                       times=simtime,
-                                      func = model_seir_p,
+                                      func = model_seir_a,
                                       parms=NULL,
                                       method="euler"))
   }else{

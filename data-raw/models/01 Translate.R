@@ -4,9 +4,10 @@ library(readsdr) # Sys.getenv("GITHUB_PAT") Sys.unsetenv("GITHUB_PAT")
 library(stringr)
 library(dplyr)
 
-TARGET_XMILE <- "data-raw/models/seir_p/v0.2/vensim/xmile/SEIR_IRL_Population_V0.2.xmile"
+#TARGET_XMILE <- "data-raw/models/seir_p/v0.2/vensim/xmile/SEIR_IRL_Population_V0.2.xmile"
+TARGET_XMILE <- "data-raw/models/seir_a/v0.1/vensim/xmile/SEIR_IRL_Age_V0.1.xmile"
 
-MODEL_ID <- "seir_pf"
+MODEL_ID <- "seir_a"
 #MODEL_ID <- "seir_p"
 
 get_ptype_lookup <- function(){

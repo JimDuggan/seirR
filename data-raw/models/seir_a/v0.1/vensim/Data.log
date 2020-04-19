@@ -1,0 +1,20 @@
+Initial point of search.
+  ZZ Q Calibrated = 0.1.
+  ZZBeta Multiplier h = 0.11.
+  ZZProportion Asymptomatic f = 0.25.
+  ZZSymptomatic Testing Fraction = 0.2.
+  ZZ Reporting Delay = 3.
+Simulations = 1.
+Pass = 0.
+Payoff = -17310.8.
+---------------------------------.
+Maximum payoff found at:.
+ *ZZ Q Calibrated = 0.214617.
+  ZZBeta Multiplier h = 0.
+  ZZProportion Asymptomatic f = 0.1.
+  ZZSymptomatic Testing Fraction = 1.
+  ZZ Reporting Delay = 1.
+Simulations = 398.
+Pass = 3.
+Payoff = -1241.5.
+---------------------------------.

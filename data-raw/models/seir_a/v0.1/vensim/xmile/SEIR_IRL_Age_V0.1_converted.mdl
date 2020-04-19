@@ -1,0 +1,322 @@
+{UTF-8}
+:MACRO: INT(IN)
+INT=INTEGER(IN)
+	~	in
+	~	|
+:END OF MACRO:
+
+:MACRO: LOG10(IN)
+LOG10=LOG(IN,10)
+	~	DMNL
+	~	|
+:END OF MACRO:
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+|
+
+INITIAL TIME = -8
+	~	Day
+	~	|
+
+FINAL TIME = 100
+	~	Day
+	~	|
+
+TIME STEP = 0.125
+	~	Day
+	~	|
+
+SAVEPER = INITIAL(TIME STEP)
+	~	Day
+	~	|
+
+"CumulativeCases" = INTEG (  + 
+					ReportedCases
+					 , 0 ) 
+	~	People
+	~	Cumulative number of reported infections
+	|
+
+"Exposed_01" = INTEG (  + 
+					IR
+					 - 
+					E01
+					 , 0 ) 
+	~	People
+	~	Number Exposed (compartment 1)
+	|
+
+"Exposed_02" = INTEG (  + 
+					E01
+					 - 
+					E02
+					 , 0 ) 
+	~	People
+	~	Number Exposed (compartment 2)
+	|
+
+"Infected_Reporting_in_Progress" = INTEG (  + 
+					Being Tested
+					 - 
+					R\
+eportedCases
+					 , 0 ) 
+	~	People
+	~	Number of people awaiting test results
+	|
+
+"Infectious_Asymptomatic_01" = INTEG (  + 
+					IP02a
+					 - 
+					ASI1
+					 ,\
+ 0 ) 
+	~	People
+	~	Number asymptomatic infectious (compartment 1)
+	|
+
+"Infectious_Asymptomatic_02" = INTEG (  + 
+					ASI1
+					 - 
+					ASI2
+					 , \
+0 ) 
+	~	People
+	~	Number asymptomatic infectious (compartment 2)
+	|
+
+"Infectious_Presymptomatic_01" = INTEG (  + 
+					E02
+					 - 
+					IP01
+					 ,\
+ ZZNumber_Seeds ) 
+	~	People
+	~	Number presymptomatic infectious (compartment 1)
+	|
+
+"Infectious_Presymptomatic_02" = INTEG (  + 
+					IP01
+					 - 
+					IP02a
+					\
+ - 
+					IP02b
+					 , 0 ) 
+	~	People
+	~	Number presymptomatic infectious (compartment 2)
+	|
+
+"Infectious_Symptomatic_01" = INTEG (  + 
+					IP02b
+					 - 
+					NQI1
+					 , \
+0 ) 
+	~	People
+	~	Number symptomatic infectious (compartment 1)
+	|
+
+"Infectious_Symptomatic_02" = INTEG (  + 
+					NQI1
+					 - 
+					NQI2
+					 , 0\
+ ) 
+	~	People
+	~	Number symptomatic infectious (compartment 2)
+	|
+
+"Removed" = INTEG (  + 
+					ASI2
+					 + 
+					NQI2
+					 , 0 ) 
+	~	People
+	~	Total removed
+	|
+
+"Susceptible" = INTEG (  - 
+					IR
+					 , ZZTotal_Population-ZZNumber_Seeds ) \
+
+	~	People
+	~	Model Equation (1)
+	|
+
+"ASI1" = Infectious_Asymptomatic_01/(Net_Infectious_Period_for_Infection_Compart\
+ments/2)
+	~	People/Day
+	~	
+	|
+
+"ASI2" = Infectious_Asymptomatic_02/(Net_Infectious_Period_for_Infection_Compart\
+ments/2)
+	~	People/Day
+	~	
+	|
+
+"Asymptomatic_Infectious_Period" = ZZIncubation_Period_C-ZZLatent_Period_L
+	~	Day
+	~	
+	|
+
+"Being_Tested" = ZZSymptomatic_Testing_Fraction*IP02b
+	~	People/Day
+	~	Number of people being tested per day
+	|
+
+"Beta" = ZZContact_Multiplier*ZZBeta_Calibrated
+	~	1/Day
+	~	Transmission parameter = R0/Total Infectious Period
+	|
+
+"C01_Total_Presymptomatic_Infected" = Infectious_Presymptomatic_01+Infectious_Pr\
+esymptomatic_02
+	~	People
+	~	Total Presymptomatic Infected (Subclinical infectious)
+	|
+
+"C02_Total_Asymptomatic_Infected" = Infectious_Asymptomatic_01+Infectious_Asympt\
+omatic_02
+	~	People
+	~	
+	|
+
+"C06_Total_Symptomatic_Infected" = Infectious_Symptomatic_01+Infectious_Symptoma\
+tic_02
+	~	People
+	~	
+	|
+
+"E01" = Exposed_01/(ZZLatent_Period_L/2)
+	~	People/Day
+	~	Exit rate from Exposed 01
+	|
+
+"E02" = Exposed_02/(ZZLatent_Period_L/2)
+	~	People/Day
+	~	Exit rate from Exposed 02
+	|
+
+"IP01" = Infectious_Presymptomatic_01/(Asymptomatic_Infectious_Period/2)
+	~	People/Day
+	~	Exit rate from Infected Presymptomatic 01
+	|
+
+"IP02a" = Total_Exiting_IP02*ZZProportion_Asymptomatic_f
+	~	People/Day
+	~	
+	|
+
+"IP02b" = Total_Exiting_IP02*(1-ZZProportion_Asymptomatic_f)
+	~	People/Day
+	~	
+	|
+
+"IR" = Lambda*Susceptible
+	~	People/Day
+	~	Infection rate (indicence) in the population
+	|
+
+"Lambda" = ((Beta*C01_Total_Presymptomatic_Infected)+(Beta*ZZBeta_Multiplier_h*C\
+02_Total_Asymptomatic_Infected 	)+(Beta*C06_Total_Symptomatic_Infected))/ZZTot\
+al_Population
+	~	1/Day
+	~	Force of infection, with contributions from all of the infected compartments.
+	|
+
+"Net_Infectious_Period_for_Infection_Compartments" = ZZTotal_Infectious_Period_D\
++ZZLatent_Period_L-ZZIncubation_Period_C
+	~	Day
+	~	Infectious period to be applied to infectious compartments
+	|
+
+"NQI1" = Infectious_Symptomatic_01/(Net_Infectious_Period_for_Infection_Compartm\
+ents/2)
+	~	People/Day
+	~	
+	|
+
+"NQI2" = Infectious_Symptomatic_02/(Net_Infectious_Period_for_Infection_Compartm\
+ents/2)
+	~	People/Day
+	~	
+	|
+
+"ReportedCases" = Infected_Reporting_in_Progress/ZZReporting_Delay
+	~	People/Day
+	~	Reported Cases
+	|
+
+"Total_Exiting_IP02" = Infectious_Presymptomatic_02/(Asymptomatic_Infectious_Per\
+iod/2)
+	~	People/Day
+	~	Total exit rate from Infected Presymptomatic 02
+	|
+
+"ZZBeta_Calibrated" = 0.7366
+	~	1/Day
+	~	Infectiousness of a contact between an infected and susceptible. To be initially estimated using calibration methods
+	|
+
+"ZZBeta_Multiplier_h" = 1
+	~	Dmnl
+	~	Multiplicative factor for reduction in infectiousness of asymptomatic infected compartment
+	|
+
+"ZZContact_Multiplier" = 1
+	~	Dmnl
+	~	A multiplier to model physical distancing. 1 = normal contacts
+	|
+
+"ZZIncubation_Period_C" = 6.4
+	~	Day
+	~	Duration of time at incubation stage
+	|
+
+"ZZLatent_Period_L" = 3.4
+	~	Day
+	~	Duration of time in incubation stage
+	|
+
+"ZZNumber_Seeds" = 1
+	~	People
+	~	Number of seeds initially importing the virus
+	|
+
+"ZZProportion_Asymptomatic_f" = 0.3828
+	~	Dmnl
+	~	Proportion of infected who show symptoms
+	|
+
+"ZZReporting_Delay" = 1
+	~	Day
+	~	Reporting delay in obtaining results.
+	|
+
+"ZZSymptomatic_Testing_Fraction" = 0.735
+	~	Dmnl
+	~	Fraction of symptomatic people tested
+	|
+
+"ZZTotal_Infectious_Period_D" = 5.85
+	~	Day
+	~	Duration of infectiousness
+	|
+
+"ZZTotal_Population" = 4.99997e+06
+	~	People
+	~	Total Population at outset of epidemic
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$0-0-0,0,|0||0-0-0|0-0-0|0-0-0|0-0-0|0-0-0|0,0,100,0
+///---\\\
+:L<^E!@
+15:0,0,0,1,0,0

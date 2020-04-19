@@ -97,48 +97,35 @@ create_seir_p <- function (model_offset = 0){
   # Add the sim_date tibble
   mod$sim_date <-create_simtime_tibble(mod, model_offset)
   mod$package_version  <- packageVersion("seirR")
-  mod$type  <- "SEIR Population Model"
+  mod$type  <- "SEIR Population Model 1"
   mod
 }
-
-create_seir_pf <- function (model_offset = 0){
-  #tb      <- create_seir_common()
-  tb      <- setup_seir_pf_parameters()
-  polymod <- load_social_contacts()
-  lst <- list(params=tb,       # The main parameters
-              #pulse="TBD",     # Pulse information for social distancing
-              sim_date="TBD",   # Lookup table to translate from sim time to dates
-              POLYMOD=polymod)
-  mod <- structure(lst, class=c("seir_pf","seir", "list"))
-  # Add the sim_date tibble
-  mod$sim_date <-create_simtime_tibble(mod, model_offset)
-  mod$package_version  <- packageVersion("seirR")
-  mod$type  <- "SEIR Population Model (French Model)"
-  mod
-}
-
 
 #-------------------------------------------------------------------------------------
 #' Creates an object to facilitate running the simulation
 #'
-#' \code{create_seir_a} returns an age cohort seir object to the calling program.
+#' \code{create_seir_p} returns a population seir object to the calling program.
 #' This object contains a tibble with default parameter, any of which
-#' can be modified before the model is rum
+#' can be modified before the model is run
+#' @param model_offset the offset for the model (subtracted from start time)
 #' @return An S3 object of class seir
 #' @export
 #' @examples
 #' \dontrun{
-#' mod <- create_seir()
+#' mod <- create_seir_p()
 #' }
-create_seir_a <- function (){
-  tb <- create_seir_common()
+create_seir_a <- function (model_offset = 0){
+  tb      <- setup_seir_a_parameters()
   polymod <- load_social_contacts()
   lst <- list(params=tb,       # The main parameters
               #pulse="TBD",     # Pulse information for social distancing
               sim_date="TBD",   # Lookup table to translate from sim time to dates
               POLYMOD=polymod)
   mod <- structure(lst, class=c("seir_a","seir", "list"))
+  # Add the sim_date tibble
   mod$sim_date <-create_simtime_tibble(mod, model_offset)
+  mod$package_version  <- packageVersion("seirR")
+  mod$type  <- "SEIR Age Population Model 1"
   mod
 }
 
