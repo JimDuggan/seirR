@@ -32,12 +32,12 @@ setup_seir_a_parameters <- function(){
 
 	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='Contact_Multiplier',
-		ParameterType='Model',
-		Description='TBD',
+		ParameterType='Distancing',
+		Description='Multiplier on effective contacts to model physical distancing',
 		Value=1,
 		UpperEstimate=1,
 		LowerEstimate=1,
-		Models='TBD')
+		Models='seir_a')
 
 	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='Incubation_Period_C',
@@ -76,22 +76,40 @@ setup_seir_a_parameters <- function(){
 		Models='seir_p')
 
 	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='R0_Fixed_Flag',
+		ParameterType='Transmission',
+		Description='Flag (0|1) that will fix R0 for the simulation',
+		Value=0,
+		UpperEstimate=0,
+		LowerEstimate=0,
+		Models='seir_p')
+
+	p_tb <- dplyr::add_row(p_tb,
+		ParameterName='R0_Input',
+		ParameterType='Transmission',
+		Description='If R0_Fixed_Flag is set to 1, this value of R0 will be used.',
+		Value=4.30911,
+		UpperEstimate=4.30911,
+		LowerEstimate=4.30911,
+		Models='seir_p')
+
+	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='Reporting_Delay',
-		ParameterType='Model',
-		Description='TBD',
+		ParameterType='HealthSystem',
+		Description='Time taken to generate official case',
 		Value=1,
 		UpperEstimate=1,
 		LowerEstimate=1,
-		Models='TBD')
+		Models='seir_a')
 
 	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='Symptomatic_Testing_Fraction',
-		ParameterType='Model',
-		Description='TBD',
+		ParameterType='Pathway',
+		Description='Percentage of symptomatic who get tested',
 		Value=0.735,
 		UpperEstimate=0.735,
 		LowerEstimate=0.735,
-		Models='TBD')
+		Models='seir_a')
 
 	p_tb <- dplyr::add_row(p_tb,
 		ParameterName='Total_Infectious_Period_D',

@@ -3,8 +3,6 @@ library(ggplot2)
 library(readsdr)
 library(tidyr)
 
-mod <- create_seir_a(model_offset = 8)
-
 # ZZBeta Multiplier h = 1
 # ZZProportion Asymptomatic f = 0.2
 # ZZSymptomatic Testing Fraction = 1
@@ -13,6 +11,8 @@ mod <- create_seir_a(model_offset = 8)
 # ZZTotal Infectious Period D = 5.8535
 # ZZBeta Calibrated = 0.7366
 # *ZZReporting Delay = 1
+
+mod <- create_seir_a(model_offset = 8)
 
 summary(mod)
 

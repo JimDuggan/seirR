@@ -13,7 +13,7 @@ library(lubridate)
 library(stringr)
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to package seirR v0.2")
+  packageStartupMessage(paste0("Welcome to package seirR v",packageVersion("seirR")))
   #data_env <<- new.env()
   #data_env$DATA <<- FALSE
   #get_world_data()

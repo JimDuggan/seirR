@@ -9,7 +9,8 @@ load_social_contacts <- function(){
   age_data$lower.age.limit <- as.numeric(lower_lims)
 
   suppressMessages(scenario_1 <- socialmixr::contact_matrix(socialmixr::polymod,
-                                                            age.limits = c(0, 19, 65),
+                                      age.limits = c(0, 19, 65),
+                                      #age.limits = c(0, 9, 19, 29, 39, 49, 59, 69, 79),
                                                             countries = "Great Britain",
                                                             survey.pop = age_data,
                                                             symmetric = TRUE))
@@ -18,6 +19,7 @@ load_social_contacts <- function(){
 
  suppressMessages(scenario_2 <- socialmixr::contact_matrix(socialmixr::polymod,
                                                            age.limits = c(0, 19, 65),
+                                                           #age.limits = c(0, 9, 19, 29, 39, 49, 59, 69, 79),
                                                            countries = "Great Britain",
                                                            survey.pop = age_data,
                                                            symmetric = F))

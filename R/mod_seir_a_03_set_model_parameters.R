@@ -6,6 +6,8 @@ set_model_parameters_seir_a <- function(p){
 	sim_state$Latent_Period_L  <- get_param(p,'Latent_Period_L') 
 	sim_state$Number_Seeds  <- get_param(p,'Number_Seeds') 
 	sim_state$Proportion_Asymptomatic_f  <- get_param(p,'Proportion_Asymptomatic_f') 
+	sim_state$R0_Fixed_Flag  <- get_param(p,'R0_Fixed_Flag') 
+	sim_state$R0_Input  <- get_param(p,'R0_Input') 
 	sim_state$Reporting_Delay  <- get_param(p,'Reporting_Delay') 
 	sim_state$Symptomatic_Testing_Fraction  <- get_param(p,'Symptomatic_Testing_Fraction') 
 	sim_state$Total_Infectious_Period_D  <- get_param(p,'Total_Infectious_Period_D') 
